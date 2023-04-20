@@ -1,4 +1,7 @@
-import Providers from './providers';
+'use client';
+
+import Providers from '../providers';
+import Header from './Header';
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,6 +16,7 @@ const RootLayout = ({ children }: Props) => {
   return (
     <html lang="en">
       <body>
+        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>
