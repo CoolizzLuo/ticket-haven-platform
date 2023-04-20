@@ -34,22 +34,11 @@
 ## Project structure
 
 ```javascript
-├── .commitlintrc.json       // CommitLint 配置文件，用於檢查 Git 提交信息的格式
-├── .env.sample              // .env 模板文件，存放環境變量的範例
-├── .eslintignore            // ESLint 忽略配置，指定不需要進行語法檢查的文件
-├── .eslintrc.json           // ESLint 配置文件，用於設置語法檢查規則
 ├── .git                     // Git 版本控制系統的資料夾
-├── .gitignore               // Git 忽略配置，指定不需要版本控制的文件
 ├── .husky                   // Husky 配置文件夾，用於管理 Git hooks
 ├── .next                    // Next.js 編譯產生的資料夾，包含靜態文件和緩存
-├── .prettierignore          // Prettier 忽略配置，指定不需要進行程式碼格式化的文件
-├── .prettierrc              // Prettier 配置文件，用於設置程式碼格式化規則
 ├── .vscode                  // Visual Studio Code 設定文件夾
-├── README.md                // 專案說明文件
-├── next-env.d.ts            // Next.js 環境類型定義文件
-├── next.config.js           // Next.js 配置文件
-├── node_modules             // Node.js 模組資料夾，存放所有依賴
-├── package.json             // 專案配置文件，包含專案信息、腳本和依賴
+├── node_modules             // Node.js 模組資料夾，存放所有 dependencies
 ├── public                   // 靜態資源文件夾，例如圖片、字體等
 ├── src                      // 源碼文件夾
 │   ├── api                  // 存放 API 請求相關程式碼
@@ -60,6 +49,17 @@
 │   ├── stores               // 存放應用狀態管理程式碼，例如 Redux 或 MobX
 │   └── types                // 存放 TypeScript 類型定義
 ├── tsconfig.json            // TypeScript 配置文件
+├── .commitlintrc.json       // CommitLint 配置文件，用於檢查 Git 提交信息的格式
+├── .env.sample              // .env 模板文件，存放環境變量的範例
+├── .eslintignore            // ESLint 忽略配置，指定不需要進行語法檢查的文件
+├── .eslintrc.json           // ESLint 配置文件，用於設置語法檢查規則
+├── .gitignore               // Git 忽略配置，指定不需要版本控制的文件
+├── .prettierignore          // Prettier 忽略配置，指定不需要進行程式碼格式化的文件
+├── .prettierrc              // Prettier 配置文件，用於設置程式碼格式化規則
+├── README.md                // 專案說明文件
+├── next-env.d.ts            // Next.js 環境類型定義文件
+├── next.config.js           // Next.js 配置文件
+├── package.json             // 專案配置文件，包含專案信息、腳本和依賴
 └── yarn.lock                // Yarn 鎖定文件，確保依賴版本的一致性
 ```
 
