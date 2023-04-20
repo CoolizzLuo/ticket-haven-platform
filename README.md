@@ -91,18 +91,18 @@
 
 #### Example
 
-`build: Update eslint config for production`
-`ci: Add GitHub Actions workflow for automated testing`
-`chore: Update project dependencies to latest versions`
-`docs: Add usage instructions to README`
-`feat: Add new user registration feature`
-`fix: Resolve login issue for locked accounts`
-`docs: Update API documentation`
-`perf: Optimize image loading for faster page rendering`
-`refactor: Simplify error handling in API client`
-`revert: Roll back to previous version of login form`
-`style: Enforce consistent indentation with Prettier`
-`test: Add unit tests for user registration endpoint`
+- `build: Update eslint config for production`
+- `ci: Add GitHub Actions workflow for automated testing`
+- `chore: Update project dependencies to latest versions`
+- `docs: Add usage instructions to README`
+- `feat: Add new user registration feature`
+- `fix: Resolve login issue for locked accounts`
+- `docs: Update API documentation`
+- `perf: Optimize image loading for faster page rendering`
+- `refactor: Simplify error handling in API client`
+- `revert: Roll back to previous version of login form`
+- `style: Enforce consistent indentation with Prettier`
+- `test: Add unit tests for user registration endpoint`
 
 
 ### Coding style
