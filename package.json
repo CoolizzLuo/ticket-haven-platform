@@ -34,5 +34,6 @@
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "husky": "^8.0.0"
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }
