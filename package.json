@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "eslint": "8.38.0",
@@ -17,9 +18,12 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1",
     "@coolizz/eslint-config": "^1.0.12",
     "@types/node": "18.15.12",
     "@types/react": "18.0.37",
-    "@types/react-dom": "18.0.11"
+    "@types/react-dom": "18.0.11",
+    "husky": "^8.0.0"
   }
 }
