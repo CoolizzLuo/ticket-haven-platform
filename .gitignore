@@ -39,4 +39,3 @@ next-env.d.ts
 .yarn/*
 !.yarn/releases
 !.yarn/plugins
-.pnp.*
