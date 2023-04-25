@@ -1444,9 +1444,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@coolizz/eslint-config@npm:^1.0.13":
-  version: 1.0.13
-  resolution: "@coolizz/eslint-config@npm:1.0.13"
+"@coolizz/eslint-config@npm:^1.0.16":
+  version: 1.0.16
+  resolution: "@coolizz/eslint-config@npm:1.0.16"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
@@ -1463,7 +1463,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-testing-library: ^5.10.3
     prettier: ^2.8.7
-  checksum: 37ff4d46d11f7b0661cecba21ec517a0f1fe33b3263a1b4571b1d40e1931b8413109fe53a0e6696f4c9022eda1c24e0d5a8dcfc6ebee4c622628ddb0ca902509
+  checksum: 54170cee4525c21edddbea0eca92158ec28117a37ba9fb7194f06f619ed54472f61ef41056f44eb3ea8b00e019ab29fab89347560e4a7314dd7f9b06b3d4e6e2
   languageName: node
   linkType: hard
 
@@ -1729,10 +1729,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/env@npm:13.3.1-canary.16"
-  checksum: 962f86c7a2c809d0874814b4955653b924b353280128fc0b60faedfe5b8468f0ff52a23244237dc60bc6160b36db6ce91e28b30a516da6a8dec7e4630b830ab3
+"@next/env@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/env@npm:13.3.1"
+  checksum: 3bf01e62b7de1de9de0cf7a5904364a2e807ad4f0a6cabfbb288225696a0750163bee23669bd45bfbec17dcf1fe66512212bdfa5be0a341ad187270a3cc27943
   languageName: node
   linkType: hard
 
@@ -1745,65 +1745,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-darwin-arm64@npm:13.3.1-canary.16"
+"@next/swc-darwin-arm64@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-darwin-arm64@npm:13.3.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-darwin-x64@npm:13.3.1-canary.16"
+"@next/swc-darwin-x64@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-darwin-x64@npm:13.3.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.3.1-canary.16"
+"@next/swc-linux-arm64-gnu@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.3.1"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-linux-arm64-musl@npm:13.3.1-canary.16"
+"@next/swc-linux-arm64-musl@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-linux-arm64-musl@npm:13.3.1"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-linux-x64-gnu@npm:13.3.1-canary.16"
+"@next/swc-linux-x64-gnu@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-linux-x64-gnu@npm:13.3.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-linux-x64-musl@npm:13.3.1-canary.16"
+"@next/swc-linux-x64-musl@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-linux-x64-musl@npm:13.3.1"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.3.1-canary.16"
+"@next/swc-win32-arm64-msvc@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.3.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.3.1-canary.16"
+"@next/swc-win32-ia32-msvc@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.3.1"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.3.1-canary.16":
-  version: 13.3.1-canary.16
-  resolution: "@next/swc-win32-x64-msvc@npm:13.3.1-canary.16"
+"@next/swc-win32-x64-msvc@npm:13.3.1":
+  version: 13.3.1
+  resolution: "@next/swc-win32-x64-msvc@npm:13.3.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -4753,20 +4753,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:canary":
-  version: 13.3.1-canary.16
-  resolution: "next@npm:13.3.1-canary.16"
+"next@npm:latest":
+  version: 13.3.1
+  resolution: "next@npm:13.3.1"
   dependencies:
-    "@next/env": 13.3.1-canary.16
-    "@next/swc-darwin-arm64": 13.3.1-canary.16
-    "@next/swc-darwin-x64": 13.3.1-canary.16
-    "@next/swc-linux-arm64-gnu": 13.3.1-canary.16
-    "@next/swc-linux-arm64-musl": 13.3.1-canary.16
-    "@next/swc-linux-x64-gnu": 13.3.1-canary.16
-    "@next/swc-linux-x64-musl": 13.3.1-canary.16
-    "@next/swc-win32-arm64-msvc": 13.3.1-canary.16
-    "@next/swc-win32-ia32-msvc": 13.3.1-canary.16
-    "@next/swc-win32-x64-msvc": 13.3.1-canary.16
+    "@next/env": 13.3.1
+    "@next/swc-darwin-arm64": 13.3.1
+    "@next/swc-darwin-x64": 13.3.1
+    "@next/swc-linux-arm64-gnu": 13.3.1
+    "@next/swc-linux-arm64-musl": 13.3.1
+    "@next/swc-linux-x64-gnu": 13.3.1
+    "@next/swc-linux-x64-musl": 13.3.1
+    "@next/swc-win32-arm64-msvc": 13.3.1
+    "@next/swc-win32-ia32-msvc": 13.3.1
+    "@next/swc-win32-x64-msvc": 13.3.1
     "@swc/helpers": 0.5.0
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -4809,7 +4809,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 622559e9e41caf9e0b07ddcd561fb60901a38e44765650e57fe0ad2d238c56b62aaa105bd17e13e183d1205fa5605d24c6f1bc8780297039f7758dcb0cd2cac7
+  checksum: a685abbcfe028940f8e3c86f6712fadcba1ca92c68b4dddfd1192d93a4ebac2d0947cd62d8cecf530afbd8163b2ef6dfe338b1fe7b699d78bc7123624a7622db
   languageName: node
   linkType: hard
 
@@ -5890,7 +5890,7 @@ __metadata:
     "@chakra-ui/react": ^2.5.5
     "@commitlint/cli": ^17.6.1
     "@commitlint/config-conventional": ^17.6.1
-    "@coolizz/eslint-config": ^1.0.13
+    "@coolizz/eslint-config": ^1.0.16
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
     "@types/axios": ^0.14.0
@@ -5902,7 +5902,7 @@ __metadata:
     eslint-config-next: 13.3.0
     framer-motion: ^10.12.4
     husky: ^8.0.0
-    next: canary
+    next: latest
     react: 18.2.0
     react-dom: 18.2.0
     typescript: 5.0.4
