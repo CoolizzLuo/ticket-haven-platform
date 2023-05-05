@@ -1,6 +1,7 @@
 'use client';
 
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
+import axios from 'axios';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
 
@@ -21,6 +22,18 @@ const signinFormReducer = (state: SigninForm, { type, playload }: { type: string
 const Signin = () => {
   const [form, dispatch] = useReducer(signinFormReducer, initSigninForm);
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
+  const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:3000/api/user/signin', form)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert(res.data.message);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <Container w="50%" margin="auto">
       <VStack spacing="4">
@@ -34,7 +47,7 @@ const Signin = () => {
             onChange={(e) => onChangeHandler('password', e.target.value)}
           />
         </InputGroup>
-        <Button>登入</Button>
+        <Button onClick={onSubmit}>登入</Button>
         <Link href="/signup" fontSize="xs">
           註冊
         </Link>
