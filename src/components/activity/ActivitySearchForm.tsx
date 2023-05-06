@@ -59,9 +59,9 @@ const ActivitySearchForm = () => {
               value={searchForm.region}
               onChange={(e) => onChangeHandler('SET_REGION', e.target.value)}
             >
-              <option value={'0'}>北部</option>
-              <option value={'1'}>中部</option>
-              <option value={'2'}>南部</option>
+              <option value="0">北部</option>
+              <option value="1">中部</option>
+              <option value="2">南部</option>
             </Select>
           </Box>
           <Box padding="20px">

@@ -1,4 +1,5 @@
 import { Card, CardBody, Image } from '@chakra-ui/react';
+
 type Props = {
   children: React.ReactNode;
 };
@@ -6,14 +7,14 @@ type Props = {
 const imgUrl =
   'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80';
 
-function EventCards({ children }: Props) {
+const EventCards = ({ children }: Props) => {
   return (
     <Card border="none" boxShadow="none">
       <CardBody p="0">
-        <Image src={imgUrl} borderRadius="lg" />
+        <Image src={imgUrl} borderRadius="lg" alt="eventImg" />
         {children}
       </CardBody>
     </Card>
   );
-}
+};
 export default EventCards;
