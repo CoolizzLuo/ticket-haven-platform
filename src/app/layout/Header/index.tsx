@@ -22,7 +22,6 @@ import { useState } from 'react';
 
 const Header = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
-  console.log(isMobile);
   const [isLogin] = useState<boolean>(false);
 
   return (
