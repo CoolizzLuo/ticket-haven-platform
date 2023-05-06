@@ -2,6 +2,7 @@
 
 import Providers from '../providers';
 import Header from './Header';
+import Footer from './Footer';
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,6 +20,7 @@ const RootLayout = ({ children }: Props) => {
         <Providers>
           <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
