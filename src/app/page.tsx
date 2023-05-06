@@ -1,58 +1,17 @@
 'use client';
 
-import {
-  Text,
-  HStack,
-  Box,
-  Heading,
-  Badge,
-  Container,
-  Stack,
-  useBreakpointValue,
-  useRadioGroup,
-  Grid,
-  Button,
-  Image,
-} from '@chakra-ui/react';
+import { Text, Box, useBreakpointValue, Button, Image } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
-import { fetchEvents } from '@/api/index';
-import ActivityCard from '@/components/activity/ActivityCard';
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
 import ActivitySearchTemplate from '@/components/activity/ActivitySearchTemplate';
-import RadioCard from '@/components/common/RadioCard';
-import { Activities } from '@/types/activityTypes';
 
 const Home = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [mounted, setMounted] = useState(false);
 
-  // The Hito / Recent Activities
-  const [result, setResult] = useState<any>([]);
-  const [sellsValue, setSellsValue] = useState<string>('1');
-
-  const sellsOptions = [
-    { id: '1', name: '今天', params: { startTime: '2023-05-04' } },
-    { id: '2', name: '明天', params: { startTime: '2023-05-05' } },
-    { id: '3', name: '未來一週', params: { startTime: '2023-05-04', endTime: '2023-05-11' } },
-  ];
-
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'pickSellingType',
-    defaultValue: sellsValue,
-    onChange: (val: string) => {
-      setSellsValue(val);
-    },
-  });
-
-  const group = getRootProps();
-  const handleFetchEvents = async () => {
-    const data = await fetchEvents();
-    setResult(data.mock);
-  };
   useEffect(() => {
     setMounted(true);
-    handleFetchEvents();
   }, []);
 
   return (

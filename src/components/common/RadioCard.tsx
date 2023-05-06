@@ -4,7 +4,8 @@ interface RadioCardProps extends UseRadioProps {
   children: React.ReactNode;
 }
 
-function RadioCard(props: RadioCardProps) {
+const RadioCard = (props: RadioCardProps) => {
+  const { children } = props;
   const { getInputProps, getRadioProps } = useRadio(props);
 
   const input = getInputProps();
@@ -30,10 +31,10 @@ function RadioCard(props: RadioCardProps) {
         px={5}
         py={3}
       >
-        {props.children}
+        {children}
       </Box>
     </Box>
   );
-}
+};
 
 export default RadioCard;

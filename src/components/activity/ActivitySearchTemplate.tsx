@@ -9,7 +9,7 @@ import RadioCard from '@/components/common/RadioCard';
 import { Activities } from '@/types/activityTypes';
 
 const ActivitySearchTemplate = () => {
-  const [result, setResult] = useState<any>([]);
+  const [result, setResult] = useState<Activities[]>([]);
   const [sellsValue, setSellsValue] = useState<string>('1');
 
   const sellsOptions = [
@@ -29,7 +29,7 @@ const ActivitySearchTemplate = () => {
   const group = getRootProps();
   const handleFetchEvents = async () => {
     const data = await fetchEvents();
-    setResult(data.mock);
+    setResult(Array.isArray(data.mock) ? data.mock : []);
   };
   useEffect(() => {
     handleFetchEvents();

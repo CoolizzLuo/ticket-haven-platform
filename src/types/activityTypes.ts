@@ -4,7 +4,7 @@ export type Activities = {
   cover_img_url: string;
   content: string;
   notice: string;
-  status: 0 | 1;
+  status: 0 | 1 | number;
   location: string;
   address: string;
   seat_big_img_url: string;
