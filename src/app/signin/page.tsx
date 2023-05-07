@@ -43,6 +43,7 @@ const Signin = () => {
         <InputGroup>
           <Input
             placeholder="密碼"
+            type="password"
             value={form.password}
             onChange={(e) => onChangeHandler('password', e.target.value)}
           />
