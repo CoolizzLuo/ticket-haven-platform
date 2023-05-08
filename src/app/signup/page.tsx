@@ -6,14 +6,14 @@ import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
 import axios from 'axios';
 
 interface SignupForm {
-  userName: string;
+  username: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 const initSignupForm = {
-  userName: '',
+  username: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -30,14 +30,18 @@ const Signup = () => {
     e.preventDefault();
     if (form.password === form.confirmPassword) {
       axios
-        .post('http://localhost:3000/api/user/signup', form)
+        .post('http://localhost:3000/user/signup', form)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
             alert(res.data.message);
+            window.location.href = '/signin';
           }
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          console.error(error);
+          alert(error.response.data.message);
+        });
     } else {
       alert('您輸入的密碼不一致！請重新輸入');
       dispatch({ type: 'password', playload: '' });
@@ -50,8 +54,8 @@ const Signup = () => {
         <InputGroup>
           <Input
             placeholder="使用者名稱"
-            value={form.userName}
-            onChange={(e) => onChangeHandler('userName', e.target.value)}
+            value={form.username}
+            onChange={(e) => onChangeHandler('username', e.target.value)}
           />
         </InputGroup>
         <InputGroup>

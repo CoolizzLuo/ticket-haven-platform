@@ -25,7 +25,7 @@ const Signin = () => {
   const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/user/signin', form)
+      .post('http://localhost:3000/user/signin', form)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
