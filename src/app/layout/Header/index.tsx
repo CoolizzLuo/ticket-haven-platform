@@ -17,6 +17,7 @@ import {
   useBreakpointValue,
   IconButton,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 
@@ -29,7 +30,9 @@ const Header = () => {
       <Box as="nav" width="100%">
         <Container maxW="1200px">
           <HStack justifyContent="space-between">
-            <Image w="180px" src="/brand-white.svg" alt="Logo" />
+            <Link href="/">
+              <Image w="180px" src="/brand-white.svg" alt="Logo" />
+            </Link>
             {!isMobile ? (
               <HStack>
                 <InputGroup width="320px" alignItems="center" mr="2">

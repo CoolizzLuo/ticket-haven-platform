@@ -7,6 +7,7 @@ import { fetchEvents } from '@/api/index';
 import ActivityCard from '@/components/activity/ActivityCard';
 import RadioCard from '@/components/common/RadioCard';
 import { Activities } from '@/types/activityTypes';
+import Link from 'next/link';
 
 const ActivitySearchTemplate = () => {
   const [result, setResult] = useState<Activities[]>([]);
@@ -46,7 +47,7 @@ const ActivitySearchTemplate = () => {
           {sellsOptions.map((opt) => {
             const radio = getRadioProps({ value: opt.id });
             return (
-              <RadioCard key={opt.id} {...radio}>
+              <RadioCard key={opt.id} {...radio} isChecked>
                 {opt.name}
               </RadioCard>
             );
@@ -56,25 +57,27 @@ const ActivitySearchTemplate = () => {
         <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="30px" as="ul" alignItems="stretch">
           {result.map((r: Activities) => (
             <Box as="li" listStyleType="none" key={r.id}>
-              <ActivityCard>
-                <Stack py="3" align="flex-start">
-                  <Text size="20px" fontWeight="400">
-                    {r.created_at}
-                  </Text>
-                  <Heading size="3" fontWeight="700" color="brand.100" mb="12px">
-                    {r.name}
-                  </Heading>
-                  {r.status === 1 ? (
-                    <Badge py="6px" px="4" bgColor="#FFF1C1" borderRadius="20px">
-                      熱賣
-                    </Badge>
-                  ) : (
-                    <Badge py="6px" px="4" bgColor="#F7F2F0" borderRadius="20px">
-                      售罄
-                    </Badge>
-                  )}
-                </Stack>
-              </ActivityCard>
+              <Link href={`/activity/${r.id}`} scroll={true}>
+                <ActivityCard>
+                  <Stack py="3" align="flex-start">
+                    <Text size="20px" fontWeight="400">
+                      {r.created_at}
+                    </Text>
+                    <Heading size="3" fontWeight="700" color="brand.100" mb="12px">
+                      {r.name}
+                    </Heading>
+                    {r.status === 1 ? (
+                      <Badge py="6px" px="4" bgColor="#FFF1C1" borderRadius="20px">
+                        熱賣
+                      </Badge>
+                    ) : (
+                      <Badge py="6px" px="4" bgColor="#F7F2F0" borderRadius="20px">
+                        售罄
+                      </Badge>
+                    )}
+                  </Stack>
+                </ActivityCard>
+              </Link>
             </Box>
           ))}
         </Grid>
