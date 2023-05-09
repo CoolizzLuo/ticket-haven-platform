@@ -1,3 +1,6 @@
 {
-  "extends": ["@coolizz/eslint-config"]
+  "extends": ["@coolizz/eslint-config"],
+  "rules": {
+    "react/jsx-boolean-value": "off"
+  }
 }
