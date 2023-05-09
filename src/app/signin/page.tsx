@@ -25,7 +25,7 @@ const Signin = () => {
   const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/user/signin', form)
+      .post('https://ticket-haven.onrender.com/user/signin', form)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -43,6 +43,7 @@ const Signin = () => {
         <InputGroup>
           <Input
             placeholder="密碼"
+            type="password"
             value={form.password}
             onChange={(e) => onChangeHandler('password', e.target.value)}
           />
