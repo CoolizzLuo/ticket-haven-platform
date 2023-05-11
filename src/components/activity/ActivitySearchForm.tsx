@@ -42,7 +42,7 @@ const ActivitySearchForm = () => {
   const redirectEventsResultPage = () => {
     const queryStr = new URLSearchParams({ ...searchForm }).toString();
 
-    router.push(`/activity?${queryStr}`);
+    router.push(`/activities?${queryStr}`);
   };
 
   return (

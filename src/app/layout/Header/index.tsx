@@ -17,22 +17,21 @@ import {
   useBreakpointValue,
   IconButton,
 } from '@chakra-ui/react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
 
 const Header = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const [isLogin] = useState<boolean>(false);
+  // const [isLogin] = useState<boolean>(false);
 
   return (
     <Box as="section" p="5" bg="brand.100">
       <Box as="nav" width="100%">
         <Container maxW="1200px">
           <HStack justifyContent="space-between">
-            <Link href="/">
+            <NextLink href="/">
               <Image w="180px" src="/brand-white.svg" alt="Logo" />
-            </Link>
+            </NextLink>
             {!isMobile ? (
               <HStack>
                 <InputGroup width="320px" alignItems="center" mr="2">
@@ -51,9 +50,9 @@ const Header = () => {
                   </InputRightElement>
                 </InputGroup>
                 <Flex alignItems="center">
-                  {!isLogin ? (
+                  {/* {!isLogin ? ( */}
+                  <NextLink href="/signup">
                     <Button
-                      as="a"
                       fontSize={20}
                       fontWeight={600}
                       color="brand.100"
@@ -61,30 +60,55 @@ const Header = () => {
                       height="auto"
                       px={8}
                       py={2}
-                      href="#"
                       _hover={{
                         bg: 'black',
                         color: 'white',
                       }}
+                      mr={2}
                     >
                       註冊
                     </Button>
-                  ) : (
-                    <Menu>
-                      <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
-                        <Avatar
-                          size="sm"
-                          src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                        />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem>Link 1</MenuItem>
-                        <MenuItem>Link 2</MenuItem>
-                        <MenuDivider />
-                        <MenuItem>Link 3</MenuItem>
-                      </MenuList>
-                    </Menu>
-                  )}
+                  </NextLink>
+                  <NextLink href="/signin">
+                    <Button
+                      fontSize={20}
+                      fontWeight={600}
+                      color="brand.100"
+                      bg="white"
+                      height="auto"
+                      px={8}
+                      py={2}
+                      _hover={{
+                        bg: 'black',
+                        color: 'white',
+                      }}
+                      mr={2}
+                    >
+                      登入
+                    </Button>
+                  </NextLink>
+
+                  <Menu>
+                    <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
+                      <Avatar
+                        size="sm"
+                        src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                      />
+                    </MenuButton>
+                    <MenuList>
+                      <NextLink href="user/account">
+                        <MenuItem>我的資料</MenuItem>
+                      </NextLink>
+                      <MenuDivider />
+                      <NextLink href="user/orders">
+                        <MenuItem>我的訂單</MenuItem>
+                      </NextLink>
+                      <MenuDivider />
+                      <NextLink href="user/tickets">
+                        <MenuItem>我的票券</MenuItem>
+                      </NextLink>
+                    </MenuList>
+                  </Menu>
                 </Flex>
               </HStack>
             ) : (
