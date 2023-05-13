@@ -25,14 +25,17 @@ const Signin = () => {
   const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     axios
-      .post('https://ticket-haven.onrender.com/user/signin', form)
+      .post('http://localhost:3000/user/signin', form)
       .then((res) => {
         console.log(res);
-        if (res.status === 200) {
-          alert(res.data.message);
-        }
+        alert(res.data.message);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        if (error.response.data.message) {
+          alert(error.response.data.message);
+        }
+      });
   };
   return (
     <Container w="50%" margin="auto">

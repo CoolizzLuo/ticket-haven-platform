@@ -30,7 +30,7 @@ const Signup = () => {
     e.preventDefault();
     if (form.password === form.confirmPassword) {
       axios
-        .post('https://ticket-haven.onrender.com/user/signup', form)
+        .post('http://localhost:3000/user/signup', form)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
