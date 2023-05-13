@@ -1,8 +1,11 @@
 'use client';
 
-import Providers from '../providers';
+import { useState, useEffect } from 'react';
+
 import Header from './Header';
 import Footer from './Footer';
+
+import Providers from '../providers';
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,12 +17,18 @@ type Props = {
 };
 
 const RootLayout = ({ children }: Props) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <html lang="en">
       <body>
         <Providers>
           <Header />
-          {children}
+          {mounted && children}
           <Footer />
         </Providers>
       </body>

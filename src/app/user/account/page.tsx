@@ -3,6 +3,8 @@
 import { useEffect, useReducer, MouseEvent } from 'react';
 import { getUserInfo, updatUserInfo } from '@/api/user';
 import { User as UserFormState } from '@/types/userTyps';
+import withAuth from '../../layout/withAuth';
+
 import {
   Select,
   RadioGroup,
@@ -86,8 +88,10 @@ const Account = () => {
     e.preventDefault();
     try {
       const res = await updatUserInfo(user);
-      const { data, message } = res.data;
-      console.log(data, message);
+      const { message } = res.data;
+      if (message === 'success') {
+        alert('修改成功');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -113,11 +117,15 @@ const Account = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Input placeholder="Email" value={user.email} readOnly bgColor="gray.100" />
+              <Input type="email" placeholder="Email" value={user.email} readOnly={true} bgColor="gray.100" />
             </InputGroup>
           </Box>
           <WrapItem>
-            <Avatar size="2xl" name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />{' '}
+            <Avatar
+              size="xl"
+              name="Segun Adebayo"
+              src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+            />
           </WrapItem>
         </Flex>
 
@@ -125,7 +133,12 @@ const Account = () => {
           <Input placeholder="手機號碼" value={user.phone} onChange={(e) => onChangeHandler('phone', e.target.value)} />
         </InputGroup>
         <InputGroup>
-          <Input placeholder="生日" value={user.birth} onChange={(e) => onChangeHandler('birth', e.target.value)} />
+          <Input
+            type="date"
+            placeholder="生日"
+            value={user.birth}
+            onChange={(e) => onChangeHandler('birth', e.target.value)}
+          />
         </InputGroup>
         <RadioGroup onChange={(val) => onChangeHandler('gender', val)} value={String(user.gender)}>
           <Stack direction="row">
@@ -133,7 +146,11 @@ const Account = () => {
             <Radio value="1">男</Radio>
           </Stack>
         </RadioGroup>
-        <Select placeholder="主要活動區塊" value={user.activity_region}>
+        <Select
+          placeholder="主要活動區塊"
+          value={user.activity_region}
+          onChange={(e) => onChangeHandler('activity_region', e.target.value)}
+        >
           <option value="1">台北市</option>
           <option value="2">新北市</option>
         </Select>
@@ -143,4 +160,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default withAuth(Account);

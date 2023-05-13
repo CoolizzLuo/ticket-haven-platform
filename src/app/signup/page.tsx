@@ -3,7 +3,7 @@
 import React, { useReducer } from 'react';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
-import axios from 'axios';
+import axios from '@/api/axiosClient';
 
 interface SignupForm {
   username: string;
@@ -30,7 +30,7 @@ const Signup = () => {
     e.preventDefault();
     if (form.password === form.confirmPassword) {
       axios
-        .post('https://ticket-haven.onrender.com/user/signup', form)
+        .post('/user/signup', form)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
@@ -49,7 +49,7 @@ const Signup = () => {
     }
   };
   return (
-    <Container w="50%" margin="auto">
+    <Container w="50%" margin="auto" py="80px">
       <VStack spacing="4">
         <InputGroup>
           <Input
