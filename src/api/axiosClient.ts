@@ -15,7 +15,7 @@ export const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     const conf = { ...config };
-    conf.headers.Authorization = `Bearer ${getTokenFromLS()}`;
+    conf.headers.Authorization = getTokenFromLS();
     return conf;
   },
   (error) => {
