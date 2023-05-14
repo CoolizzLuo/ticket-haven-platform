@@ -1,10 +1,10 @@
 export interface User {
   username: string;
   email: string;
-  email_verify: boolean;
+  emailVerify: boolean;
   gender: 0 | 1;
   phone: string;
-  phone_verify: boolean;
-  activity_region: string;
+  phoneVerify: boolean;
+  activityRegion: number | '';
   birth: string;
 }
