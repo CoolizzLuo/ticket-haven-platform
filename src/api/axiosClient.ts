@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getTokenFromLS } from '@/api/auth';
+import { getTokenFromLS, clearTokenFromLS } from '@/api/auth';
 
 export const axiosClient = axios.create({
   baseURL: process?.env?.NEXT_PUBLIC_API_URL
@@ -28,6 +28,12 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    const { status } = error?.response || {};
+
+    if (status === 401) {
+      alert('請重新登入');
+      clearTokenFromLS();
+    }
     return Promise.reject(error);
   },
 );
