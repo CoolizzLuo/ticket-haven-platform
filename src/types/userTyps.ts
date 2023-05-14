@@ -5,6 +5,6 @@ export interface User {
   gender: 0 | 1;
   phone: string;
   phoneVerify: boolean;
-  activityRegion: number | '';
+  activityRegion: number | null;
   birth: string;
 }
