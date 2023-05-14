@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useReducer } from 'react';
-import axios from 'axios';
+import axios from '@/api/axiosClient';
+import { saveTokenToLS } from '@/api/auth';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
+import { useRouter, useParams } from 'next/navigation';
 
 interface SigninForm {
   email: string;
@@ -20,22 +22,37 @@ const signinFormReducer = (state: SigninForm, { type, playload }: { type: string
 };
 
 const Signin = () => {
+  // Router
+  const router = useRouter();
+  const params = useParams();
+
+  const { redirect } = params;
+  const previousPage = redirect || '/';
+
+  // Form Data
   const [form, dispatch] = useReducer(signinFormReducer, initSigninForm);
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
+
   const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     axios
-      .post('https://ticket-haven.onrender.com/user/signin', form)
+      .post('/user/signin', form)
       .then((res) => {
-        console.log(res);
+        const { message, token } = res.data;
         if (res.status === 200) {
-          alert(res.data.message);
+          alert(message);
+          saveTokenToLS(token);
+          router.push(previousPage);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        alert('登入異常');
+        console.error(error);
+      });
   };
+
   return (
-    <Container w="50%" margin="auto">
+    <Container w="50%" margin="auto" py="80px">
       <VStack spacing="4">
         <InputGroup>
           <Input placeholder="Email" value={form.email} onChange={(e) => onChangeHandler('email', e.target.value)} />

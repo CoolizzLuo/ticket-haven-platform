@@ -19,26 +19,27 @@ import {
   WrapItem,
   Avatar,
 } from '@chakra-ui/react';
+import withAuth from '../../layout/withAuth';
 
 const initUserForm: UserFormState = {
   username: '',
   email: '',
-  email_verify: false,
+  emailVerify: false,
   gender: 0,
   phone: '',
-  phone_verify: false,
-  activity_region: '',
+  phoneVerify: false,
+  activityRegion: '',
   birth: '',
 };
 
 type UserFormAction =
   | { type: 'username'; payload: string | '' }
   | { type: 'email'; payload: string | '' }
-  | { type: 'email_verify'; payload: boolean }
+  | { type: 'emailVerify'; payload: boolean }
   | { type: 'gender'; payload: 0 | 1 }
   | { type: 'phone'; payload: string }
-  | { type: 'phone_verify'; payload: boolean }
-  | { type: 'activity_region'; payload: string | '' }
+  | { type: 'phoneVerify'; payload: boolean }
+  | { type: 'activityRegion'; payload: number }
   | { type: 'birth'; payload: string };
 
 const userFormReducer = (state: UserFormState, action: UserFormAction): UserFormState => {
@@ -51,7 +52,6 @@ const Account = () => {
     switch (type) {
       case 'username':
       case 'phone':
-      case 'activity_region':
       case 'birth':
       case 'email':
         dispatch({ type, payload: value as string });
@@ -59,8 +59,11 @@ const Account = () => {
       case 'gender':
         dispatch({ type, payload: Number(value) as 0 | 1 });
         break;
-      case 'phone_verify':
-      case 'email_verify':
+      case 'activityRegion':
+        dispatch({ type, payload: Number(value) });
+        break;
+      case 'phoneVerify':
+      case 'emailVerify':
         dispatch({ type, payload: value as boolean });
         break;
       default:
@@ -86,8 +89,10 @@ const Account = () => {
     e.preventDefault();
     try {
       const res = await updatUserInfo(user);
-      const { data, message } = res.data;
-      console.log(data, message);
+      const { message } = res.data;
+      if (message === 'success') {
+        alert('修改成功');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -113,11 +118,15 @@ const Account = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Input placeholder="Email" value={user.email} readOnly bgColor="gray.100" />
+              <Input type="email" placeholder="Email" value={user.email} readOnly={true} bgColor="gray.100" />
             </InputGroup>
           </Box>
           <WrapItem>
-            <Avatar size="2xl" name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />{' '}
+            <Avatar
+              size="xl"
+              name="Segun Adebayo"
+              src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+            />
           </WrapItem>
         </Flex>
 
@@ -125,7 +134,12 @@ const Account = () => {
           <Input placeholder="手機號碼" value={user.phone} onChange={(e) => onChangeHandler('phone', e.target.value)} />
         </InputGroup>
         <InputGroup>
-          <Input placeholder="生日" value={user.birth} onChange={(e) => onChangeHandler('birth', e.target.value)} />
+          <Input
+            type="date"
+            placeholder="生日"
+            value={user.birth}
+            onChange={(e) => onChangeHandler('birth', e.target.value)}
+          />
         </InputGroup>
         <RadioGroup onChange={(val) => onChangeHandler('gender', val)} value={String(user.gender)}>
           <Stack direction="row">
@@ -133,7 +147,11 @@ const Account = () => {
             <Radio value="1">男</Radio>
           </Stack>
         </RadioGroup>
-        <Select placeholder="主要活動區塊" value={user.activity_region}>
+        <Select
+          placeholder="主要活動區塊"
+          value={user.activityRegion}
+          onChange={(e) => onChangeHandler('activityRegion', e.target.value)}
+        >
           <option value="1">台北市</option>
           <option value="2">新北市</option>
         </Select>
@@ -143,4 +161,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default withAuth(Account);
