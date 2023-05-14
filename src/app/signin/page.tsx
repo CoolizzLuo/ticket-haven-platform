@@ -28,7 +28,9 @@ const Signin = () => {
       .post('http://localhost:3000/user/signin', form)
       .then((res) => {
         console.log(res);
+        localStorage.setItem('token', res.data.token);
         alert(res.data.message);
+        window.location.href = '/user';
       })
       .catch((error) => {
         console.error(error);
