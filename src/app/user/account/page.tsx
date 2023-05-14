@@ -24,22 +24,22 @@ import withAuth from '../../layout/withAuth';
 const initUserForm: UserFormState = {
   username: '',
   email: '',
-  email_verify: false,
+  emailVerify: false,
   gender: 0,
   phone: '',
-  phone_verify: false,
-  activity_region: '',
+  phoneVerify: false,
+  activityRegion: '',
   birth: '',
 };
 
 type UserFormAction =
   | { type: 'username'; payload: string | '' }
   | { type: 'email'; payload: string | '' }
-  | { type: 'email_verify'; payload: boolean }
+  | { type: 'emailVerify'; payload: boolean }
   | { type: 'gender'; payload: 0 | 1 }
   | { type: 'phone'; payload: string }
-  | { type: 'phone_verify'; payload: boolean }
-  | { type: 'activity_region'; payload: string | '' }
+  | { type: 'phoneVerify'; payload: boolean }
+  | { type: 'activityRegion'; payload: number }
   | { type: 'birth'; payload: string };
 
 const userFormReducer = (state: UserFormState, action: UserFormAction): UserFormState => {
@@ -52,7 +52,6 @@ const Account = () => {
     switch (type) {
       case 'username':
       case 'phone':
-      case 'activity_region':
       case 'birth':
       case 'email':
         dispatch({ type, payload: value as string });
@@ -60,8 +59,11 @@ const Account = () => {
       case 'gender':
         dispatch({ type, payload: Number(value) as 0 | 1 });
         break;
-      case 'phone_verify':
-      case 'email_verify':
+      case 'activityRegion':
+        dispatch({ type, payload: Number(value) });
+        break;
+      case 'phoneVerify':
+      case 'emailVerify':
         dispatch({ type, payload: value as boolean });
         break;
       default:
@@ -147,8 +149,8 @@ const Account = () => {
         </RadioGroup>
         <Select
           placeholder="主要活動區塊"
-          value={user.activity_region}
-          onChange={(e) => onChangeHandler('activity_region', e.target.value)}
+          value={user.activityRegion}
+          onChange={(e) => onChangeHandler('activityRegion', e.target.value)}
         >
           <option value="1">台北市</option>
           <option value="2">新北市</option>
