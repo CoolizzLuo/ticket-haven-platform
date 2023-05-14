@@ -3,8 +3,6 @@
 import { useEffect, useReducer, MouseEvent } from 'react';
 import { getUserInfo, updatUserInfo } from '@/api/user';
 import { User as UserFormState } from '@/types/userTyps';
-import withAuth from '../../layout/withAuth';
-
 import {
   Select,
   RadioGroup,
@@ -21,6 +19,7 @@ import {
   WrapItem,
   Avatar,
 } from '@chakra-ui/react';
+import withAuth from '../../layout/withAuth';
 
 const initUserForm: UserFormState = {
   username: '',
