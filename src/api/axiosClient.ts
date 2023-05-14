@@ -2,9 +2,7 @@ import axios from 'axios';
 import { getTokenFromLS, clearTokenFromLS } from '@/api/auth';
 
 export const axiosClient = axios.create({
-  baseURL: process?.env?.NEXT_PUBLIC_API_URL
-    ? process.env.NEXT_PUBLIC_API_URL
-    : 'https://ticket-haven-dev.onrender.com',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://ticket-haven-dev.onrender.com',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
