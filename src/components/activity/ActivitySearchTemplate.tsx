@@ -57,7 +57,7 @@ const ActivitySearchTemplate = () => {
         <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="30px" as="ul" alignItems="stretch">
           {result.map((r: Activities) => (
             <Box as="li" listStyleType="none" key={r.id}>
-              <Link href={`/activity/${r.id}`} scroll={true}>
+              <Link href={`/activities/${r.id}`} scroll={true}>
                 <ActivityCard>
                   <Stack py="3" align="flex-start">
                     <Text size="20px" fontWeight="400">
