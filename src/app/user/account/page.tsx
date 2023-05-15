@@ -28,7 +28,7 @@ const initUserForm: UserFormState = {
   gender: 0,
   phone: '',
   phoneVerify: false,
-  activityRegion: '',
+  activityRegion: null,
   birth: '',
 };
 
@@ -149,7 +149,7 @@ const Account = () => {
         </RadioGroup>
         <Select
           placeholder="主要活動區塊"
-          value={user.activityRegion}
+          value={user.activityRegion || ''}
           onChange={(e) => onChangeHandler('activityRegion', e.target.value)}
         >
           <option value="1">台北市</option>
