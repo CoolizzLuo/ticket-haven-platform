@@ -8,3 +8,15 @@ export interface User {
   activityRegion: number | '';
   birth: string;
 }
+
+export interface SigninForm {
+  email: string;
+  password: string;
+}
+
+export interface SignupForm {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}

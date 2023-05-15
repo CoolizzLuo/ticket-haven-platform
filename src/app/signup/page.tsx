@@ -3,14 +3,9 @@
 import React, { useReducer } from 'react';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
-import axios from '@/api/axiosClient';
-
-interface SignupForm {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { SignupForm } from '@/types/userTyps';
+import { userSignup } from '@/api/user';
+import { AxiosError } from 'axios';
 
 const initSignupForm = {
   username: '',
@@ -26,24 +21,32 @@ const signupFormReducer = (state: SignupForm, { type, playload }: { type: string
 const Signup = () => {
   const [form, dispatch] = useReducer(signupFormReducer, initSignupForm);
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
-  const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (form.password === form.confirmPassword) {
-      axios
-        .post('/user/signup', form)
-        .then((res) => {
-          console.log(res);
+    let errorMsg = '';
+    const { confirmPassword, ...postForm } = form;
+    if (postForm.password === confirmPassword) {
+      if (confirmPassword.length < 8) {
+        errorMsg = '密碼不可小於 8 個字';
+      } else {
+        try {
+          const res = await userSignup(postForm);
           if (res.status === 200) {
             alert(res.data.message);
             window.location.href = '/signin';
           }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert(error.response.data.message);
-        });
+        } catch (err) {
+          if (err instanceof AxiosError && err.response) {
+            console.log(err);
+            alert(err.response.data.message);
+          }
+        }
+      }
     } else {
-      alert('您輸入的密碼不一致！請重新輸入');
+      errorMsg = '您輸入的密碼不一致！請重新輸入';
+    }
+    if (errorMsg) {
+      alert(errorMsg);
       dispatch({ type: 'password', playload: '' });
       dispatch({ type: 'confirmPassword', playload: '' });
     }
