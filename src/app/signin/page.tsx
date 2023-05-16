@@ -35,16 +35,18 @@ const Signin = () => {
     try {
       const res = await userSignin(form);
       const {
-        message,
         data: { token },
       } = res.data;
-      alert(message);
+      alert('登入成功！');
       saveTokenToLS(token);
       router.push(previousPage);
     } catch (err) {
-      if (err instanceof AxiosError && err.response) {
-        console.error(err);
-        alert(err.response.data.message);
+      if (err instanceof AxiosError) {
+        let message = '發生錯誤，請稍後再試';
+        if (err.response?.data.status === '0002') {
+          message = '帳號/密碼錯誤';
+        }
+        alert(message);
       }
     }
   };

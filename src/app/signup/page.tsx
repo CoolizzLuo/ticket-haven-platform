@@ -6,6 +6,7 @@ import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
 import { SignupForm } from '@/types/userTyps';
 import { userSignup } from '@/api/user';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 const initSignupForm = {
   username: '',
@@ -20,6 +21,7 @@ const signupFormReducer = (state: SignupForm, { type, playload }: { type: string
 
 const Signup = () => {
   const [form, dispatch] = useReducer(signupFormReducer, initSignupForm);
+  const router = useRouter();
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
   const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -32,23 +34,26 @@ const Signup = () => {
         try {
           const res = await userSignup(postForm);
           if (res.status === 200) {
-            alert(res.data.message);
-            window.location.href = '/signin';
+            alert('註冊成功，請重新登入!');
+            router.push('/signin');
           }
         } catch (err) {
-          if (err instanceof AxiosError && err.response) {
-            console.log(err);
-            alert(err.response.data.message);
+          if (err instanceof AxiosError) {
+            let message = '發生錯誤，請稍後再試';
+            if (err.response?.data.status === '0002') {
+              message = 'Email 已存在，請重新輸入';
+            }
+            alert(message);
           }
         }
       }
     } else {
       errorMsg = '您輸入的密碼不一致！請重新輸入';
+      dispatch({ type: 'password', playload: '' });
+      dispatch({ type: 'confirmPassword', playload: '' });
     }
     if (errorMsg) {
       alert(errorMsg);
-      dispatch({ type: 'password', playload: '' });
-      dispatch({ type: 'confirmPassword', playload: '' });
     }
   };
   return (
