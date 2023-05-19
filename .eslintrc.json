@@ -1,6 +1,7 @@
 {
   "extends": ["@coolizz/eslint-config"],
   "rules": {
-    "react/jsx-boolean-value": "off"
+    "react/jsx-boolean-value": "off",
+    "linebreak-style": "off"
   }
 }
