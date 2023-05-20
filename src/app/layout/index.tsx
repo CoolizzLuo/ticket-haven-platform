@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Providers from '../providers';
+import Dialog from './Dialog';
 
 export const metadata = {
   title: 'Create Next App',
@@ -25,6 +26,7 @@ const RootLayout = ({ children }: Props) => {
     <html lang="en">
       <body>
         <Providers>
+          <Dialog />
           <Header />
           {mounted && children}
           <Footer />
