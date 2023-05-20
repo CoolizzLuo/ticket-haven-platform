@@ -1,52 +1,47 @@
 import { Text, HStack, Box, Select, InputGroup, Input, InputRightElement, Heading } from '@chakra-ui/react';
 import { useReducer } from 'react';
-import { useRouter } from 'next/navigation';
 import { SearchIcon } from '@chakra-ui/icons';
 
 type Action =
-  | { type: 'SET_REGION'; payload: string }
-  | { type: 'SET_START_TIME'; payload: string }
-  | { type: 'SET_KEYWORD'; payload: string };
+  | { type: 'region'; payload: number | '' }
+  | { type: 'startAfter'; payload: string }
+  | { type: 'q'; payload: string };
 
-interface SearchState {
-  region: string;
-  startTime: string;
-  keyword: string;
-}
+import { SearchFormState as SearchState } from '@/types/activityTypes';
 
-const initSearchState = {
-  region: '',
-  startTime: '',
-  keyword: '',
-};
+type OnChangeType = ({ queryStr, json }: { queryStr: string; json: SearchState }) => void;
 
 const searchReducer = (state: SearchState, action: Action): SearchState => {
-  switch (action.type) {
-    case 'SET_REGION':
-      return { ...state, region: action.payload };
-    case 'SET_START_TIME':
-      return { ...state, startTime: action.payload };
-    case 'SET_KEYWORD':
-      return { ...state, keyword: action.payload };
-    default:
-      return state;
-  }
+  return { ...state, [action.type]: action.payload };
 };
 
-const ActivitySearchForm = () => {
-  const router = useRouter();
+const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType; searchParams?: SearchState }) => {
+  const initSearchState = searchParams || { region: '', startAfter: '', q: '' };
+
   const [searchForm, dispatch] = useReducer(searchReducer, initSearchState);
-  const onChangeHandler = (type: 'SET_REGION' | 'SET_START_TIME' | 'SET_KEYWORD', value: string) =>
-    dispatch({ type, payload: value });
+
+  const onChangeHandler = (type: keyof SearchState, value: string | 0 | 1 | 2 | '') => {
+    switch (type) {
+      case 'startAfter':
+      case 'q':
+        dispatch({ type, payload: value as string });
+        break;
+      case 'region':
+        dispatch({ type, payload: value as 0 | 1 | 2 | '' });
+        break;
+      default:
+        break;
+    }
+  };
 
   const redirectEventsResultPage = () => {
-    const queryStr = new URLSearchParams({ ...searchForm }).toString();
-
-    router.push(`/activities?${queryStr}`);
+    const { region = '', startAfter = '', q = '' } = searchForm;
+    const queryStr = new URLSearchParams({ startAfter, q, region: region.toString() }).toString();
+    onChange({ json: searchForm, queryStr });
   };
 
   return (
-    <Box as="section" py="120px" bgColor="#F7F4F6">
+    <Box as="section" py="80px" bgColor="#F7F4F6">
       <Heading as="h2" textAlign="center" mb="32px">
         找活動
       </Heading>
@@ -57,7 +52,7 @@ const ActivitySearchForm = () => {
             <Select
               placeholder="全部"
               value={searchForm.region}
-              onChange={(e) => onChangeHandler('SET_REGION', e.target.value)}
+              onChange={(e) => onChangeHandler('region', e.target.value)}
             >
               <option value="0">北部</option>
               <option value="1">中部</option>
@@ -68,8 +63,8 @@ const ActivitySearchForm = () => {
             <Text as="label">日期</Text>
             <Input
               type="date"
-              value={searchForm.startTime}
-              onChange={(e) => onChangeHandler('SET_START_TIME', e.target.value)}
+              value={searchForm.startAfter}
+              onChange={(e) => onChangeHandler('startAfter', e.target.value)}
             />
           </Box>
           <Box>
@@ -83,8 +78,8 @@ const ActivitySearchForm = () => {
                 lineHeight="1.2"
                 py="12px"
                 px="24px"
-                value={searchForm.keyword}
-                onChange={(e) => onChangeHandler('SET_KEYWORD', e.target.value)}
+                value={searchForm.q}
+                onChange={(e) => onChangeHandler('q', e.target.value)}
               />
 
               <InputRightElement onClick={redirectEventsResultPage} cursor="pointer">

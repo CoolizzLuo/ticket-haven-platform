@@ -1884,6 +1884,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:4.29.7":
+  version: 4.29.7
+  resolution: "@tanstack/query-core@npm:4.29.7"
+  checksum: f28441a1fc17881d770ebacbe3a2fcf58bd065ac0cf58f8dc544d367f00d7f65213e09a1a1280e021eef25a50b307cac6884173b5acf32570e755baf29b741aa
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^4.29.7":
+  version: 4.29.7
+  resolution: "@tanstack/react-query@npm:4.29.7"
+  dependencies:
+    "@tanstack/query-core": 4.29.7
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 9db2fb78e18f299c0e58f3c177261f6010fdea63a5f950e4c93a7cf7a46da019aa3171c77759fa7b327e35763e3379f0a885c71dafd9aa99bf2ddda9f264de90
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^8.11.1":
   version: 8.20.0
   resolution: "@testing-library/dom@npm:8.20.0"
@@ -2773,6 +2799,13 @@ __metadata:
   version: 7.0.0
   resolution: "dargs@npm:7.0.0"
   checksum: b8f1e3cba59c42e1f13a114ad4848c3fc1cf7470f633ee9e9f1043762429bc97d91ae31b826fb135eefde203a3fdb20deb0c0a0222ac29d937b8046085d668d1
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.7":
+  version: 1.11.7
+  resolution: "dayjs@npm:1.11.7"
+  checksum: 5003a7c1dd9ed51385beb658231c3548700b82d3548c0cfbe549d85f2d08e90e972510282b7506941452c58d32136d6362f009c77ca55381a09c704e9f177ebb
   languageName: node
   linkType: hard
 
@@ -5906,11 +5939,13 @@ __metadata:
     "@coolizz/eslint-config": ^1.0.16
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
+    "@tanstack/react-query": ^4.29.7
     "@types/axios": ^0.14.0
     "@types/node": 18.15.12
     "@types/react": 18.0.37
     "@types/react-dom": 18.0.11
     axios: ^1.3.6
+    dayjs: ^1.11.7
     eslint: 8.38.0
     eslint-config-next: 13.3.0
     framer-motion: ^10.12.4
@@ -6179,7 +6214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
