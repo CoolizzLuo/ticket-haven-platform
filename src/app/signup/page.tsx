@@ -3,14 +3,10 @@
 import React, { useReducer } from 'react';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
-import axios from '@/api/axiosClient';
-
-interface SignupForm {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { SignupForm } from '@/types/userTyps';
+import { userSignup } from '@/api/user';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 const initSignupForm = {
   username: '',
@@ -25,27 +21,39 @@ const signupFormReducer = (state: SignupForm, { type, playload }: { type: string
 
 const Signup = () => {
   const [form, dispatch] = useReducer(signupFormReducer, initSignupForm);
+  const router = useRouter();
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
-  const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (form.password === form.confirmPassword) {
-      axios
-        .post('/user/signup', form)
-        .then((res) => {
-          console.log(res);
+    let errorMsg = '';
+    const { confirmPassword, ...postForm } = form;
+    if (postForm.password === confirmPassword) {
+      if (confirmPassword.length < 8) {
+        errorMsg = '密碼不可小於 8 個字';
+      } else {
+        try {
+          const res = await userSignup(postForm);
           if (res.status === 200) {
-            alert(res.data.message);
-            window.location.href = '/signin';
+            alert('註冊成功，請重新登入!');
+            router.push('/signin');
           }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert(error.response.data.message);
-        });
+        } catch (err) {
+          if (err instanceof AxiosError) {
+            let message = '發生錯誤，請稍後再試';
+            if (err.response?.data.status === '0002') {
+              message = 'Email 已存在，請重新輸入';
+            }
+            alert(message);
+          }
+        }
+      }
     } else {
-      alert('您輸入的密碼不一致！請重新輸入');
+      errorMsg = '您輸入的密碼不一致！請重新輸入';
       dispatch({ type: 'password', playload: '' });
       dispatch({ type: 'confirmPassword', playload: '' });
+    }
+    if (errorMsg) {
+      alert(errorMsg);
     }
   };
   return (
