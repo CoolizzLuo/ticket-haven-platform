@@ -23,22 +23,22 @@ import {
 const initUserForm: UserFormState = {
   username: '',
   email: '',
-  email_verify: false,
+  emailVerify: false,
   gender: 0,
   phone: '',
-  phone_verify: false,
-  activity_region: '',
+  phoneVerify: false,
+  activityRegion: null,
   birth: '',
 };
 
 type UserFormAction =
   | { type: 'username'; payload: string | '' }
   | { type: 'email'; payload: string | '' }
-  | { type: 'email_verify'; payload: boolean }
+  | { type: 'emailVerify'; payload: boolean }
   | { type: 'gender'; payload: 0 | 1 }
   | { type: 'phone'; payload: string }
-  | { type: 'phone_verify'; payload: boolean }
-  | { type: 'activity_region'; payload: string | '' }
+  | { type: 'phoneVerify'; payload: boolean }
+  | { type: 'activityRegion'; payload: string | '' }
   | { type: 'birth'; payload: string };
 
 const userFormReducer = (state: UserFormState, action: UserFormAction): UserFormState => {
@@ -51,7 +51,7 @@ const User = () => {
     switch (type) {
       case 'username':
       case 'phone':
-      case 'activity_region':
+      case 'activityRegion':
       case 'birth':
       case 'email':
         dispatch({ type, payload: value as string });
@@ -59,8 +59,8 @@ const User = () => {
       case 'gender':
         dispatch({ type, payload: Number(value) as 0 | 1 });
         break;
-      case 'phone_verify':
-      case 'email_verify':
+      case 'phoneVerify':
+      case 'emailVerify':
         dispatch({ type, payload: value as boolean });
         break;
       default:
@@ -133,7 +133,7 @@ const User = () => {
             <Radio value="1">男</Radio>
           </Stack>
         </RadioGroup>
-        <Select placeholder="主要活動區塊" value={user.activity_region}>
+        <Select placeholder="主要活動區塊" value={user.activityRegion || ''}>
           <option value="1">台北市</option>
           <option value="2">新北市</option>
         </Select>
