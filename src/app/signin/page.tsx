@@ -1,16 +1,13 @@
 'use client';
 
 import React, { useReducer } from 'react';
-import axios from '@/api/axiosClient';
 import { saveTokenToLS } from '@/api/auth';
 import { Link } from '@chakra-ui/next-js';
 import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
 import { useRouter, useParams } from 'next/navigation';
-
-interface SigninForm {
-  email: string;
-  password: string;
-}
+import { SigninForm } from '@/types/userTyps';
+import { userSignin } from '@/api/user';
+import { AxiosError } from 'axios';
 
 const initSigninForm = {
   email: '',
@@ -33,22 +30,35 @@ const Signin = () => {
   const [form, dispatch] = useReducer(signinFormReducer, initSigninForm);
   const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
 
-  const onSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    axios
-      .post('/user/signin', form)
-      .then((res) => {
-        const { message, token } = res.data;
-        if (res.status === 200) {
-          alert(message);
-          saveTokenToLS(token);
-          router.push(previousPage);
+    try {
+      const res = await userSignin(form);
+      const {
+        message,
+        data: { token },
+      } = res.data;
+      alert(message);
+      saveTokenToLS(token);
+      router.push(previousPage);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        let message = '發生錯誤，請稍後再試';
+        switch(err.response?.data.status){
+          case '0002':
+            message = '帳號/密碼錯誤';
+            break;
+          case '0003':
+            message = '帳號不存在，請重新註冊';
+            router.push('/signup');
+            break;
+          default:
+            break;
         }
-      })
-      .catch((error) => {
-        alert('登入異常');
-        console.error(error);
-      });
+        alert(message);
+        console.error(err);
+      }
+    }
   };
 
   return (
