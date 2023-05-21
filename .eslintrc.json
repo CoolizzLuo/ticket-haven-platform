@@ -3,5 +3,6 @@
   "rules": {
     "react/jsx-boolean-value": "off",
     "react/require-default-props": "off"
+    "linebreak-style": "off"
   }
 }

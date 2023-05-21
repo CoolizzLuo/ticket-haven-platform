@@ -34,21 +34,16 @@ const Signup = () => {
         try {
           const res = await userSignup(postForm);
           if (res.status === 200) {
-            alert("登入成功!");
+            alert('註冊成功，請重新登入!');
             router.push('/signin');
           }
         } catch (err) {
           if (err instanceof AxiosError) {
             let message = '發生錯誤，請稍後再試';
-            switch(err.response?.data.status){
-              case '0002':
-                message = 'Email 已存在，請重新輸入';
-                break;
-              default:
-                break;
+            if (err.response?.data.status === '0002') {
+              message = 'Email 已存在，請重新輸入';
             }
             alert(message);
-            console.log(err);
           }
         }
       }
