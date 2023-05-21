@@ -17,10 +17,6 @@ const Activities = () => {
   const startAfter = searchParams.get('startAfter') || '';
   const keyword = searchParams.get('q') || '';
 
-  const handleChange = ({ json }: { json: SearchFormState }) => {
-    handleFetchEvents(json);
-  };
-
   // searchResult
   const [result, setResult] = useState<ActType[]>([]);
 
@@ -28,6 +24,10 @@ const Activities = () => {
     const res = await fetchEvents({ ...search, page: 1, pageSize: 10 });
     const { data } = res.data;
     setResult(Array.isArray(data) ? data : []);
+  };
+
+  const handleChange = ({ json }: { json: SearchFormState }) => {
+    handleFetchEvents(json);
   };
 
   useEffect(() => {

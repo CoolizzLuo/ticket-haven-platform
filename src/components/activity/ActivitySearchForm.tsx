@@ -1,13 +1,12 @@
 import { Text, HStack, Box, Select, InputGroup, Input, InputRightElement, Heading } from '@chakra-ui/react';
 import { useReducer } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
+import { SearchFormState as SearchState } from '@/types/activityTypes';
 
 type Action =
   | { type: 'region'; payload: number | '' }
   | { type: 'startAfter'; payload: string }
   | { type: 'q'; payload: string };
-
-import { SearchFormState as SearchState } from '@/types/activityTypes';
 
 type OnChangeType = ({ queryStr, json }: { queryStr: string; json: SearchState }) => void;
 

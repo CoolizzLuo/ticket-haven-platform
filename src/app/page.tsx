@@ -4,7 +4,7 @@ import { Text, Box, useBreakpointValue, Button, Image } from '@chakra-ui/react';
 import { dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 
-import { Activities, ActivitiesSearch } from '@/types/activityTypes';
+import { Activities } from '@/types/activityTypes';
 import { usePathname, useRouter } from 'next/navigation';
 
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
