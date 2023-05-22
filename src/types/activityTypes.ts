@@ -1,16 +1,27 @@
 export type Activities = {
   id: string;
+  seatCount: number;
   name: string;
-  cover_img_url: string;
+  coverImgUrl: string;
+  endAt: string;
+  startAt: string;
+  sellAt: string;
+  location: string;
   content: string;
   notice: string;
-  status: 0 | 1 | number;
-  location: string;
-  address: string;
-  seat_big_img_url: string;
-  seat_small_img_url: string;
-  firm_user_id: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
+  region: number;
+  soldOut: boolean;
+};
+
+export interface SearchFormState {
+  region?: number | '';
+  startAfter?: string;
+  q?: string;
+}
+
+export type ActivitiesSearch = SearchFormState & {
+  page: number;
+  pageSize: number;
+  startBefore?: string;
+  sort?: string;
 };

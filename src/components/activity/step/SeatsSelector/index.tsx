@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
-import { format } from 'date-fns';
-import { zhTW } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-tw';
 import AreaPicker from './AreaPicker';
 import { Area, Event } from './types';
+
+dayjs.locale('zh-tw');
 
 type ButtonType = 'sale' | 'soldout';
 const btnStyleMap = {
@@ -23,7 +25,7 @@ const buttonProps = (isActive: boolean) => {
 };
 
 const formatDateLocationStr = (date: string, location: string) =>
-  `${format(new Date(date), 'yyyy/MM/dd(eeeee) kk:mm', { locale: zhTW })} ${location}`;
+  `${dayjs(date).format('YYYY/MM/DD(dd) HH:mm')} ${location}`;
 
 const SeatSelector = ({ activityName, events, areas }: { activityName: string; events: Event[]; areas: Area[] }) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
