@@ -1,20 +1,49 @@
-import { Card, CardBody, Image } from '@chakra-ui/react';
+import { Card, CardBody, Image, Text, Heading, Badge, Stack } from '@chakra-ui/react';
+import Link from 'next/link';
+import { dayFormat, isBeforeToday } from '@/lib/dayjs';
 
 type Props = {
-  children: React.ReactNode;
+  id: string;
+  name: string;
+  startAt: string;
+  soldOut: boolean;
 };
 
-const imgUrl =
-  'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80';
-
-const EventCards = ({ children }: Props) => {
+const EventCards = ({ id, name, startAt, soldOut }: Props) => {
   return (
-    <Card border="none" boxShadow="none">
-      <CardBody p="0">
-        <Image src={imgUrl} borderRadius="lg" alt="eventImg" />
-        {children}
-      </CardBody>
-    </Card>
+    <Link href={`/activities/${id}`} scroll={true}>
+      <Card border="none" boxShadow="none">
+        <CardBody p="0">
+          <Image src={`image/${id}.jpg`} borderRadius="lg" alt="eventImg" width="100%" h="200px" objectFit="cover" />
+          <Stack py="3" align="flex-start">
+            <Text size="20px" fontWeight="400" color="#9F9D9E">
+              {dayFormat(startAt)}
+            </Text>
+            <Heading size="3" fontWeight="700" color="#565355" mb="12px">
+              {name}
+            </Heading>
+
+            {isBeforeToday(startAt) && (
+              <Badge py="6px" px="4" bgColor="#F5F2F4" color="#565355" borderRadius="20px">
+                即將開賣
+              </Badge>
+            )}
+
+            {!isBeforeToday(startAt) && !soldOut && (
+              <Badge py="6px" px="4" bgColor="#FFF1C1" color="#BF7506" borderRadius="20px">
+                熱賣中
+              </Badge>
+            )}
+
+            {!isBeforeToday(startAt) && soldOut && (
+              <Badge py="6px" px="4" bgColor="#F7F2F0" color="#BFBCBD" borderRadius="20px">
+                售罄
+              </Badge>
+            )}
+          </Stack>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };
 export default EventCards;
