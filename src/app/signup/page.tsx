@@ -1,90 +1,43 @@
 'use client';
 
-import React, { useReducer } from 'react';
+import React from 'react';
 import { Link } from '@chakra-ui/next-js';
-import { Input, InputGroup, Container, VStack, Button } from '@chakra-ui/react';
-import { SignupForm } from '@/types/userTyps';
-import { userSignup } from '@/api/user';
-import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-
-const initSignupForm = {
-  username: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-
-const signupFormReducer = (state: SignupForm, { type, playload }: { type: string; playload: string }) => {
-  return { ...state, [type]: playload };
-};
+import { Container, VStack, Button } from '@chakra-ui/react';
+import InputWithErrMsg from '@/components/common/InputWithErrMsg';
+import useSignupForm from './useSignupForm';
 
 const Signup = () => {
-  const [form, dispatch] = useReducer(signupFormReducer, initSignupForm);
-  const router = useRouter();
-  const onChangeHandler = (type: string, value: string) => dispatch({ type, playload: value });
-  const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    let errorMsg = '';
-    const { confirmPassword, ...postForm } = form;
-    if (postForm.password === confirmPassword) {
-      if (confirmPassword.length < 8) {
-        errorMsg = '密碼不可小於 8 個字';
-      } else {
-        try {
-          const res = await userSignup(postForm);
-          if (res.status === 200) {
-            alert('註冊成功，請重新登入!');
-            router.push('/signin');
-          }
-        } catch (err) {
-          if (err instanceof AxiosError) {
-            let message = '發生錯誤，請稍後再試';
-            if (err.response?.data.status === '0002') {
-              message = 'Email 已存在，請重新輸入';
-            }
-            alert(message);
-          }
-        }
-      }
-    } else {
-      errorMsg = '您輸入的密碼不一致！請重新輸入';
-      dispatch({ type: 'password', playload: '' });
-      dispatch({ type: 'confirmPassword', playload: '' });
-    }
-    if (errorMsg) {
-      alert(errorMsg);
-    }
-  };
+  const { form, onChangeHandler, onSubmit, errMsgMap } = useSignupForm();
+
   return (
     <Container w="50%" margin="auto" py="80px">
       <VStack spacing="4">
-        <InputGroup>
-          <Input
-            placeholder="使用者名稱"
-            value={form.username}
-            onChange={(e) => onChangeHandler('username', e.target.value)}
-          />
-        </InputGroup>
-        <InputGroup>
-          <Input placeholder="Email" value={form.email} onChange={(e) => onChangeHandler('email', e.target.value)} />
-        </InputGroup>
-        <InputGroup>
-          <Input
-            placeholder="密碼"
-            type="password"
-            value={form.password}
-            onChange={(e) => onChangeHandler('password', e.target.value)}
-          />
-        </InputGroup>
-        <InputGroup>
-          <Input
-            placeholder="再次輸入密碼"
-            type="password"
-            value={form.confirmPassword}
-            onChange={(e) => onChangeHandler('confirmPassword', e.target.value)}
-          />
-        </InputGroup>
+        <InputWithErrMsg
+          placeholder="使用者名稱"
+          value={form.username}
+          onChange={(e) => onChangeHandler('username', e.target.value)}
+          errMsg={errMsgMap.username}
+        />
+        <InputWithErrMsg
+          placeholder="Email"
+          value={form.email}
+          onChange={(e) => onChangeHandler('email', e.target.value)}
+          errMsg={errMsgMap.email}
+        />
+        <InputWithErrMsg
+          placeholder="密碼"
+          type="password"
+          value={form.password}
+          onChange={(e) => onChangeHandler('password', e.target.value)}
+          errMsg={errMsgMap.password}
+        />
+        <InputWithErrMsg
+          placeholder="再次輸入密碼"
+          type="password"
+          value={form.confirmPassword}
+          onChange={(e) => onChangeHandler('confirmPassword', e.target.value)}
+          errMsg={errMsgMap.confirmPassword}
+        />
         <Button onClick={onSubmit}>註冊</Button>
         <Link href="/signin" fontSize="xs">
           登入
