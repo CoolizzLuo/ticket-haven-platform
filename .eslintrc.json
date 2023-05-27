@@ -5,6 +5,7 @@
     "react/require-default-props": "off",
     "linebreak-style": "off",
     "@typescript-eslint/no-shadow": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "linebreak-style": "off"
   }
 }

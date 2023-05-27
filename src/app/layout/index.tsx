@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Providers from '../providers';
+import Providers from './providers';
 import Dialog from './Dialog';
 
 export const metadata = {
@@ -23,7 +23,7 @@ const RootLayout = ({ children }: Props) => {
   }, []);
 
   return (
-    <html lang="en">
+    <html lang="zh-TW">
       <body>
         <Providers>
           <Dialog />
