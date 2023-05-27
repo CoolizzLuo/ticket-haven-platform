@@ -3,6 +3,8 @@
   "rules": {
     "react/jsx-boolean-value": "off",
     "react/require-default-props": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
