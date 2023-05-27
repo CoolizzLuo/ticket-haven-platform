@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Avatar,
   Flex,
@@ -18,29 +20,17 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { useEffect, useState } from 'react';
 import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { getTokenFromLS, clearTokenFromLS } from '@/api/auth';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const getToken = !!getTokenFromLS();
 
-  const [isLogin, setIsLogin] = useState(false);
+  const { status } = useSession();
+  const isLogin = status === 'authenticated';
 
   const pathname = usePathname();
-  const router = useRouter();
-
-  useEffect(() => {
-    setIsLogin(getToken);
-  }, [getToken]);
-
-  const logOut = () => {
-    clearTokenFromLS();
-    setIsLogin(false);
-    router.push('/');
-  };
 
   return (
     <Box as="section" p="5" bg="brand.100">
@@ -88,26 +78,25 @@ const Header = () => {
                           註冊
                         </Button>
                       </NextLink>
-                      <NextLink href={`/signin?redirect=${pathname}`}>
-                        <Button
-                          fontSize={20}
-                          fontWeight={600}
-                          color="white"
-                          border="1px solid white"
-                          bg="brand.100"
-                          height="auto"
-                          px={8}
-                          py={2}
-                          _hover={{
-                            bg: 'black',
-                            color: 'white',
-                            borderColor: 'black',
-                          }}
-                          mr={2}
-                        >
-                          登入
-                        </Button>
-                      </NextLink>
+                      <Button
+                        fontSize={20}
+                        fontWeight={600}
+                        color="white"
+                        border="1px solid white"
+                        bg="brand.100"
+                        height="auto"
+                        px={8}
+                        py={2}
+                        _hover={{
+                          bg: 'black',
+                          color: 'white',
+                          borderColor: 'black',
+                        }}
+                        mr={2}
+                        onClick={() => signIn()}
+                      >
+                        登入
+                      </Button>
                     </>
                   ) : (
                     <Menu>
@@ -130,7 +119,7 @@ const Header = () => {
                           <MenuItem>我的票券</MenuItem>
                         </NextLink>
                         <MenuDivider />
-                        <MenuItem onClick={logOut}>登出</MenuItem>
+                        <MenuItem onClick={() => signOut()}>登出</MenuItem>
                       </MenuList>
                     </Menu>
                   )}

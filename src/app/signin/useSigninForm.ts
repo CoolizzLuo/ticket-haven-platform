@@ -1,10 +1,7 @@
 import { useState, useReducer } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { AxiosError } from 'axios';
-import { saveTokenToLS } from '@/api/auth';
-import { userSignin } from '@/api/user';
+import { useSearchParams } from 'next/navigation';
 import { SigninForm } from '@/types/userTyps';
-
+import { signIn } from 'next-auth/react';
 
 const initSigninForm = {
   email: '',
@@ -28,11 +25,7 @@ const initialErrMsg = {
 
 const useSigninForm = () => {
   // Router
-  const router = useRouter();
-  const params = useParams();
-
-  const { redirect } = params;
-  const previousPage = redirect || '/';
+  const searchParams = useSearchParams();
 
   // Form Data
   const [form, dispatch] = useReducer(signinFormReducer, initSigninForm);
@@ -42,7 +35,7 @@ const useSigninForm = () => {
   const [errMsgMap, setErrMsgMap] = useState(initialErrMsg);
 
   const checkError = () => {
-    const result =  Object.entries(form).reduce(
+    const result = Object.entries(form).reduce(
       (acc: ErrorMsg, [key, value]: [string, string]) => {
         if (!value) {
           acc[key] = '欄位不得為空';
@@ -75,25 +68,14 @@ const useSigninForm = () => {
 
   const onSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (!checkError()) {
-      try {
-        const res = await userSignin(form);
-        const {
-          data: { token },
-        } = res.data;
-        alert('登入成功！');
-        saveTokenToLS(token);
-        router.push(previousPage);
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          let message = '發生錯誤，請稍後再試';
-          if (err.response?.data.status === '0002') {
-            message = '帳號/密碼錯誤';
-          }
-          alert(message);
-        }
-      }
-    }
+
+    if (checkError()) return;
+
+    await signIn('credentials', {
+      email: form.email,
+      password: form.password,
+      callbackUrl: searchParams.get('callbackUrl') || '/',
+    });
   };
 
   return { errMsgMap, onChangeHandler, form, onSubmit };

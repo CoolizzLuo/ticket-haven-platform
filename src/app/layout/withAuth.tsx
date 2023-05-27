@@ -1,21 +1,14 @@
 'use client';
 
-import { getTokenFromLS } from '@/api/auth';
-import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { ComponentType } from 'react';
 
 const withAuth = <P extends object>(WrapComponents: ComponentType<P>) => {
-  const Auth = (props: P) => {
-    const router = useRouter();
+  return function WithAuth(props: P) {
+    const { status } = useSession({ required: true });
 
-    const token = getTokenFromLS();
-    if (!token) {
-      router.push('/signin');
-      return null;
-    }
-    return <WrapComponents {...props} />;
+    return status !== 'loading' && <WrapComponents {...props} />;
   };
-  return Auth;
 };
 
 export default withAuth;
