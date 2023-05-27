@@ -15,7 +15,6 @@ const middleware = async <T>(response: Response) => {
     return data as T;
   } catch (error) {
     // eslint-disable-next-line no-console
-
     console.error('Error:', error);
     throw error;
   }
