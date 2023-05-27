@@ -3,6 +3,9 @@ import { extendTheme } from '@chakra-ui/react';
 const colors = {
   brand: {
     100: '#8D2048',
+    200: '#FFF3F8',
+    300: '#BF7506',
+    400: '#FFF1C1',
   },
   primary: {
     100: '#FFF3F8',

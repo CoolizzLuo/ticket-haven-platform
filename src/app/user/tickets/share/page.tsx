@@ -1,5 +1,5 @@
-const AddTicket = () => {
+const ShareTicket = () => {
   return <h2>AddTicket</h2>;
 };
 
-export default AddTicket;
+export default ShareTicket;
