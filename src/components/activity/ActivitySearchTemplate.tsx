@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 type Content = {
   id: string;
   name: string;
-  rule: (item: Activities) => void;
+  fnRule: (item: Activities) => void;
 };
 
 type ActivitySearchProps = {
@@ -66,9 +66,15 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                       as="ul"
                       alignItems="stretch"
                     >
-                      {result.filter(tab.rule).map((r: Activities) => (
-                        <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
-                      ))}
+                      {tab.fnRule && result.filter(tab.fnRule).length ? (
+                        result
+                          .filter(tab.fnRule)
+                          .map((r: Activities) => (
+                            <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
+                          ))
+                      ) : (
+                        <>無活動資訊</>
+                      )}
                     </Grid>
                   </TabPanel>
                 )
