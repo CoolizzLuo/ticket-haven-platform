@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { chakra, Card, CardHeader, CardBody, Heading, Divider, VStack, Square, Text } from '@chakra-ui/react';
+import { ChoseArea } from '@/api/activities';
 import { SubArea, Area } from './types';
 
-const AreaPicker = ({ price, name, subAreas }: Area) => {
+interface AreaPickerProps extends Area {
+  clickHandler: (ChoseArea: ChoseArea) => void;
+}
+
+const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) => {
   const [areas, setAreas] = useState<SubArea[][]>([]);
   useEffect(() => {
     const sortedObj = subAreas.reduce((acc: { [key: string]: SubArea[] }, area: SubArea) => {
@@ -56,6 +61,7 @@ const AreaPicker = ({ price, name, subAreas }: Area) => {
                     w="100%"
                     padding="10px 8px"
                     sx={{ ':hover': { bg: 'gray1.100' } }}
+                    onClick={() => clickHandler({ price, ...subArea })}
                   >
                     <Square size="20px" bg={subArea.color} marginRight="8px" />
                     <Text marginRight="20px">{subArea.name}</Text>

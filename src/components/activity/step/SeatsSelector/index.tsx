@@ -1,11 +1,18 @@
 import { useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
+import { Area, Activity, SubArea } from '@/types/activityTypes';
+import { areaCookie, ChoseArea } from '@/api/activities';
 import AreaPicker from './AreaPicker';
-import { Area, Event } from './types';
 
 dayjs.locale('zh-tw');
+
+interface SeatsSelectorProps {
+  activity: Activity;
+  areas: Area[];
+}
 
 type ButtonType = 'sale' | 'soldout';
 const btnStyleMap = {
@@ -27,18 +34,28 @@ const buttonProps = (isActive: boolean) => {
 const formatDateLocationStr = (date: string, location: string) =>
   `${dayjs(date).format('YYYY/MM/DD(dd) HH:mm')} ${location}`;
 
-const SeatSelector = ({ activityName, events, areas }: { activityName: string; events: Event[]; areas: Area[] }) => {
+const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
+  const router = useRouter();
+  const pathName = usePathname();
+  const clickHandler = (selectArea: ChoseArea) => {
+    localStorage.setItem('activity-choseArea', JSON.stringify(selectArea));
+    areaCookie.setChoseArea(selectArea);
+    router.push(pathName.replace(/\d$/g, '2'));
+  };
   return (
     <VStack align="stretch" gap="48px" bg="gray1.50" borderRadius="6px" padding="40px 24px">
       <Heading as="h2" fontSize="28px">
-        {activityName}
+        {activity.name}
       </Heading>
-      <Select variant="selectPrimary" defaultValue={formatDateLocationStr(events[0].startAt, events[0].location)}>
-        {events.map(({ startAt, location }) => {
-          const str = formatDateLocationStr(startAt, location);
+      <Select
+        variant="selectPrimary"
+        defaultValue={formatDateLocationStr(activity.events[0].startTime, activity.location)}
+      >
+        {activity.events.map(({ startTime }) => {
+          const str = formatDateLocationStr(startTime, activity.location);
           return (
-            <option key={startAt} value={str}>
+            <option key={startTime} value={str}>
               {str}
             </option>
           );
@@ -55,7 +72,7 @@ const SeatSelector = ({ activityName, events, areas }: { activityName: string; e
         </HStack>
         <VStack align="stretch" gap="24px">
           {areas.map(({ name, price, subAreas, id }) => (
-            <AreaPicker key={id} name={name} price={price} subAreas={subAreas} />
+            <AreaPicker key={id} name={name} price={price} subAreas={subAreas} clickHandler={clickHandler} />
           ))}
         </VStack>
       </Box>

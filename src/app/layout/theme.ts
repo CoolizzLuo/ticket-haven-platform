@@ -18,7 +18,9 @@ const colors = {
     300: '#DEDBDC',
     500: '#BFBCBD',
     600: '#9F9D9E',
+    700: '#858284',
     800: '#565355',
+    900: '#383537',
   },
   primary: {
     100: '#FFF3F8',
@@ -132,6 +134,19 @@ const buttonPrimary = defineStyle({
     bg: 'brand.700',
   },
 });
+const primaryBtnOutline = defineStyle({
+  background: 'white',
+  color: 'brand.500',
+  border: '1px',
+  borderColor: 'brand.500',
+  _hover: {
+    background: 'gray1.50',
+  },
+  _active: {
+    bg: 'brand.700',
+    color: 'white',
+  },
+});
 
 const grayBtnOutline = defineStyle({
   background: 'white',
@@ -147,12 +162,22 @@ const grayBtnOutline = defineStyle({
 });
 
 const btnTheme =  defineStyleConfig({
-  variants: { buttonPrimary, grayBtnOutline },
+  variants: { buttonPrimary, grayBtnOutline, primaryBtnOutline },
 });
 
+const checkNormal = defineStyle({
+  control: {
+    width: '20px',
+    height: '20px',
+  }
+})
+const checkTheme = defineStyleConfig({
+  variants: {checkNormal},
+})
 const components = {
   Select: selectTheme,
   Button: btnTheme,
+  Checkbox: checkTheme,
 };
 
 const theme = extendTheme({ colors, fonts , components });
