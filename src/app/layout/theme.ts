@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
+import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
 
 const colors = {
   brand: {
@@ -83,11 +84,27 @@ const textStyles = {
   },
 };
 
+// Button Theme
+const md = defineStyle({
+  fontSize: '20px',
+  fontWeight: 600,
+  px: '12px',
+  py: '8px',
+  border: '1px solid',
+  borderColor: colors.natural[500],
+  borderRadius: '8px',
+  bg: '#fff',
+});
+
+const buttonTheme = defineStyleConfig({
+  sizes: { md },
+});
+
 const fonts = {
   heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const theme = extendTheme({ colors, fonts, textStyles });
+const theme = extendTheme({ colors, fonts, textStyles }, { components: { Button: buttonTheme } });
 
 export default theme;
