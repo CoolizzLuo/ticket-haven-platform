@@ -1,52 +1,91 @@
-type Method = 'GET' | 'DELETE' | 'HEAD' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'PURGE' | 'LINK' | 'UNLINK';
+// import { getServerSession } from 'next-auth';
+// import { getSession } from 'next-auth/react';
+
+export type Method = 'GET' | 'DELETE' | 'HEAD' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'PURGE' | 'LINK' | 'UNLINK';
+export type RequestData<RequestParams = void, RequestSearchParams = void> = {
+  params?: RequestParams;
+  searchParams?: RequestSearchParams;
+};
 
 const BASE_URL = process?.env?.API_URL || '';
-const getDefaultHeaders = (): Record<string, string> => ({
+const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
-});
+};
 
-const middleware = async <T>(response: Response) => {
+const parseData = (response: Response) => {
+  const contentType = response.headers.get('Content-Type') ?? '';
+
+  if (contentType.includes('application/json')) {
+    return response.json();
+  }
+
+  if (contentType.includes('application/octet-stream')) {
+    return response.arrayBuffer();
+  }
+
+  return response.text();
+};
+
+const processResponse = <T>(response: Response) => {
   try {
-    if (!response.ok) throw new Error(response.statusText);
-    const data = await response.json();
-    // eslint-disable-next-line no-console
+    const data = parseData(response);
+
     console.log('Data:', data);
     return data as T;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Error:', error);
-    throw error;
+    return undefined;
   }
 };
 
-const createApiMethod = (method: Method) => {
-  return (endpoint: string) =>
-    async <RequestData = void, ResponseData = void>(requestData?: RequestData, options: RequestInit = {}) => {
-      const body = requestData && method !== 'GET' ? JSON.stringify(requestData) : undefined;
+// const getSessionToken = async (requireAuth: boolean) => {
+//   let token;
+//   if (requireAuth) {
+//     const isServer = typeof window === 'undefined';
+//     const session = isServer ? await getServerSession() : await getSession();
+//     if (!session) {
+//       throw new Error('Unauthorized');
+//     }
+//     token = session.user;
+//   }
+//   return token;
+// };
 
-      const fetchOptions: RequestInit = {
-        ...options,
-        method,
-        body,
-        headers: {
-          ...getDefaultHeaders(),
-          ...(options.headers ?? {}),
-        },
-      };
+const createApiMethod =
+  (method: Method) =>
+  (endpoint: string, requireAuth = false) =>
+  async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
+    requestData?: RequestData<RequestParams, RequestSearchParams>,
+    options: RequestInit = {},
+  ) => {
+    const body = requestData?.params && ['GET', 'HEAD'].includes(method) ? JSON.stringify(requestData) : undefined;
 
-      if (method === 'GET') {
-        delete fetchOptions.body;
-      }
+    let newEndpoint = endpoint;
+    if (requestData?.searchParams) {
+      const urlSearchParams = new URLSearchParams(requestData.searchParams as Record<string, string>);
+      newEndpoint += `?${urlSearchParams.toString()}`;
+    }
 
-      const url = new URL(endpoint, BASE_URL).href;
-      const response = await fetch(url, fetchOptions);
+    // const token = getSessionToken(requireAuth);
 
-      return middleware<ResponseData>(response);
+    const url = new URL(newEndpoint, BASE_URL).href;
+    const fetchOptions: RequestInit = {
+      ...options,
+      method,
+      body,
+      headers: {
+        ...DEFAULT_HEADERS,
+        // Authorization: `Bearer ${token}`,
+        ...(options.headers ?? {}),
+      },
     };
-};
 
-const httpClient = {
+    const response = await fetch(url, fetchOptions);
+    return processResponse<ResponseData>(response);
+  };
+
+export const httpClient = {
   get: createApiMethod('GET'),
   post: createApiMethod('POST'),
   put: createApiMethod('PUT'),

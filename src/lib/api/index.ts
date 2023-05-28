@@ -1,14 +1,13 @@
 import { BaseResponse } from '@/lib/api/types/baseResponse';
 import { UserSinginReq, UserSinginRes } from '@/lib/api/types/userSignin';
 import { UserSingupReq } from '@/lib/api/types/userSignup';
-import httpClient from './httpClient';
+import { httpClient, RequestData } from './httpClient';
 
-interface API<Req = void, Res = void> {
-  (req?: Req, options?: RequestInit): Promise<BaseResponse<Res>>;
+interface API<ReqParams = void, ReqSearchParams = void, Res = void> {
+  (req?: RequestData<ReqParams, ReqSearchParams>, options?: RequestInit): Promise<BaseResponse<Res> | undefined>;
 }
-
 interface APIEndpoints {
-  signin: API<UserSinginReq, UserSinginRes>;
+  signin: API<UserSinginReq, void, UserSinginRes>;
   signup: API<UserSingupReq>;
 }
 

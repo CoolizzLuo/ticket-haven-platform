@@ -1,6 +1,5 @@
 export interface BaseResponse<T = void> {
-  request_id: string;
-  code: number;
+  code: string;
   message: string;
   data?: T;
 }
