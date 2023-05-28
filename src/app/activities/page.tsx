@@ -27,11 +27,15 @@ const Activities = () => {
   };
 
   const handleChange = ({ json }: { json: SearchFormState }) => {
-    handleFetchEvents(json);
+    const req = Object.entries(json).reduce(
+      (acc, [key, value]) => (String(value) ? { [key]: value, ...acc } : acc),
+      {},
+    );
+    handleFetchEvents(req);
   };
 
   useEffect(() => {
-    handleFetchEvents();
+    handleChange({ json: { region, startAfter, q: keyword } });
   }, []);
 
   return (
