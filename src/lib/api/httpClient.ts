@@ -1,5 +1,4 @@
-// import { getServerSession } from 'next-auth';
-// import { getSession } from 'next-auth/react';
+import { processResponse } from './utils';
 
 export type Method = 'GET' | 'DELETE' | 'HEAD' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'PURGE' | 'LINK' | 'UNLINK';
 export type RequestData<RequestParams = void, RequestSearchParams = void> = {
@@ -13,67 +12,18 @@ const DEFAULT_HEADERS = {
   Accept: 'application/json',
 };
 
-const parseData = (response: Response) => {
-  const contentType = response.headers.get('Content-Type') ?? '';
-
-  if (contentType.includes('application/json')) {
-    return response.json();
-  }
-
-  if (contentType.includes('application/octet-stream')) {
-    return response.arrayBuffer();
-  }
-
-  return response.text();
-};
-
-const processResponse = <T>(response: Response) => {
-  try {
-    const data = parseData(response);
-
-    console.log('Data:', data);
-    return data as T;
-  } catch (error) {
-    console.error('Error:', error);
-    return undefined;
-  }
-};
-
-// const getSessionToken = async (requireAuth: boolean) => {
-//   let token;
-//   if (requireAuth) {
-//     const isServer = typeof window === 'undefined';
-//     const session = isServer ? await getServerSession() : await getSession();
-//     if (!session) {
-//       throw new Error('Unauthorized');
-//     }
-//     token = session.user;
-//   }
-//   return token;
-// };
-
-const createApiMethod =
+const createRequest =
   (method: Method) =>
   (endpoint: string, requireAuth = false) =>
   async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
     requestData?: RequestData<RequestParams, RequestSearchParams>,
     options: RequestInit = {},
   ) => {
-    const body = requestData?.params && ['GET', 'HEAD'].includes(method) ? JSON.stringify(requestData) : undefined;
+    // const token = await getSessionToken(requireAuth);
 
-    let newEndpoint = endpoint;
-    if (requestData?.searchParams) {
-      const urlSearchParams = new URLSearchParams(requestData.searchParams as Record<string, string>);
-      newEndpoint += `?${urlSearchParams.toString()}`;
-    }
-
-    // const token = getSessionToken(requireAuth);
-
-    const url = new URL(newEndpoint, BASE_URL).href;
     const fetchOptions: RequestInit = {
       ...options,
       method,
-      body,
       headers: {
         ...DEFAULT_HEADERS,
         // Authorization: `Bearer ${token}`,
@@ -81,16 +31,60 @@ const createApiMethod =
       },
     };
 
+    let url = new URL(endpoint, BASE_URL).href;
+    if (requestData?.searchParams) {
+      const searchParams = new URLSearchParams(requestData.searchParams).toString();
+      url += `?${searchParams}`;
+    }
+
+    if (requestData?.params && !['GET', 'HEAD'].includes(method)) {
+      fetchOptions.body = JSON.stringify(requestData?.params);
+    }
+
+    const response = await fetch(url, fetchOptions);
+    return processResponse<ResponseData>(response);
+  };
+
+const createFileUploadRequest =
+  (endpoint: string, requireAuth = false) =>
+  async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
+    file: File,
+    requestData?: RequestData<RequestParams, RequestSearchParams>,
+    options: RequestInit = {},
+  ) => {
+    // const token = await getSessionToken(requireAuth);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const fetchOptions: RequestInit = {
+      ...options,
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+        // Authorization: `Bearer ${token}`,
+        ...(options.headers ?? {}),
+      },
+    };
+
+    let url = new URL(endpoint, BASE_URL).href;
+    if (requestData?.searchParams) {
+      const urlSearchParams = new URLSearchParams(requestData.searchParams as Record<string, string>);
+      url += `?${urlSearchParams.toString()}`;
+    }
+
     const response = await fetch(url, fetchOptions);
     return processResponse<ResponseData>(response);
   };
 
 export const httpClient = {
-  get: createApiMethod('GET'),
-  post: createApiMethod('POST'),
-  put: createApiMethod('PUT'),
-  delete: createApiMethod('DELETE'),
-  patch: createApiMethod('PATCH'),
+  get: createRequest('GET'),
+  post: createRequest('POST'),
+  postFile: createFileUploadRequest,
+  put: createRequest('PUT'),
+  delete: createRequest('DELETE'),
+  patch: createRequest('PATCH'),
 };
 
 export default httpClient;
