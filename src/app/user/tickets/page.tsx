@@ -3,7 +3,7 @@
 import { Container, Heading, Tabs, Tab, TabList, TabPanels, TabPanel, Flex, Button } from '@chakra-ui/react';
 import { useEffect, useReducer, useState } from 'react';
 import { getTickets } from '@/api/tickets';
-import { AddIcon } from '@chakra-ui/icons';
+// import { AddIcon } from '@chakra-ui/icons';
 import { TicketCard } from '@/types/ticketTypes';
 import TicketCardList from '@/components/tickets/TicketCardList';
 
@@ -27,7 +27,7 @@ const Tickets = () => {
   const [tickets, dispatch] = useReducer(ticketsReducer, initTickets);
 
   const onChangeHandler = (type: string, payload: TicketState) => dispatch({ type, payload });
-  const fetchTickets = async ({ page, isValid, pageSize }: { page: number; isValid: boolean; pageSize: number }) => {
+  const fetchTickets = async ({ page, isValid, pageSize }: { page: number; isValid: 0 | 1; pageSize: number }) => {
     try {
       const res = await getTickets({ page, isValid, pageSize });
       const { data, message, totalCount } = res.data;
@@ -41,8 +41,8 @@ const Tickets = () => {
   };
 
   useEffect(() => {
-    fetchTickets({ page: 1, isValid: true, pageSize: 3 });
-    fetchTickets({ page: 1, isValid: false, pageSize: 3 });
+    fetchTickets({ page: 1, isValid: 1, pageSize: 3 });
+    fetchTickets({ page: 1, isValid: 0, pageSize: 3 });
   }, []);
 
   return (
@@ -60,17 +60,18 @@ const Tickets = () => {
               已過期
             </Tab>
           </Flex>
-          <Button color="brand.100" bg="white" border="1px" height="auto" p="12px">
+          {/* 等之後要做時，再打開
+            <Button color="brand.100" bg="white" border="1px" height="auto" p="12px">
             <AddIcon mr="8px" />
             兌換票券
-          </Button>
+          </Button> */}
         </TabList>
         <TabPanels bg="#F7F4F6" borderRadius="6px" p="32px">
           <TabPanel>
-            <TicketCardList list={tickets.valid.items} />
+            {tickets.valid.items.length ? <TicketCardList list={tickets.valid.items} /> : <>沒有票券</>}
           </TabPanel>
-          <TabPanel borderRadius="6px" px="0">
-            <TicketCardList list={tickets.invalid.items} />
+          <TabPanel>
+            {tickets.invalid.items.length ? <TicketCardList list={tickets.invalid.items} /> : <>沒有票券</>}
           </TabPanel>
         </TabPanels>
       </Tabs>

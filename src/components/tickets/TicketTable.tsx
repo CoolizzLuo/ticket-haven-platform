@@ -2,7 +2,7 @@ import { Ticket } from '@/types/ticketTypes';
 import { Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Tag } from '@chakra-ui/react';
 import { InfoIcon } from '@chakra-ui/icons';
 
-const TicketTable = ({ tickets }: { tickets: Ticket[] }) => {
+const TicketTable = ({ tickets, showTicket }: { tickets: Ticket[]; showTicket: (item: Ticket) => void }) => {
   return (
     <TableContainer>
       <Table variant="simple">
@@ -47,6 +47,7 @@ const TicketTable = ({ tickets }: { tickets: Ticket[] }) => {
                   px="16px"
                   mr="16px"
                   isDisabled={ticket.isShare || ticket.isUsed}
+                  onClick={() => showTicket(ticket)}
                 >
                   <InfoIcon mr="8px" />
                   使用
