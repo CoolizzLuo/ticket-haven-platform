@@ -12,12 +12,12 @@ export const axiosClient = axios.create({
   },
 });
 
-const isServer = typeof window === 'undefined';
+const isServerSide = typeof window === 'undefined';
 
 axiosClient.interceptors.request.use(
   async (config) => {
     const conf = { ...config };
-    const session = isServer ? await getServerSession(authOptions) : await getSession();
+    const session = isServerSide ? await getServerSession(authOptions) : await getSession();
 
     conf.headers.Authorization = session?.token && `Bearer ${session.token}`;
     return conf;
