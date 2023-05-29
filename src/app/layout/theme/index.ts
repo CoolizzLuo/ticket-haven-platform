@@ -1,6 +1,7 @@
 import { extendTheme, defineStyle, defineStyleConfig } from '@chakra-ui/react';
 
 import Tabs from './tabs';
+import Accordion from './accordion';
 
 const colors = {
   brand: {
@@ -9,6 +10,10 @@ const colors = {
   primary: {
     100: '#FFF3F8',
     500: '#8D2048',
+    600: '#7C1B3F',
+    700: '#6B1736',
+    800: '#5A122D',
+    900: '#480E24',
   },
   yellow: {
     light: '#FFF1C1',
@@ -113,6 +118,7 @@ const theme = extendTheme({
   components: {
     Button: buttonTheme,
     Tabs,
+    Accordion,
   },
 });
 
