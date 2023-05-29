@@ -36,7 +36,7 @@ export type AccordionData = {
 
 const ActivityAccordion = ({ data }: { data: AccordionData }) => {
   return (
-    <Accordion allowToggle allowMultiple>
+    <Accordion allowMultiple>
       <VStack align="stretch" spacing="24px">
         {data.map(({ id, status, price, orderNo, activityName, startTime, location, seats }) => (
           <AccordionItem key={id} borderRadius="6px" border="none">
