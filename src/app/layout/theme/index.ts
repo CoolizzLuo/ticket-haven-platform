@@ -1,5 +1,6 @@
-import { extendTheme } from '@chakra-ui/react';
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, defineStyle, defineStyleConfig } from '@chakra-ui/react';
+
+import Tabs from './tabs';
 
 const colors = {
   brand: {
@@ -105,6 +106,14 @@ const fonts = {
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const theme = extendTheme({ colors, fonts, textStyles }, { components: { Button: buttonTheme } });
+const theme = extendTheme({
+  colors,
+  fonts,
+  textStyles,
+  components: {
+    Button: buttonTheme,
+    Tabs,
+  },
+});
 
 export default theme;
