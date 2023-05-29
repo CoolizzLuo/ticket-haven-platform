@@ -14,7 +14,7 @@ import {
   Spacer,
   Text,
   VStack,
-} from '@/components/chakra';
+} from '@/lib/chakra';
 import { OrderStatus, OrderStatusLabel } from '@/constants/orderStatus';
 import { LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';

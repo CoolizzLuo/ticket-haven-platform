@@ -1,4 +1,4 @@
-import { Center, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/components/chakra';
+import { Center, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/lib/chakra';
 import { OrderStatus } from '@/constants/orderStatus';
 import ActivityAccordion from './TicketAccordion';
 
