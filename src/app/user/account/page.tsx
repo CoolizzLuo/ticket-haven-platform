@@ -19,7 +19,6 @@ import {
   WrapItem,
   Avatar,
 } from '@chakra-ui/react';
-import withAuth from '../../layout/withAuth';
 
 const initUserForm: UserFormState = {
   username: '',
@@ -161,4 +160,4 @@ const Account = () => {
   );
 };
 
-export default withAuth(Account);
+export default Account;
