@@ -1,4 +1,4 @@
-import { extendTheme, defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
 
 import Tabs from './tabs';
 import Accordion from './accordion';
@@ -91,19 +91,16 @@ const textStyles = {
 };
 
 // Button Theme
-const md = defineStyle({
-  fontSize: '20px',
-  fontWeight: 600,
-  px: '12px',
-  py: '8px',
-  border: '1px solid',
-  borderColor: colors.natural[500],
-  borderRadius: '8px',
-  bg: '#fff',
-});
-
-const buttonTheme = defineStyleConfig({
-  sizes: { md },
+const Button = defineStyleConfig({
+  sizes: {
+    md: {
+      px: '24px',
+      py: '12px',
+      borderRadius: '8px',
+      fontSize: '20px',
+      h: 'auto',
+    },
+  },
 });
 
 const fonts = {
@@ -116,7 +113,7 @@ const theme = extendTheme({
   fonts,
   textStyles,
   components: {
-    Button: buttonTheme,
+    Button,
     Tabs,
     Accordion,
   },

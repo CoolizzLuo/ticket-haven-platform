@@ -272,7 +272,7 @@ const Activitie = () => {
           </Text>
           <Text color="brand.100" mb="24px" fontWeight="700">
             {result &&
-              result.events.length &&
+              !!result.events.length &&
               dayFormat(
                 result.events.map((e) => e.sellStartTime).sort((a: string, b: string) => a.localeCompare(b))[0],
               )}
@@ -285,35 +285,29 @@ const Activitie = () => {
                     <Flex>
                       <Box bg="natural.50" p="20px" flexGrow="1">
                         <Text mb="8px">演出時間</Text>
-                        <Text mb="4px"> {event?.startTime && dayFormat(event.startTime)}</Text>
+                        <Text mb="4px"> {event.startTime && dayFormat(event.startTime)}</Text>
                       </Box>
                       <Box textAlign="center" p="20px" alignSelf="center">
                         {isBeforeToday(event.sellStartTime) && (
                           <Text color="#BF7506" mb="8px">
-                            {dayFromNow(event?.sellStartTime)}後開賣
+                            {dayFromNow(event.sellStartTime)}後開賣
                           </Text>
                         )}
 
                         {isBeforeToday(event.sellStartTime) && (
-                          <Button size="md" bg="white">
+                          <Button size="md" bg="white" py="8px" px="12px">
                             即將開賣
                           </Button>
                         )}
                         {isAfterToday(event.sellEndTime) && (
-                          <Button color="#BFBCBD" bg="white" disabled>
+                          <Button colorScheme="natural" variant="outline" py="8px" px="12px" isDisabled>
                             結束售票
                           </Button>
                         )}
 
                         {isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
                           <NextLink href={`/activities/${event.id}/step/1`} key={event.id}>
-                            <Button
-                              size="md"
-                              color="white"
-                              bg="primary.500"
-                              _hover={{ bg: 'white', color: 'primary.500' }}
-                              height="auto"
-                            >
+                            <Button colorScheme="primary" py="8px" px="12px">
                               立即購票
                             </Button>
                           </NextLink>
