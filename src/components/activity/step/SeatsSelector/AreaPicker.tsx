@@ -50,7 +50,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                   },
                   remainFew: {
                     text: `剩餘${subArea.remainingSeats}`,
-                    color: 'brand.100',
+                    color: 'brand.500',
                   },
                 };
                 return (

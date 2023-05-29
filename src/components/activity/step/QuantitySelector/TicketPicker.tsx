@@ -38,7 +38,7 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
         <Square size="20px" backgroundColor={color} marginRight="8px" />
         <Text>{name}</Text>
       </Flex>
-      <Text color="brand.100" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
+      <Text color="brand.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
         {price}
       </Text>
       <InputGroup>

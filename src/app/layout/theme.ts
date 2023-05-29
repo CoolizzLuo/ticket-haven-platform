@@ -6,7 +6,7 @@ createMultiStyleConfigHelpers(selectAnatomy.keys);
 
 const colors = {
   brand: {
-    100: '#8D2048',
+    100: '#bf245d',
     500: '#8D2048',
     600: '#751b3c',
     700: '#631733',
@@ -127,7 +127,7 @@ const selectPrimary = definePartsStyle({
     border: '1px',
     borderColor: 'gray1.300',
     _focus:{
-      borderColor: 'brand.500',
+      borderColor: 'brand.100',
     },
   },
 });
@@ -185,7 +185,7 @@ const checkNormal = defineStyle({
   }
 })
 const checkTheme = defineStyleConfig({
-  variants: {checkNormal},
+  variants: { checkNormal },
 })
 const components = {
   Select: selectTheme,
