@@ -52,7 +52,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
       </VStack>
       <Checkbox
         alignItems="flex-start"
-        variant="checkNormal"
+        variant="normal"
         checked={isCheck}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsCheck(e.target.checked)}
       >
@@ -60,7 +60,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
       </Checkbox>
       <Flex justifyContent="flex-end" gap="32px" width="100%">
         <Button
-          variant="primaryBtnOutline"
+          variant="primaryOutline"
           width="160px"
           height="54px"
           fontSize="20px"
@@ -68,13 +68,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
         >
           返回
         </Button>
-        <Button
-          variant="buttonPrimary"
-          width="160px"
-          height="54px"
-          fontSize="20px"
-          onClick={() => actionsHandler('next')}
-        >
+        <Button variant="primary" width="160px" height="54px" fontSize="20px" onClick={() => actionsHandler('next')}>
           下一步
         </Button>
       </Flex>

@@ -102,90 +102,93 @@ const textStyles = {
 };
 
 // Button Theme
-const md = defineStyle({
-  fontSize: '20px',
-  fontWeight: 600,
-  px: '12px',
-  py: '8px',
-  border: '1px solid',
-  borderColor: colors.natural[500],
-  borderRadius: '8px',
-  bg: '#fff',
-});
+// const md = defineStyle({
+//   fontSize: '20px',
+//   fontWeight: 600,
+//   px: '12px',
+//   py: '8px',
+//   border: '1px solid',
+//   borderColor: colors.natural[500],
+//   borderRadius: '8px',
+//   bg: '#fff',
+// });
 
 const fonts = {
   heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const selectPrimary = definePartsStyle({
-  field:{
-    fontSize: '20px',
-    bg: 'white',
-    padding: '17px 12px',
-    height: 'fit-content',
+const selectThemeMap = {
+  primary: definePartsStyle({
+    field:{
+      fontSize: '20px',
+      bg: 'white',
+      padding: '17px 12px',
+      height: 'fit-content',
+      border: '1px',
+      borderColor: 'gray1.300',
+      _focus:{
+        borderColor: 'brand.100',
+      },
+    },
+  }),
+};
+
+const buttonThemeMap = {
+  primary: defineStyle({
+    background: 'brand.500',
+    color: 'white',
+    _hover: {
+      bg: 'brand.600',
+    },
+    _active: {
+      bg: 'brand.700',
+    },
+  }),
+  primaryOutline: defineStyle({
+    background: 'white',
+    color: 'brand.500',
+    border: '1px',
+    borderColor: 'brand.500',
+    _hover: {
+      background: 'gray1.50',
+    },
+    _active: {
+      bg: 'brand.700',
+      color: 'white',
+    },
+  }),
+  grayOutline: defineStyle({
+    background: 'white',
+    color: 'gray1.800',
     border: '1px',
     borderColor: 'gray1.300',
-    _focus:{
-      borderColor: 'brand.100',
+    _hover:{
+      bg: 'gray1.200'
     },
-  },
-});
+    _active: {
+      bg: 'gray1.300',
+    },
+  }),
+};
 
+const checkThemeMap = {
+  normal: defineStyle({
+    control: {
+      width: '20px',
+      height: '20px',
+    }
+  }),
+};
 const selectTheme = defineMultiStyleConfig({
-  variants: { selectPrimary },
+  variants: selectThemeMap,
 });
-
-const buttonPrimary = defineStyle({
-  background: 'brand.500',
-  color: 'white',
-  _hover: {
-    bg: 'brand.600',
-  },
-  _active: {
-    bg: 'brand.700',
-  },
-});
-const primaryBtnOutline = defineStyle({
-  background: 'white',
-  color: 'brand.500',
-  border: '1px',
-  borderColor: 'brand.500',
-  _hover: {
-    background: 'gray1.50',
-  },
-  _active: {
-    bg: 'brand.700',
-    color: 'white',
-  },
-});
-
-const grayBtnOutline = defineStyle({
-  background: 'white',
-  color: 'gray1.800',
-  border: '1px',
-  borderColor: 'gray1.300',
-  _hover:{
-    bg: 'gray1.200'
-  },
-  _active: {
-    bg: 'gray1.300',
-  },
-});
-
 const buttonTheme =  defineStyleConfig({
-  sizes: { md },
-  variants: { buttonPrimary, grayBtnOutline, primaryBtnOutline },
+  // sizes: { md },
+  variants: buttonThemeMap,
 });
-
-const checkNormal = defineStyle({
-  control: {
-    width: '20px',
-    height: '20px',
-  }
-})
 const checkTheme = defineStyleConfig({
-  variants: { checkNormal },
+  variants: checkThemeMap,
 })
 const components = {
   Select: selectTheme,

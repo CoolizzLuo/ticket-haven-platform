@@ -3,7 +3,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-tw';
-import { Area, Activity, SubArea } from '@/types/activityTypes';
+import { Area, Activity } from '@/types/activityTypes';
 import { areaCookie, ChoseArea } from '@/api/activities';
 import AreaPicker from './AreaPicker';
 
@@ -17,10 +17,10 @@ interface SeatsSelectorProps {
 type ButtonType = 'sale' | 'soldout';
 const btnStyleMap = {
   active: {
-    variant: 'buttonPrimary',
+    variant: 'primary',
   },
   default: {
-    variant: 'grayBtnOutline',
+    variant: 'grayOutline',
   },
 };
 const buttonProps = (isActive: boolean) => {
