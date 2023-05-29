@@ -101,6 +101,18 @@ const textStyles = {
   },
 };
 
+// Button Theme
+const md = defineStyle({
+  fontSize: '20px',
+  fontWeight: 600,
+  px: '12px',
+  py: '8px',
+  border: '1px solid',
+  borderColor: colors.natural[500],
+  borderRadius: '8px',
+  bg: '#fff',
+});
+
 const fonts = {
   heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
@@ -161,7 +173,8 @@ const grayBtnOutline = defineStyle({
   },
 });
 
-const btnTheme =  defineStyleConfig({
+const buttonTheme =  defineStyleConfig({
+  sizes: { md },
   variants: { buttonPrimary, grayBtnOutline, primaryBtnOutline },
 });
 
@@ -176,7 +189,7 @@ const checkTheme = defineStyleConfig({
 })
 const components = {
   Select: selectTheme,
-  Button: btnTheme,
+  Button: buttonTheme,
   Checkbox: checkTheme,
 };
 
