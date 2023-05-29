@@ -35,6 +35,7 @@ type Event = {
   sellEndTime: string;
   sellStartTime: string;
   startTime: string;
+  soldOut: boolean;
 };
 
 type DetailType = {
@@ -299,13 +300,14 @@ const Activitie = () => {
                             即將開賣
                           </Button>
                         )}
+
                         {isAfterToday(event.sellEndTime) && (
-                          <Button color="#BFBCBD" bg="white" disabled>
+                          <Button size="md" color="#BFBCBD" bg="white" disabled>
                             結束售票
                           </Button>
                         )}
 
-                        {isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
+                        {!event.soldOut && isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
                           <NextLink href={`/activities/${event.id}/step/1`} key={event.id}>
                             <Button
                               size="md"
@@ -317,6 +319,12 @@ const Activitie = () => {
                               立即購票
                             </Button>
                           </NextLink>
+                        )}
+
+                        {event.soldOut && isBeforeToday(event.sellEndTime) && (
+                          <Button size="md" color="#BFBCBD" bg="white" disabled>
+                            售罄
+                          </Button>
                         )}
                       </Box>
                     </Flex>
