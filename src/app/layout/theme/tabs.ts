@@ -4,20 +4,22 @@ import { tabsAnatomy } from '@chakra-ui/anatomy';
 const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(tabsAnatomy.keys);
 
 const Tabs = defineMultiStyleConfig({
+  baseStyle: {
+    tablist: {
+      gap: '16px',
+    },
+    tabpanels: {
+      marginTop: '24px',
+    },
+  },
   sizes: {
-    md: {
-      tablist: {
-        gap: '16px',
-      },
+    lg: {
       tab: {
         minW: '116px',
         px: '28px',
         py: '16px',
         fontSize: '20px',
         fontWeight: 700,
-      },
-      tabpanels: {
-        marginTop: '24px',
       },
       tabpanel: {
         p: '32px',

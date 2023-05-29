@@ -53,7 +53,7 @@ const Order = () => {
       <Center pt="120px" pb="80px">
         <Text textStyle="h1">我的票券</Text>
       </Center>
-      <Tabs variant="card">
+      <Tabs variant="card" size="lg">
         <TabList>
           <Tab textStyle="t5">可使用</Tab>
           <Tab>已過期</Tab>
