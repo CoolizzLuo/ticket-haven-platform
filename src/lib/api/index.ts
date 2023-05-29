@@ -3,12 +3,13 @@ import { UserSinginReq, UserSinginRes } from '@/lib/api/types/userSignin';
 import { UserSingupReq } from '@/lib/api/types/userSignup';
 import { httpClient, RequestData } from './httpClient';
 
-interface API<ReqParams = void, ReqSearchParams = void, Res = void> {
-  (req?: RequestData<ReqParams, ReqSearchParams>, options?: RequestInit): Promise<BaseResponse<Res> | undefined>;
+interface API<Req extends RequestData, Res = void> {
+  (req?: Req, options?: RequestInit): Promise<BaseResponse<Res> | undefined>;
 }
+
 interface APIEndpoints {
-  signin: API<UserSinginReq, void, UserSinginRes>;
-  signup: API<UserSingupReq>;
+  signin: API<RequestData<UserSinginReq, void>, UserSinginRes>;
+  signup: API<RequestData<UserSingupReq>>;
 }
 
 const api: APIEndpoints = {

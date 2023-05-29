@@ -23,7 +23,7 @@ export const processResponse = async <T>(response: Response) => {
     return data as T;
   } catch (error) {
     console.error('Error:', error);
-    return undefined;
+    throw error;
   }
 };
 

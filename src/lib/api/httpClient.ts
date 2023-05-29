@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { processResponse } from './utils';
 
 export type Method = 'GET' | 'DELETE' | 'HEAD' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'PURGE' | 'LINK' | 'UNLINK';
-export type RequestData<RequestParams = void, RequestSearchParams = void> = {
+export type RequestData<
+  RequestParams = Record<string, any> | void,
+  RequestSearchParams = Record<string, string | number | boolean> | void,
+> = {
   params?: RequestParams;
   searchParams?: RequestSearchParams;
 };
