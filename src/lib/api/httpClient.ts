@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { processResponse } from './utils';
+// import { getServerSession } from 'next-auth';
+// import { getSession } from 'next-auth/react';
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 export type RequestData<
   RequestParams = Record<string, any> | void,
-  RequestSearchParams = Record<string, string | number | boolean> | void,
+  RequestSearchParams = Record<string, string | string[]> | void,
 > = {
   file?: File;
   params?: RequestParams;
@@ -16,6 +17,45 @@ const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
+
+const parseData = (response: Response) => {
+  const contentType = response.headers.get('Content-Type') ?? '';
+
+  if (contentType.includes('application/json')) {
+    return response.json();
+  }
+
+  if (contentType.includes('application/octet-stream')) {
+    return response.arrayBuffer();
+  }
+
+  return response.text();
+};
+
+const processResponse = async <T>(response: Response) => {
+  try {
+    const data = await parseData(response);
+
+    console.log('Data:', data);
+    return data as T;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+// export const getSessionToken = async (requireAuth: boolean) => {
+//   let token;
+//   if (requireAuth) {
+//     const isServerSide = typeof window === 'undefined';
+//     const session = isServerSide ? await getServerSession() : await getSession();
+//     if (!session) {
+//       throw new Error('Unauthorized');
+//     }
+//     token = session.user;
+//   }
+//   return token;
+// };
 
 const createRequest =
   (method: Method, isFileUpload = false) =>
@@ -38,8 +78,16 @@ const createRequest =
 
     let url = new URL(endpoint, BASE_URL).href;
     if (requestData?.searchParams) {
-      const searchParams = new URLSearchParams(requestData?.searchParams).toString();
-      url += `?${searchParams}`;
+      const urlSearchParams = new URLSearchParams();
+
+      Object.entries<string>(requestData.searchParams).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((val) => urlSearchParams.append(key, val.toString()));
+        } else {
+          urlSearchParams.append(key, value.toString());
+        }
+      });
+      url += `?${urlSearchParams.toString()}`;
     }
 
     if (isFileUpload && requestData?.file) {

@@ -8,7 +8,7 @@ interface API<Req extends RequestData, Res = void> {
 }
 
 interface APIEndpoints {
-  demo: (id: string) => API<RequestData<void, { page: number }>, void>;
+  demo: (id: string) => API<RequestData<void, { page: string }>, void>;
   signin: API<RequestData<UserSinginReq>, UserSinginRes>;
   signup: API<RequestData<UserSingupReq>>;
 }
