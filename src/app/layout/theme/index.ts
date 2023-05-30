@@ -1,11 +1,28 @@
-import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, defineStyleConfig, defineStyle, createMultiStyleConfigHelpers } from '@chakra-ui/react';
+import { selectAnatomy } from '@chakra-ui/anatomy';
 
 import Tabs from './tabs';
 import Accordion from './accordion';
 
+const { defineMultiStyleConfig, definePartsStyle } = createMultiStyleConfigHelpers(selectAnatomy.keys);
+
 const colors = {
   brand: {
-    100: '#8D2048',
+    100: '#bf245d',
+    500: '#8D2048',
+    600: '#751b3c',
+    700: '#631733',
+  },
+  gray1: {
+    50: '#F7F4F6',
+    100: '#F5F2F4',
+    200: '#E6E3E5',
+    300: '#DEDBDC',
+    500: '#BFBCBD',
+    600: '#9F9D9E',
+    700: '#858284',
+    800: '#565355',
+    900: '#383537',
   },
   primary: {
     100: '#FFF3F8',
@@ -90,8 +107,79 @@ const textStyles = {
   },
 };
 
-// Button Theme
-const Button = defineStyleConfig({
+const fonts = {
+  heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+  body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+};
+
+const selectThemeMap = {
+  primary: definePartsStyle({
+    field: {
+      fontSize: '20px',
+      bg: 'white',
+      padding: '17px 12px',
+      height: 'fit-content',
+      border: '1px',
+      borderColor: 'gray1.300',
+      _focus: {
+        borderColor: 'brand.100',
+      },
+    },
+  }),
+};
+
+const buttonThemeMap = {
+  primary: defineStyle({
+    background: 'brand.500',
+    color: 'white',
+    _hover: {
+      bg: 'brand.600',
+    },
+    _active: {
+      bg: 'brand.700',
+    },
+  }),
+  primaryOutline: defineStyle({
+    background: 'white',
+    color: 'brand.500',
+    border: '1px',
+    borderColor: 'brand.500',
+    _hover: {
+      background: 'gray1.50',
+    },
+    _active: {
+      bg: 'brand.700',
+      color: 'white',
+    },
+  }),
+  grayOutline: defineStyle({
+    background: 'white',
+    color: 'gray1.800',
+    border: '1px',
+    borderColor: 'gray1.300',
+    _hover: {
+      bg: 'gray1.200',
+    },
+    _active: {
+      bg: 'gray1.300',
+    },
+  }),
+};
+
+const checkThemeMap = {
+  normal: defineStyle({
+    control: {
+      width: '20px',
+      height: '20px',
+    },
+  }),
+};
+
+const selectTheme = defineMultiStyleConfig({
+  variants: selectThemeMap,
+});
+
+const buttonTheme = defineStyleConfig({
   sizes: {
     md: {
       px: '24px',
@@ -101,22 +189,21 @@ const Button = defineStyleConfig({
       h: 'auto',
     },
   },
+  variants: buttonThemeMap,
 });
 
-const fonts = {
-  heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
-  body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+const checkTheme = defineStyleConfig({
+  variants: checkThemeMap,
+});
+
+const components = {
+  Select: selectTheme,
+  Button: buttonTheme,
+  Checkbox: checkTheme,
+  Tabs,
+  Accordion,
 };
 
-const theme = extendTheme({
-  colors,
-  fonts,
-  textStyles,
-  components: {
-    Button,
-    Tabs,
-    Accordion,
-  },
-});
+const theme = extendTheme({ colors, fonts, textStyles, components });
 
 export default theme;

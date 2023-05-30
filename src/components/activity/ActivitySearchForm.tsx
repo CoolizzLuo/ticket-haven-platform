@@ -85,7 +85,7 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
                 <SearchIcon color="gray.500" boxSize={5} />
               </InputRightElement>
             </InputGroup>
-            <Text as="label" ml="2" color="brand.100">
+            <Text as="label" ml="2" color="brand.500">
               熱門搜尋：BlackPink 五月天 告五人
             </Text>
           </Box>

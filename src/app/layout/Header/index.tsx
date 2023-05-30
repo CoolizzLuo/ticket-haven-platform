@@ -43,7 +43,7 @@ const Header = () => {
   };
 
   return (
-    <Box as="section" p="5" bg="brand.100">
+    <Box as="section" p="5" bg="brand.500">
       <Box as="nav" width="100%">
         <Container maxW="1200px">
           <HStack justifyContent="space-between">
@@ -74,7 +74,7 @@ const Header = () => {
                         <Button
                           fontSize={20}
                           fontWeight={600}
-                          color="brand.100"
+                          color="brand.500"
                           bg="white"
                           height="auto"
                           px={8}
@@ -94,7 +94,7 @@ const Header = () => {
                           fontWeight={600}
                           color="white"
                           border="1px solid white"
-                          bg="brand.100"
+                          bg="brand.500"
                           height="auto"
                           px={8}
                           py={2}

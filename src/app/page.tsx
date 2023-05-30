@@ -73,7 +73,7 @@ const Home = () => {
           <Button
             fontSize={20}
             fontWeight={600}
-            bg="brand.100"
+            bg="brand.500"
             color="white"
             height="auto"
             px={8}

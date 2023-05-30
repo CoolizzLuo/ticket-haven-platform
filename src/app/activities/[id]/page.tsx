@@ -268,10 +268,10 @@ const Activitie = () => {
           </Tabs>
         </Box>
         <Box order={{ base: 1, md: 2 }}>
-          <Text color="brand.100" fontWeight="700">
+          <Text color="brand.500" fontWeight="700">
             開始售票
           </Text>
-          <Text color="brand.100" mb="24px" fontWeight="700">
+          <Text color="brand.500" mb="24px" fontWeight="700">
             {result &&
               !!result.events.length &&
               dayFormat(
