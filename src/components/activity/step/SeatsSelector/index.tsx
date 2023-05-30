@@ -2,12 +2,9 @@ import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import 'dayjs/locale/zh-tw';
-import { Area, Activity } from '@/types/activityTypes';
-import { areaCookie, ChoseArea } from '@/api/activities';
+import { Area, Activity, ChoseArea } from '@/types/activityTypes';
+import { areaCookie } from '@/api/activities';
 import AreaPicker from './AreaPicker';
-
-dayjs.locale('zh-tw');
 
 interface SeatsSelectorProps {
   activity: Activity;
@@ -32,7 +29,7 @@ const buttonProps = (isActive: boolean) => {
 };
 
 const formatDateLocationStr = (date: string, location: string) =>
-  `${dayjs(date).format('YYYY/MM/DD(dd) HH:mm')} ${location}`;
+  `${dayjs(date).format('YYYY/MM/DD(ddd) HH:mm')} ${location}`;
 
 const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
@@ -71,8 +68,8 @@ const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
           </Button>
         </HStack>
         <VStack align="stretch" gap="24px">
-          {areas.map(({ name, price, subAreas, id }) => (
-            <AreaPicker key={id} name={name} price={price} subAreas={subAreas} clickHandler={clickHandler} />
+          {areas.map((props) => (
+            <AreaPicker key={props.id} {...props} clickHandler={clickHandler} />
           ))}
         </VStack>
       </Box>

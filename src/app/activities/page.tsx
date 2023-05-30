@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Container, Text } from '@chakra-ui/react';
 
 import { Activities as ActType, SearchFormState } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
 import ActivityCard from '@/components/activity/ActivityCard';
@@ -21,7 +21,7 @@ const Activities = () => {
   const [result, setResult] = useState<ActType[]>([]);
 
   const handleFetchEvents = async (search?: SearchFormState) => {
-    const res = await fetchEvents({ ...search, page: 1, pageSize: 10 });
+    const res = await fetchActivities({ ...search, page: 1, pageSize: 10 });
     const { data } = res.data;
     setResult(Array.isArray(data) ? data : []);
   };

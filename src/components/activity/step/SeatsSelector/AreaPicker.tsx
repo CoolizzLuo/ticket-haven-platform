@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { chakra, Card, CardHeader, CardBody, Heading, Divider, VStack, Square, Text } from '@chakra-ui/react';
-import { ChoseArea } from '@/api/activities';
-import { SubArea, Area } from './types';
+import { SubArea, Area, ChoseArea } from '@/types/activityTypes';
 
 interface AreaPickerProps extends Area {
   clickHandler: (ChoseArea: ChoseArea) => void;

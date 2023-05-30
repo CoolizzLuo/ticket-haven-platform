@@ -4,8 +4,7 @@ import { Box, VStack, Heading, Flex, Icon, Text, Checkbox, Button } from '@chakr
 import { GoLocation } from 'react-icons/go';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import dayjs from 'dayjs';
-import { Activity } from '@/types/activityTypes';
-import { ChoseArea } from '@/api/activities';
+import { Activity, ChoseArea } from '@/types/activityTypes';
 import TicketPicker from './TicketPicker';
 
 interface QuantitySelectorProps {

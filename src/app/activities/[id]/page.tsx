@@ -26,7 +26,7 @@ import NextLink from 'next/link';
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getEventById } from '@/api/activities';
+import { getActivityById } from '@/api/activities';
 import { dayFormat, isBeforeToday, isAfterToday, dayFromNow } from '@/lib/dayjs';
 
 type Event = {
@@ -55,7 +55,7 @@ const Activitie = () => {
   const [result, setResult] = useState<DetailType>();
 
   const getEvents = async () => {
-    const res = await getEventById(id);
+    const res = await getActivityById(id);
     const { data } = res.data;
     setResult(data);
   };
