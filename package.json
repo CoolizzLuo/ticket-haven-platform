@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "theme": "chakra-cli tokens src/app/layout/theme.ts",
+    "theme:watch": "chakra-cli tokens src/app/layout/theme.ts --watch"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -18,6 +20,7 @@
     "@emotion/styled": "^11.10.6",
     "@tanstack/react-query": "^4.29.7",
     "axios": "^1.3.6",
+    "cookies-next": "^2.1.1",
     "dayjs": "^1.11.7",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
@@ -25,10 +28,12 @@
     "next": "13.4.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
     "typescript": "5.0.4",
     "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
     "@coolizz/eslint-config": "^1.0.16",
@@ -36,6 +41,7 @@
     "@types/node": "18.15.12",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
+    "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.0"
   },
   "packageManager": "yarn@3.5.0"
