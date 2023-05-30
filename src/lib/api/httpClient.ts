@@ -7,7 +7,6 @@ export type RequestData<
   RequestParams = Record<string, any> | void,
   RequestSearchParams = Record<string, string | string[]> | void,
 > = {
-  file?: File;
   params?: RequestParams;
   searchParams?: RequestSearchParams;
 };
@@ -57,16 +56,30 @@ const processResponse = async <T>(response: Response) => {
 //   return token;
 // };
 
+const objectToFormData = (object: Record<string, string | Blob>) => {
+  const formData = new FormData();
+
+  Object.entries(object).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  return formData;
+};
+
 const createRequest =
-  (method: Method, isFileUpload = false) =>
-  (endpoint: string, requireAuth = false) =>
+  (method: Method) =>
+  (
+    endpoint: string,
+    options: Omit<RequestInit, 'headers'> & {
+      headers?: Record<string, string>;
+    } = {},
+  ) =>
   async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
     requestData?: RequestData<RequestParams, RequestSearchParams>,
-    options: RequestInit = {},
   ) => {
     // const token = await getSessionToken(requireAuth);
 
-    const fetchOptions: RequestInit = {
+    const fetchOptions = {
       ...options,
       method,
       headers: {
@@ -90,13 +103,18 @@ const createRequest =
       url += `?${urlSearchParams.toString()}`;
     }
 
-    if (isFileUpload && requestData?.file) {
-      const fileUploadData = requestData.file;
-      const formData = new FormData();
-      formData.append('file', fileUploadData);
-      fetchOptions.body = formData;
-    } else if (requestData?.params && !['GET', 'HEAD'].includes(method)) {
-      fetchOptions.body = JSON.stringify(requestData.params);
+    if (!['GET', 'HEAD'].includes(method) && requestData?.params) {
+      let body: FormData | string;
+
+      if (fetchOptions.headers?.['Content-Type'] === 'multipart/form-data') {
+        const formData =
+          requestData.params instanceof FormData ? requestData.params : objectToFormData(requestData.params);
+        body = formData;
+      } else {
+        body = JSON.stringify(requestData.params);
+      }
+
+      fetchOptions.body = body;
     }
 
     const response = await fetch(url, fetchOptions);
@@ -106,7 +124,19 @@ const createRequest =
 export const httpClient = {
   get: createRequest('GET'),
   post: createRequest('POST'),
-  postFile: createRequest('POST', true),
+  postFormData: (
+    e: string,
+    o: Omit<RequestInit, 'headers'> & {
+      headers?: Record<string, string>;
+    } = {},
+  ) =>
+    createRequest('POST')(e, {
+      ...o,
+      headers: {
+        ...(o.headers || {}),
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
   put: createRequest('PUT'),
   delete: createRequest('DELETE'),
   patch: createRequest('PATCH'),
