@@ -1,5 +1,7 @@
-import { extendTheme } from '@chakra-ui/react';
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
+
+import Tabs from './tabs';
+import Accordion from './accordion';
 
 const colors = {
   brand: {
@@ -8,6 +10,10 @@ const colors = {
   primary: {
     100: '#FFF3F8',
     500: '#8D2048',
+    600: '#7C1B3F',
+    700: '#6B1736',
+    800: '#5A122D',
+    900: '#480E24',
   },
   yellow: {
     light: '#FFF1C1',
@@ -85,19 +91,16 @@ const textStyles = {
 };
 
 // Button Theme
-const md = defineStyle({
-  fontSize: '20px',
-  fontWeight: 600,
-  px: '12px',
-  py: '8px',
-  border: '1px solid',
-  borderColor: colors.natural[500],
-  borderRadius: '8px',
-  bg: '#fff',
-});
-
-const buttonTheme = defineStyleConfig({
-  sizes: { md },
+const Button = defineStyleConfig({
+  sizes: {
+    md: {
+      px: '24px',
+      py: '12px',
+      borderRadius: '8px',
+      fontSize: '20px',
+      h: 'auto',
+    },
+  },
 });
 
 const fonts = {
@@ -105,6 +108,15 @@ const fonts = {
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const theme = extendTheme({ colors, fonts, textStyles }, { components: { Button: buttonTheme } });
+const theme = extendTheme({
+  colors,
+  fonts,
+  textStyles,
+  components: {
+    Button,
+    Tabs,
+    Accordion,
+  },
+});
 
 export default theme;
