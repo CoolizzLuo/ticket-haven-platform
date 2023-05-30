@@ -7,14 +7,15 @@ type Props = {
   name: string;
   startAt: string;
   soldOut: boolean;
+  coverImgUrl: string;
 };
 
-const EventCards = ({ id, name, startAt, soldOut }: Props) => {
+const EventCards = ({ id, name, startAt, soldOut, coverImgUrl }: Props) => {
   return (
     <Link href={`/activities/${id}`} scroll={true}>
       <Card border="none" boxShadow="none">
         <CardBody p="0">
-          <Image src={`image/${id}.jpg`} borderRadius="lg" alt="eventImg" width="100%" h="200px" objectFit="cover" />
+          <Image src={coverImgUrl} borderRadius="lg" alt="eventImg" width="100%" h="200px" objectFit="cover" />
           <Stack py="3" align="flex-start">
             <Text size="20px" fontWeight="400" color="#9F9D9E">
               {dayFormat(startAt)}

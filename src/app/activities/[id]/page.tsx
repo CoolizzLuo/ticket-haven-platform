@@ -46,6 +46,8 @@ type DetailType = {
   endTime: string;
   name: string;
   notice: string;
+  news: string;
+  seatMapUrl: string;
   events: Event[];
 };
 
@@ -80,7 +82,7 @@ const Activitie = () => {
       <Box as="section" mb="48px">
         <Image
           my="24px"
-          src={`/image/${id}.jpg`}
+          src={result?.converImageUrl}
           borderRadius="lg"
           alt="eventImg"
           width="100%"
@@ -96,13 +98,15 @@ const Activitie = () => {
           </Text>
           /<Text>{result?.address}</Text>
         </Flex>
-        <List bg="#FFF3F8" pt="20px" pl="36px" borderRadius="6px">
-          {result?.notice.split('\n').map((item) => (
-            <ListItem pb="20px" listStyleType="none" key={item}>
-              {item}
-            </ListItem>
-          ))}
-        </List>
+        {result?.news && (
+          <List bg="#FFF3F8" pt="20px" pl="36px" borderRadius="6px">
+            {result?.news?.split('\n').map((item) => (
+              <ListItem pb="20px" listStyleType="none" key={item}>
+                {item}
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
 
       <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} gap="30px" as="ul" alignItems="stretch">
@@ -182,7 +186,9 @@ const Activitie = () => {
                   </ListItem>
                 </List> */}
               </TabPanel>
-              <TabPanel p="0">座位示意</TabPanel>
+              <TabPanel p="0">
+                <Image my="24px" src={result?.seatMapUrl} borderRadius="lg" alt="eventImg" width="100%" />
+              </TabPanel>
               <TabPanel p="0">
                 <List>
                   {result?.notice.split('\n').map((item) => (
