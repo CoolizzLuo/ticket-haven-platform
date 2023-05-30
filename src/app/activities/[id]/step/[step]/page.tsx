@@ -1,11 +1,11 @@
 // import { useRouter } from 'next/navigation';
 import StepPage from '@/components/activity/step';
 import { Area, Activity } from '@/types/activityTypes';
-import { getActivityInfo } from '@/api/activities';
+import { getActivityById, getSeatsArea } from '@/api/activities';
 
-const getSeats = async (id: string) => {
-  const { data: activity } = await getActivityInfo(id);
-
+const getBasciInfo = async (id: string) => {
+  const { data: activity } = await getActivityById(id);
+  // const { data: areas} = await getSeatsArea()
   const areas = [
     {
       id: '1uhwue2',
@@ -115,7 +115,7 @@ type PageProps = {
 };
 
 const Step = async ({ params }: PageProps) => {
-  const data: { activity: Activity; areas: Area[] } = await getSeats(params.id);
+  const data: { activity: Activity; areas: Area[] } = await getBasciInfo(params.id);
   return <StepPage step={Number(params.step)} {...data} />;
 };
 

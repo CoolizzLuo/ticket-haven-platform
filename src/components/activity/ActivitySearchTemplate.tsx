@@ -3,7 +3,7 @@
 import { Box, Heading, Container, Grid, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ActivityCard from '@/components/activity/ActivityCard';
 import { Activities, ActivitiesSearch } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 import { useEffect, useState } from 'react';
 
 type Content = {
@@ -22,7 +22,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
   const [result, setResult] = useState<Activities[]>([]);
 
   const handleFetchEvents = async () => {
-    const res = await fetchEvents({ ...params, page: 1, pageSize: 10 });
+    const res = await fetchActivities({ ...params, page: 1, pageSize: 10 });
     const { data = [], message } = res.data;
     if (message === 'success') {
       setResult(data);

@@ -62,3 +62,6 @@ export interface Area {
   subAreas: SubArea[];
 }
 
+export interface ChoseArea extends SubArea {
+  price: number;
+}
