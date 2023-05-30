@@ -7,13 +7,12 @@ export type RequestData<
   RequestParams = Record<string, any> | void,
   RequestSearchParams = Record<string, string | string[]> | void,
 > = {
-  file?: File;
-  params?: RequestParams;
+  params?: RequestParams | FormData;
   searchParams?: RequestSearchParams;
 };
 
 const BASE_URL = process?.env?.API_URL || '';
-const DEFAULT_HEADERS = {
+const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
@@ -58,7 +57,7 @@ const processResponse = async <T>(response: Response) => {
 // };
 
 const createRequest =
-  (method: Method, isFileUpload = false) =>
+  (method: Method) =>
   (endpoint: string, requireAuth = false) =>
   async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
     requestData?: RequestData<RequestParams, RequestSearchParams>,
@@ -90,11 +89,12 @@ const createRequest =
       url += `?${urlSearchParams.toString()}`;
     }
 
-    if (isFileUpload && requestData?.file) {
-      const fileUploadData = requestData.file;
-      const formData = new FormData();
-      formData.append('file', fileUploadData);
-      fetchOptions.body = formData;
+    if (requestData?.params instanceof FormData) {
+      fetchOptions.body = requestData.params;
+      // fetch will set the correct content type automatically
+      if (fetchOptions?.headers) {
+        delete (fetchOptions.headers as Record<string, string>)['Content-Type'];
+      }
     } else if (requestData?.params && !['GET', 'HEAD'].includes(method)) {
       fetchOptions.body = JSON.stringify(requestData.params);
     }
@@ -106,7 +106,6 @@ const createRequest =
 export const httpClient = {
   get: createRequest('GET'),
   post: createRequest('POST'),
-  postFile: createRequest('POST', true),
   put: createRequest('PUT'),
   delete: createRequest('DELETE'),
   patch: createRequest('PATCH'),

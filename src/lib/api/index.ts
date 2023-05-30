@@ -11,12 +11,14 @@ interface APIEndpoints {
   demo: (id: string) => API<RequestData<void, { page: string }>, void>;
   signin: API<RequestData<UserSinginReq>, UserSinginRes>;
   signup: API<RequestData<UserSingupReq>>;
+  uploadFile: API<RequestData<FormData>>;
 }
 
 const api: APIEndpoints = {
   demo: (id: string) => httpClient.get(`/demo/${id}`), // GET /demo/:id?page=1
   signin: httpClient.post('/user/signin'),
   signup: httpClient.post('/user/signup'),
+  uploadFile: httpClient.post('/file/upload'),
 };
 
 export default api;
