@@ -8,11 +8,13 @@ interface API<Req extends RequestData, Res = void> {
 }
 
 interface APIEndpoints {
-  signin: API<RequestData<UserSinginReq, void>, UserSinginRes>;
+  demo: (id: string) => API<RequestData<void, { page: number }>, void>;
+  signin: API<RequestData<UserSinginReq>, UserSinginRes>;
   signup: API<RequestData<UserSingupReq>>;
 }
 
 const api: APIEndpoints = {
+  demo: (id: string) => httpClient.get(`/demo/${id}`), // GET /demo/:id?page=1
   signin: httpClient.post('/user/signin'),
   signup: httpClient.post('/user/signup'),
 };
