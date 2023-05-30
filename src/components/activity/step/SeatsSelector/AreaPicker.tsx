@@ -27,7 +27,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
           {name}
         </Heading>
       </CardHeader>
-      <Divider color="gray1.200" />
+      <Divider color="natural.200" />
       <CardBody padding="26px 8px" display="grid" gridTemplateColumns="1fr 1fr" gap="16px">
         {areas.map((group: SubArea[]) => {
           return (
@@ -41,7 +41,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                 const statusMap = {
                   soldout: {
                     text: '完售',
-                    color: 'gray1.600',
+                    color: 'natural.600',
                   },
                   hotsell: {
                     text: '熱賣中',
@@ -59,7 +59,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                     type="button"
                     w="100%"
                     padding="10px 8px"
-                    sx={{ ':hover': { bg: 'gray1.100' } }}
+                    sx={{ ':hover': { bg: 'natural.100' } }}
                     onClick={() => clickHandler({ price, ...subArea })}
                   >
                     <Square size="20px" bg={subArea.color} marginRight="8px" />

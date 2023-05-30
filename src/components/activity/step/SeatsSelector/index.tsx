@@ -41,15 +41,12 @@ const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
     router.push(pathName.replace(/\d$/g, '2'));
   };
   return (
-    <VStack align="stretch" gap="48px" bg="gray1.50" borderRadius="6px" padding="40px 24px">
+    <VStack align="stretch" gap="48px" bg="natural.50" borderRadius="6px" padding="40px 24px">
       <Heading as="h2" fontSize="28px">
         {activity.name}
       </Heading>
-      <Select
-        variant="selectPrimary"
-        defaultValue={formatDateLocationStr(activity.events[0].startTime, activity.location)}
-      >
-        {activity.events.map(({ startTime }) => {
+      <Select defaultValue={activity.events && formatDateLocationStr(activity.events[0].startTime, activity.location)}>
+        {activity.events?.map(({ startTime }) => {
           const str = formatDateLocationStr(startTime, activity.location);
           return (
             <option key={startTime} value={str}>
@@ -60,7 +57,7 @@ const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
       </Select>
       <Box>
         <HStack spacing="16px" marginBottom="24px">
-          <Button onClick={() => setBtnStatus('sale')} {...buttonProps(btnStatus === 'sale')}>
+          <Button colorScheme="primary" onClick={() => setBtnStatus('sale')} {...buttonProps(btnStatus === 'sale')}>
             販售中
           </Button>
           <Button onClick={() => setBtnStatus('soldout')} {...buttonProps(btnStatus === 'soldout')}>

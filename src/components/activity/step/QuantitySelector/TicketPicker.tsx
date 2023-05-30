@@ -30,7 +30,7 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
   return (
     <Grid bg="white" borderRadius="6px" padding="16px 16px 26px 16px" gridTemplateColumns="160px 163px 1fr" gap="16px">
       {fieldsTitle.map((title) => (
-        <Text key="title" color="gray1.700">
+        <Text key="title" color="natural.700">
           {title}
         </Text>
       ))}
@@ -42,13 +42,13 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
         {price}
       </Text>
       <InputGroup>
-        <InputLeftAddon padding="0" borderColor="gray1.100">
-          <Button bgColor="gray1.100" padding="12px" onClick={() => countHandler('minus')}>
-            <MinusIcon fontSize="12px" color="gray1.900" />
+        <InputLeftAddon padding="0" borderColor="natural.100">
+          <Button bgColor="natural.100" padding="12px" onClick={() => countHandler('minus')}>
+            <MinusIcon fontSize="12px" color="natural.900" />
           </Button>
         </InputLeftAddon>
         <Input
-          borderColor="gray1.100"
+          borderColor="natural.100"
           type="number"
           textAlign="center"
           value={quantity}
@@ -65,9 +65,9 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
             })
           }
         />
-        <InputRightAddon padding="0" borderColor="gray1.100">
-          <Button bgColor="gray1.100" padding="12px" onClick={() => countHandler('plus')}>
-            <AddIcon fontSize="12px" color="gray1.900" />
+        <InputRightAddon padding="0" borderColor="natural.100">
+          <Button bgColor="natural.100" padding="12px" onClick={() => countHandler('plus')}>
+            <AddIcon fontSize="12px" color="natural.900" />
           </Button>
         </InputRightAddon>
       </InputGroup>

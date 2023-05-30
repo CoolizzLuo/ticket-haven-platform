@@ -1,10 +1,12 @@
 // import { useRouter } from 'next/navigation';
 import StepPage from '@/components/activity/step';
 import { Area, Activity } from '@/types/activityTypes';
-import { getActivityById, getSeatsArea } from '@/api/activities';
+import { getActivityById } from '@/api/activities';
 
 const getBasciInfo = async (id: string) => {
-  const { data: activity } = await getActivityById(id);
+  const {
+    data: { data: activity },
+  } = await getActivityById(id);
   // const { data: areas} = await getSeatsArea()
   const areas = [
     {

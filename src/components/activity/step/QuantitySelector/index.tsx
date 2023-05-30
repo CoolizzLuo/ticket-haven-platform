@@ -30,7 +30,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
   };
   return (
     <VStack alignItems="flex-start" gap="40px">
-      <VStack alignItems="stretch" gap="24px" bg="gray1.50" borderRadius="6px" padding="40px 24px">
+      <VStack alignItems="stretch" gap="24px" bg="natural.50" borderRadius="6px" padding="40px 24px">
         <Heading as="h2" fontSize="28px">
           {activity.name}
         </Heading>
