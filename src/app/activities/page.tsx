@@ -36,6 +36,7 @@ const Activities = () => {
 
   useEffect(() => {
     handleChange({ json: { region, startAfter, q: keyword } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

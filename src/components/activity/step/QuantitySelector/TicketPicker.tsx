@@ -38,13 +38,13 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
         <Square size="20px" backgroundColor={color} marginRight="8px" />
         <Text>{name}</Text>
       </Flex>
-      <Text color="brand.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
+      <Text color="primary.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
         {price}
       </Text>
       <InputGroup>
         <InputLeftAddon padding="0" borderColor="natural.100">
-          <Button bgColor="natural.100" padding="12px" onClick={() => countHandler('minus')}>
-            <MinusIcon fontSize="12px" color="natural.900" />
+          <Button variant="light" size="sm" onClick={() => countHandler('minus')}>
+            <MinusIcon />
           </Button>
         </InputLeftAddon>
         <Input
@@ -66,8 +66,8 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
           }
         />
         <InputRightAddon padding="0" borderColor="natural.100">
-          <Button bgColor="natural.100" padding="12px" onClick={() => countHandler('plus')}>
-            <AddIcon fontSize="12px" color="natural.900" />
+          <Button variant="light" size="sm" onClick={() => countHandler('plus')}>
+            <AddIcon />
           </Button>
         </InputRightAddon>
       </InputGroup>

@@ -31,6 +31,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
 
   useEffect(() => {
     handleFetchEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

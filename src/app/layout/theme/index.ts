@@ -1,5 +1,8 @@
 import { selectAnatomy } from '@chakra-ui/anatomy';
 import { extendTheme, createMultiStyleConfigHelpers, defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import defaultTheme from "@chakra-ui/theme"
+import type { StyleFunctionProps } from '@chakra-ui/styled-system'
+import { color } from 'framer-motion';
 import Tabs from './tabs';
 import Accordion from './accordion';
 
@@ -112,55 +115,51 @@ const selectThemeMap = {
 };
 
 const buttonThemeMap = {
-  // primary: defineStyle({
-  //   background: 'primary.500',
-  //   color: 'white',
-  //   _hover: {
-  //     bg: 'primary.600',
-  //   },
-  //   _active: {
-  //     bg: 'primary.700',
-  //   },
-  // }),
-  outline: (props: any) => ({
-    ...theme.components.Button.variants.outline(props),
-    background: 'white',
-    color: `${props?.colorScheme || 'primary'}.500`,
-    border: '1px',
-    borderColor: `${props?.colorScheme || 'primary'}.500`,
-    _hover: {
-      background: 'natural.50',
-    },
-    _active: {
-      bg: `${props?.colorScheme || 'primary'}.500`,
+  outline: (props: StyleFunctionProps) => {
+    const colorScheme = props?.colorScheme || 'primary'
+    const isNatural = colorScheme === 'natural'
+    return({
+      ...defaultTheme.components?.Button?.variants?.outline(props),
+      backgroundColor: isNatural ? 'white' : 'transparent',
+      color: `${colorScheme}.${isNatural ? '800' : '500'}`,
+      border: '1px',
+      borderColor: `${colorScheme}.${isNatural ? '300' :'500'}`,
+      _hover: {
+        backgroundColor: 'natural.50',
+      },
+      _active: {
+        backgroundColor: `${colorScheme}.500`,
+        color: 'white',
+      },
+    })
+  },
+  solid({colorScheme = 'primary'} : {colorScheme: string}){
+    return {
+      backgroundColor: `${colorScheme}.500`,
       color: 'white',
-    },
-  }),
-  // primaryOutline: defineStyle({
-  //   background: 'white',
-  //   color: 'primary.500',
-  //   border: '1px',
-  //   borderColor: 'primary.500',
-  //   _hover: {
-  //     background: 'natural.50',
-  //   },
-  //   _active: {
-  //     bg: 'primary.700',
-  //     color: 'white',
-  //   },
-  // }),
-  grayOutline: defineStyle({
-    background: 'white',
-    color: 'natural.800',
-    border: '1px',
-    borderColor: 'natural.300',
-    _hover:{
-      bg: 'natural.200'
-    },
-    _active: {
-      bg: 'natural.300',
-    },
-  }),
+      _hover: {
+        bg: `${colorScheme}.600`,
+      },
+      _active: {
+        bg: `${colorScheme}.700`,
+      },
+    }
+  },
+  light(props: StyleFunctionProps){
+    const colorScheme = props.colorScheme === 'gray' ? 'natural' : props.colorScheme;
+    return (
+      {
+        backgroundColor: `${colorScheme}.100`,
+        color: `${colorScheme}.900`,
+        _hover: {
+          bg: `${colorScheme}.200`,
+        },
+        _active: {
+          bg: `${colorScheme}.300`,
+        },
+      }
+    )
+  }
 };
 
 const checkThemeMap = {
@@ -175,8 +174,7 @@ const Select = defineMultiStyleConfig({
   variants: selectThemeMap,
   baseStyle:{
     field:{
-      bg: 'white',
-      h: 'fit-content',
+      backgroundColor: 'white',
       border: '1px',
       borderColor: 'natural.300',
       _focus:{
@@ -189,6 +187,7 @@ const Select = defineMultiStyleConfig({
       field: {
         fontSize: '20px',
         padding: '17px 12px',
+        h: 'fit-content',
       },
     },
   },
@@ -198,13 +197,13 @@ const Select = defineMultiStyleConfig({
 const Button = defineStyleConfig({
   variants: buttonThemeMap,
   baseStyle:{
-    background: 'primary.500',
-    color: 'white',
+    backgroundColor: `primary.500`,
+    color: `white`,
     _hover: {
-      bg: 'primary.600',
+      bg: `primary.600`,
     },
     _active: {
-      bg: 'primary.700',
+      bg: `primary.700`,
     },
   },
   sizes: {
@@ -215,6 +214,10 @@ const Button = defineStyleConfig({
       fontSize: '20px',
       h: 'auto',
     },
+    sm:{
+      padding: '12px',
+      fontSize: '12px',
+    }
   },
 });
 
@@ -224,7 +227,7 @@ const Checkbox = defineStyleConfig({
     md: {
       control: {
         width: '20px',
-        height: '20px',
+        h: '20px',
       },
     },
   },

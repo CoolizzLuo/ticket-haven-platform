@@ -46,7 +46,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
         </Box>
         <VStack alignItems="flex-start" gap="16px">
           {area && <TicketPicker quantity={quantity} setQuantity={setQuantity} {...area} />}
-          <Text color="brand.500">* 請注意，多視窗操作或單一頁面停留過久，可能導致購票失敗</Text>
+          <Text color="primary.500">* 請注意，多視窗操作或單一頁面停留過久，可能導致購票失敗</Text>
         </VStack>
       </VStack>
       <Checkbox
@@ -59,7 +59,8 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
       </Checkbox>
       <Flex justifyContent="flex-end" gap="32px" width="100%">
         <Button
-          variant="primaryOutline"
+          variant="outline"
+          colorScheme="primary"
           width="160px"
           height="54px"
           fontSize="20px"
@@ -67,7 +68,13 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
         >
           返回
         </Button>
-        <Button variant="primary" width="160px" height="54px" fontSize="20px" onClick={() => actionsHandler('next')}>
+        <Button
+          colorScheme="primary"
+          width="160px"
+          height="54px"
+          fontSize="20px"
+          onClick={() => actionsHandler('next')}
+        >
           下一步
         </Button>
       </Flex>
