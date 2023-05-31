@@ -5,12 +5,6 @@
     "react/require-default-props": "off",
     "linebreak-style": "off",
     "no-console": "off",
-    "no-param-reassign": [
-      "error",
-      {
-        "props": true,
-        "ignorePropertyModificationsForRegex": ["^acc*"]
-      }
-    ]
+    "no-restricted-syntax": 0
   }
 }
