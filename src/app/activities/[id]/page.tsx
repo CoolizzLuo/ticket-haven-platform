@@ -109,22 +109,22 @@ const Activitie = () => {
         <Box order={{ base: 2, md: 1 }}>
           <Tabs variant="unstyled">
             <TabList mb="24px">
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 節目介紹
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 座位示意
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 注意事項
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 購票提醒
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 取票提醒
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'brand.500' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 退票說明
               </Tab>
             </TabList>

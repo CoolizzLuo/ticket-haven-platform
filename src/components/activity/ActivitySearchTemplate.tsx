@@ -48,7 +48,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                   borderWidth="1px"
                   borderRadius="md"
                   mr="8px"
-                  _selected={{ color: 'white', bg: 'brand.500' }}
+                  _selected={{ color: 'white', bg: 'primary.500' }}
                 >
                   {opt.name}
                 </Tab>

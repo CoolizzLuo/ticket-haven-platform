@@ -18,9 +18,9 @@ const ProgressBar = ({ step }: { step: number }) => {
     <Box w="100%" bg="natural.50">
       <Grid gridTemplateColumns={columns} alignItems="start" padding="60px 20px" margin="auto" w="540px">
         {steps.map((title, index) => {
-          const color = index <= step - 1 ? 'brand.500' : 'natural.300';
-          const dividerColor = index <= step - 1 ? 'brand.500' : 'natural.500';
-          const textColor = index <= step - 1 ? 'brand.500' : 'natural.600';
+          const color = index <= step - 1 ? 'primary.500' : 'natural.300';
+          const dividerColor = index <= step - 1 ? 'primary.500' : 'natural.500';
+          const textColor = index <= step - 1 ? 'primary.500' : 'natural.600';
           return (
             <React.Fragment key={`${title}`}>
               {index !== 0 && <Box w="100%" borderBottom="1px" borderColor={dividerColor} marginTop="12px" />}
