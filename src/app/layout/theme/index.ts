@@ -112,29 +112,43 @@ const selectThemeMap = {
 };
 
 const buttonThemeMap = {
-  primary: defineStyle({
-    background: 'primary.500',
-    color: 'white',
-    _hover: {
-      bg: 'primary.600',
-    },
-    _active: {
-      bg: 'primary.700',
-    },
-  }),
-  primaryOutline: defineStyle({
+  // primary: defineStyle({
+  //   background: 'primary.500',
+  //   color: 'white',
+  //   _hover: {
+  //     bg: 'primary.600',
+  //   },
+  //   _active: {
+  //     bg: 'primary.700',
+  //   },
+  // }),
+  outline: (props: any) => ({
+    ...theme.components.Button.variants.outline(props),
     background: 'white',
-    color: 'primary.500',
+    color: `${props?.colorScheme || 'primary'}.500`,
     border: '1px',
-    borderColor: 'primary.500',
+    borderColor: `${props?.colorScheme || 'primary'}.500`,
     _hover: {
       background: 'natural.50',
     },
     _active: {
-      bg: 'primary.700',
+      bg: `${props?.colorScheme || 'primary'}.500`,
       color: 'white',
     },
   }),
+  // primaryOutline: defineStyle({
+  //   background: 'white',
+  //   color: 'primary.500',
+  //   border: '1px',
+  //   borderColor: 'primary.500',
+  //   _hover: {
+  //     background: 'natural.50',
+  //   },
+  //   _active: {
+  //     bg: 'primary.700',
+  //     color: 'white',
+  //   },
+  // }),
   grayOutline: defineStyle({
     background: 'white',
     color: 'natural.800',
@@ -159,10 +173,40 @@ const checkThemeMap = {
 };
 const Select = defineMultiStyleConfig({
   variants: selectThemeMap,
+  baseStyle:{
+    field:{
+      bg: 'white',
+      h: 'fit-content',
+      border: '1px',
+      borderColor: 'natural.300',
+      _focus:{
+        borderColor: 'primary.100',
+      },
+    },
+  },
+  sizes:{
+    md: {
+      field: {
+        fontSize: '20px',
+        padding: '17px 12px',
+      },
+    },
+  },
 });
 
 // Button Theme
 const Button = defineStyleConfig({
+  variants: buttonThemeMap,
+  baseStyle:{
+    background: 'primary.500',
+    color: 'white',
+    _hover: {
+      bg: 'primary.600',
+    },
+    _active: {
+      bg: 'primary.700',
+    },
+  },
   sizes: {
     md: {
       px: '24px',
@@ -172,11 +216,18 @@ const Button = defineStyleConfig({
       h: 'auto',
     },
   },
-  variants: buttonThemeMap,
 });
 
 const Checkbox = defineStyleConfig({
   variants: checkThemeMap,
+  sizes:{
+    md: {
+      control: {
+        width: '20px',
+        height: '20px',
+      },
+    },
+  },
 })
 
 const theme = extendTheme({
