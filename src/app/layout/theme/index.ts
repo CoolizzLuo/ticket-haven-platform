@@ -1,12 +1,15 @@
-import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
-
+import { selectAnatomy } from '@chakra-ui/anatomy';
+import { extendTheme, createMultiStyleConfigHelpers, defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import defaultTheme from "@chakra-ui/theme"
+import type { StyleFunctionProps } from '@chakra-ui/styled-system'
+import { color } from 'framer-motion';
 import Tabs from './tabs';
 import Accordion from './accordion';
 
+const { definePartsStyle, defineMultiStyleConfig } =
+createMultiStyleConfigHelpers(selectAnatomy.keys);
+
 const colors = {
-  brand: {
-    100: '#8D2048',
-  },
   primary: {
     100: '#FFF3F8',
     500: '#8D2048',
@@ -90,8 +93,119 @@ const textStyles = {
   },
 };
 
+const fonts = {
+  heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+  body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+};
+
+const selectThemeMap = {
+  primary: definePartsStyle({
+    field:{
+      fontSize: '20px',
+      bg: 'white',
+      padding: '17px 12px',
+      height: 'fit-content',
+      border: '1px',
+      borderColor: 'natural.300',
+      _focus:{
+        borderColor: 'primary.100',
+      },
+    },
+  }),
+};
+
+const buttonThemeMap = {
+  outline: (props: StyleFunctionProps) => {
+    const colorScheme = props?.colorScheme || 'primary'
+    const isNatural = colorScheme === 'natural'
+    return({
+      ...defaultTheme.components?.Button?.variants?.outline(props),
+      backgroundColor: isNatural ? 'white' : 'transparent',
+      color: `${colorScheme}.${isNatural ? '800' : '500'}`,
+      border: '1px',
+      borderColor: `${colorScheme}.${isNatural ? '300' :'500'}`,
+      _hover: {
+        backgroundColor: 'natural.50',
+      },
+      _active: {
+        backgroundColor: `${colorScheme}.500`,
+        color: 'white',
+      },
+    })
+  },
+  solid({colorScheme = 'primary'} : {colorScheme: string}){
+    return {
+      backgroundColor: `${colorScheme}.500`,
+      color: 'white',
+      _hover: {
+        bg: `${colorScheme}.600`,
+      },
+      _active: {
+        bg: `${colorScheme}.700`,
+      },
+    }
+  },
+  light(props: StyleFunctionProps){
+    const colorScheme = props.colorScheme === 'gray' ? 'natural' : props.colorScheme;
+    return (
+      {
+        backgroundColor: `${colorScheme}.100`,
+        color: `${colorScheme}.900`,
+        _hover: {
+          bg: `${colorScheme}.200`,
+        },
+        _active: {
+          bg: `${colorScheme}.300`,
+        },
+      }
+    )
+  }
+};
+
+const checkThemeMap = {
+  normal: defineStyle({
+    control: {
+      width: '20px',
+      height: '20px',
+    }
+  }),
+};
+const Select = defineMultiStyleConfig({
+  variants: selectThemeMap,
+  baseStyle:{
+    field:{
+      backgroundColor: 'white',
+      border: '1px',
+      borderColor: 'natural.300',
+      _focus:{
+        borderColor: 'primary.100',
+      },
+    },
+  },
+  sizes:{
+    md: {
+      field: {
+        fontSize: '20px',
+        padding: '17px 12px',
+        h: 'fit-content',
+      },
+    },
+  },
+});
+
 // Button Theme
 const Button = defineStyleConfig({
+  variants: buttonThemeMap,
+  baseStyle:{
+    backgroundColor: `primary.500`,
+    color: `white`,
+    _hover: {
+      bg: `primary.600`,
+    },
+    _active: {
+      bg: `primary.700`,
+    },
+  },
   sizes: {
     md: {
       px: '24px',
@@ -100,13 +214,24 @@ const Button = defineStyleConfig({
       fontSize: '20px',
       h: 'auto',
     },
+    sm:{
+      padding: '12px',
+      fontSize: '12px',
+    }
   },
 });
 
-const fonts = {
-  heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
-  body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
-};
+const Checkbox = defineStyleConfig({
+  variants: checkThemeMap,
+  sizes:{
+    md: {
+      control: {
+        width: '20px',
+        h: '20px',
+      },
+    },
+  },
+})
 
 const theme = extendTheme({
   colors,
@@ -116,7 +241,8 @@ const theme = extendTheme({
     Button,
     Tabs,
     Accordion,
+    Checkbox,
+    Select,
   },
 });
-
 export default theme;

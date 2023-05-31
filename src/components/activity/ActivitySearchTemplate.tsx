@@ -3,7 +3,7 @@
 import { Box, Heading, Container, Grid, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ActivityCard from '@/components/activity/ActivityCard';
 import { Activities, ActivitiesSearch } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 import { useEffect, useState } from 'react';
 
 type Content = {
@@ -22,7 +22,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
   const [result, setResult] = useState<Activities[]>([]);
 
   const handleFetchEvents = async () => {
-    const res = await fetchEvents({ ...params, page: 1, pageSize: 10 });
+    const res = await fetchActivities({ ...params, page: 1, pageSize: 10 });
     const { data = [], message } = res.data;
     if (message === 'success') {
       setResult(data);
@@ -31,6 +31,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
 
   useEffect(() => {
     handleFetchEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,7 +49,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                   borderWidth="1px"
                   borderRadius="md"
                   mr="8px"
-                  _selected={{ color: 'white', bg: 'brand.100' }}
+                  _selected={{ color: 'white', bg: 'primary.500' }}
                 >
                   {opt.name}
                 </Tab>

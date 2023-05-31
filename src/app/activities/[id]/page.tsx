@@ -26,7 +26,7 @@ import NextLink from 'next/link';
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getEventById } from '@/api/activities';
+import { getActivityById } from '@/api/activities';
 import { dayFormat, isBeforeToday, isAfterToday, dayFromNow } from '@/lib/dayjs';
 
 type Event = {
@@ -55,7 +55,7 @@ const Activitie = () => {
   const [result, setResult] = useState<DetailType>();
 
   const getEvents = async () => {
-    const res = await getEventById(id);
+    const res = await getActivityById(id);
     const { data } = res.data;
     setResult(data);
   };
@@ -109,22 +109,22 @@ const Activitie = () => {
         <Box order={{ base: 2, md: 1 }}>
           <Tabs variant="unstyled">
             <TabList mb="24px">
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 節目介紹
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 座位示意
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 注意事項
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 購票提醒
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 取票提醒
               </Tab>
-              <Tab borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'brand.100' }}>
+              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
                 退票說明
               </Tab>
             </TabList>
@@ -268,10 +268,10 @@ const Activitie = () => {
           </Tabs>
         </Box>
         <Box order={{ base: 1, md: 2 }}>
-          <Text color="brand.100" fontWeight="700">
+          <Text color="primary.500" fontWeight="700">
             開始售票
           </Text>
-          <Text color="brand.100" mb="24px" fontWeight="700">
+          <Text color="primary.500" mb="24px" fontWeight="700">
             {result &&
               !!result.events.length &&
               dayFormat(
