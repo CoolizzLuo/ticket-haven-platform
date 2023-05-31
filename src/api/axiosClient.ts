@@ -1,6 +1,4 @@
-import authOptions from '@/app/api/auth/[...nextauth]/authOptions';
 import axios from 'axios';
-import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
 export const axiosClient = axios.create({
@@ -12,12 +10,10 @@ export const axiosClient = axios.create({
   },
 });
 
-const isServerSide = typeof window === 'undefined';
-
 axiosClient.interceptors.request.use(
   async (config) => {
     const conf = { ...config };
-    const session = isServerSide ? await getServerSession(authOptions) : await getSession();
+    const session = await getSession();
 
     conf.headers.Authorization = session?.token && `Bearer ${session.token}`;
     return conf;
