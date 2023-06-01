@@ -3,13 +3,13 @@
 import { Box, Heading, Container, Grid, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ActivityCard from '@/components/activity/ActivityCard';
 import { Activities, ActivitiesSearch } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 import { useEffect, useState } from 'react';
 
 type Content = {
   id: string;
   name: string;
-  rule: (item: Activities) => void;
+  fnRule: (item: Activities) => void;
 };
 
 type ActivitySearchProps = {
@@ -22,7 +22,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
   const [result, setResult] = useState<Activities[]>([]);
 
   const handleFetchEvents = async () => {
-    const res = await fetchEvents({ ...params, page: 1, pageSize: 10 });
+    const res = await fetchActivities({ ...params, page: 1, pageSize: 10 });
     const { data = [], message } = res.data;
     if (message === 'success') {
       setResult(data);
@@ -31,6 +31,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
 
   useEffect(() => {
     handleFetchEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,7 +49,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                   borderWidth="1px"
                   borderRadius="md"
                   mr="8px"
-                  _selected={{ color: 'white', bg: 'brand.100' }}
+                  _selected={{ color: 'white', bg: 'primary.500' }}
                 >
                   {opt.name}
                 </Tab>
@@ -66,9 +67,15 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                       as="ul"
                       alignItems="stretch"
                     >
-                      {result.filter(tab.rule).map((r: Activities) => (
-                        <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
-                      ))}
+                      {tab.fnRule && result.filter(tab.fnRule).length ? (
+                        result
+                          .filter(tab.fnRule)
+                          .map((r: Activities) => (
+                            <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
+                          ))
+                      ) : (
+                        <>無活動資訊</>
+                      )}
                     </Grid>
                   </TabPanel>
                 )

@@ -30,12 +30,12 @@ const Home = () => {
     title: '近期開賣',
     params: { startAfter: today, startBefore: endOfWeek },
     tabs: [
-      { id: '1', name: '今天', rule: (item: Activities) => dayYMDFormat(item.startAt) === today },
-      { id: '2', name: '明天', rule: (item: Activities) => dayYMDFormat(item.startAt) === tommorrow },
+      { id: '1', name: '今天', fnRule: (item: Activities) => dayYMDFormat(item.startAt) === today },
+      { id: '2', name: '明天', fnRule: (item: Activities) => dayYMDFormat(item.startAt) === tommorrow },
       {
         id: '3',
         name: '未來一週',
-        rule: (item: Activities) => dayYMDFormat(item.startAt) >= today && dayYMDFormat(item.startAt) < endOfWeek,
+        fnRule: (item: Activities) => dayYMDFormat(item.startAt) >= today && dayYMDFormat(item.startAt) < endOfWeek,
       },
     ],
   };
@@ -45,10 +45,10 @@ const Home = () => {
     title: '近期演出',
     params: {},
     tabs: [
-      { id: '1', name: '全部', rule: (item: Activities) => item },
-      { id: '2', name: '北部', rule: (item: Activities) => item.region === 0 },
-      { id: '3', name: '中部', rule: (item: Activities) => item.region === 1 },
-      { id: '4', name: '南部', rule: (item: Activities) => item.region === 2 },
+      { id: '1', name: '全部', fnRule: (item: Activities) => item },
+      { id: '2', name: '北部', fnRule: (item: Activities) => item.region === 0 },
+      { id: '3', name: '中部', fnRule: (item: Activities) => item.region === 1 },
+      { id: '4', name: '南部', fnRule: (item: Activities) => item.region === 2 },
     ],
   };
 
@@ -73,7 +73,7 @@ const Home = () => {
           <Button
             fontSize={20}
             fontWeight={600}
-            bg="brand.100"
+            bg="primary.500"
             color="white"
             height="auto"
             px={8}
