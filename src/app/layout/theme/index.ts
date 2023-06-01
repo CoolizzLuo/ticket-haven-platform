@@ -111,14 +111,6 @@ const selectThemeMap = {
   }),
 };
 
-const checkThemeMap = {
-  normal: defineStyle({
-    control: {
-      width: '20px',
-      height: '20px',
-    },
-  }),
-};
 const Select = defineMultiStyleConfig({
   variants: selectThemeMap,
   baseStyle: {
@@ -143,7 +135,6 @@ const Select = defineMultiStyleConfig({
 });
 
 const Checkbox = defineStyleConfig({
-  variants: checkThemeMap,
   sizes: {
     md: {
       control: {
