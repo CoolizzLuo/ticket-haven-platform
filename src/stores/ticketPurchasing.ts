@@ -3,11 +3,11 @@ import { devtools } from 'zustand/middleware';
 import createSelectors from './createSelectors';
 
 export interface TicketPurchasingStore {
-  activityId: string | null;
-  eventId: string | null;
-  selectAreaId: string | null;
-  selectSubAreaId: string | null;
-  orderNo: string | null;
+  activityId: string | undefined;
+  eventId: string | undefined;
+  selectAreaId: string | undefined;
+  selectSubAreaId: string | undefined;
+  orderNo: string | undefined;
   setEvent: (activityId: string, eventId: string) => void;
   setArea: (areaId: string, selectSubAreaId: string) => void;
   setOrder: (orderNo: string) => void;
@@ -16,11 +16,11 @@ export interface TicketPurchasingStore {
 }
 
 const initialValues = {
-  activityId: null,
-  eventId: null,
-  selectAreaId: null,
-  selectSubAreaId: null,
-  orderNo: null,
+  activityId: undefined,
+  eventId: undefined,
+  selectAreaId: undefined,
+  selectSubAreaId: undefined,
+  orderNo: undefined,
 };
 
 const useTicketPurchasingStore = createSelectors(
@@ -30,7 +30,7 @@ const useTicketPurchasingStore = createSelectors(
       setEvent: (activityId, eventId) => set(() => ({ activityId, eventId })),
       setArea: (selectAreaId, selectSubAreaId) => set(() => ({ selectAreaId, selectSubAreaId })),
       setOrder: (orderNo) => set(() => ({ orderNo })),
-      clearArea: () => set(() => ({ selectAreaId: null, selectSubAreaId: null })),
+      clearArea: () => set(() => ({ selectAreaId: undefined, selectSubAreaId: undefined })),
       clear: () => set(() => initialValues),
     })),
   ),
