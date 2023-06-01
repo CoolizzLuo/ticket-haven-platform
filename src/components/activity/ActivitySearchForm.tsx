@@ -49,6 +49,8 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
           <Box padding="20px" borderRight="1px solid" borderColor="gray.200">
             <Text as="label">區域</Text>
             <Select
+              variant="ghost"
+              size="sm"
               placeholder="全部"
               value={searchForm.region}
               onChange={(e) => onChangeHandler('region', e.target.value)}
@@ -61,7 +63,9 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
           <Box padding="20px">
             <Text as="label">日期</Text>
             <Input
+              variant="ghost"
               type="date"
+              size="sm"
               value={searchForm.startAfter}
               onChange={(e) => onChangeHandler('startAfter', e.target.value)}
             />

@@ -43,7 +43,7 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
       </Text>
       <InputGroup>
         <InputLeftAddon padding="0" borderColor="natural.100">
-          <Button variant="light" size="sm" onClick={() => countHandler('minus')}>
+          <Button variant="light" colorScheme="natural" size="sm" onClick={() => countHandler('minus')}>
             <MinusIcon />
           </Button>
         </InputLeftAddon>
@@ -66,7 +66,7 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
           }
         />
         <InputRightAddon padding="0" borderColor="natural.100">
-          <Button variant="light" size="sm" onClick={() => countHandler('plus')}>
+          <Button variant="light" colorScheme="natural" size="sm" onClick={() => countHandler('plus')}>
             <AddIcon />
           </Button>
         </InputRightAddon>
