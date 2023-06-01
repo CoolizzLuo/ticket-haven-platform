@@ -1,13 +1,10 @@
 import { selectAnatomy } from '@chakra-ui/anatomy';
 import { extendTheme, createMultiStyleConfigHelpers, defineStyle, defineStyleConfig } from '@chakra-ui/react';
-import defaultTheme from "@chakra-ui/theme"
-import type { StyleFunctionProps } from '@chakra-ui/styled-system'
-import { color } from 'framer-motion';
 import Tabs from './tabs';
 import Accordion from './accordion';
+import Button from './button';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-createMultiStyleConfigHelpers(selectAnatomy.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(selectAnatomy.keys);
 
 const colors = {
   primary: {
@@ -100,66 +97,18 @@ const fonts = {
 
 const selectThemeMap = {
   primary: definePartsStyle({
-    field:{
+    field: {
       fontSize: '20px',
       bg: 'white',
       padding: '17px 12px',
       height: 'fit-content',
       border: '1px',
       borderColor: 'natural.300',
-      _focus:{
+      _focus: {
         borderColor: 'primary.100',
       },
     },
   }),
-};
-
-const buttonThemeMap = {
-  outline: (props: StyleFunctionProps) => {
-    const colorScheme = props?.colorScheme || 'primary'
-    const isNatural = colorScheme === 'natural'
-    return({
-      ...defaultTheme.components?.Button?.variants?.outline(props),
-      backgroundColor: isNatural ? 'white' : 'transparent',
-      color: `${colorScheme}.${isNatural ? '800' : '500'}`,
-      border: '1px',
-      borderColor: `${colorScheme}.${isNatural ? '300' :'500'}`,
-      _hover: {
-        backgroundColor: 'natural.50',
-      },
-      _active: {
-        backgroundColor: `${colorScheme}.500`,
-        color: 'white',
-      },
-    })
-  },
-  solid({colorScheme = 'primary'} : {colorScheme: string}){
-    return {
-      backgroundColor: `${colorScheme}.500`,
-      color: 'white',
-      _hover: {
-        bg: `${colorScheme}.600`,
-      },
-      _active: {
-        bg: `${colorScheme}.700`,
-      },
-    }
-  },
-  light(props: StyleFunctionProps){
-    const colorScheme = props.colorScheme === 'gray' ? 'natural' : props.colorScheme;
-    return (
-      {
-        backgroundColor: `${colorScheme}.100`,
-        color: `${colorScheme}.900`,
-        _hover: {
-          bg: `${colorScheme}.200`,
-        },
-        _active: {
-          bg: `${colorScheme}.300`,
-        },
-      }
-    )
-  }
 };
 
 const checkThemeMap = {
@@ -167,22 +116,22 @@ const checkThemeMap = {
     control: {
       width: '20px',
       height: '20px',
-    }
+    },
   }),
 };
 const Select = defineMultiStyleConfig({
   variants: selectThemeMap,
-  baseStyle:{
-    field:{
+  baseStyle: {
+    field: {
       backgroundColor: 'white',
       border: '1px',
       borderColor: 'natural.300',
-      _focus:{
+      _focus: {
         borderColor: 'primary.100',
       },
     },
   },
-  sizes:{
+  sizes: {
     md: {
       field: {
         fontSize: '20px',
@@ -193,37 +142,9 @@ const Select = defineMultiStyleConfig({
   },
 });
 
-// Button Theme
-const Button = defineStyleConfig({
-  variants: buttonThemeMap,
-  baseStyle:{
-    backgroundColor: `primary.500`,
-    color: `white`,
-    _hover: {
-      bg: `primary.600`,
-    },
-    _active: {
-      bg: `primary.700`,
-    },
-  },
-  sizes: {
-    md: {
-      px: '24px',
-      py: '12px',
-      borderRadius: '8px',
-      fontSize: '20px',
-      h: 'auto',
-    },
-    sm:{
-      padding: '12px',
-      fontSize: '12px',
-    }
-  },
-});
-
 const Checkbox = defineStyleConfig({
   variants: checkThemeMap,
-  sizes:{
+  sizes: {
     md: {
       control: {
         width: '20px',
@@ -231,7 +152,7 @@ const Checkbox = defineStyleConfig({
       },
     },
   },
-})
+});
 
 const theme = extendTheme({
   colors,
