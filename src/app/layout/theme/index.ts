@@ -1,10 +1,10 @@
 import { selectAnatomy } from '@chakra-ui/anatomy';
-import { extendTheme, createMultiStyleConfigHelpers, defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, createMultiStyleConfigHelpers, defineStyleConfig } from '@chakra-ui/react';
 import Tabs from './tabs';
 import Accordion from './accordion';
 import Button from './button';
 
-const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(selectAnatomy.keys);
+const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(selectAnatomy.keys);
 
 const colors = {
   primary: {
@@ -95,40 +95,19 @@ const fonts = {
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const selectThemeMap = {
-  primary: definePartsStyle({
-    field: {
-      fontSize: '20px',
-      bg: 'white',
-      padding: '17px 12px',
-      height: 'fit-content',
-      border: '1px',
-      borderColor: 'natural.300',
-      _focus: {
-        borderColor: 'primary.100',
-      },
-    },
-  }),
-};
-
 const Select = defineMultiStyleConfig({
-  variants: selectThemeMap,
   baseStyle: {
     field: {
       backgroundColor: 'white',
       border: '1px',
       borderColor: 'natural.300',
-      _focus: {
-        borderColor: 'primary.100',
-      },
     },
   },
   sizes: {
     md: {
       field: {
         fontSize: '20px',
-        padding: '17px 12px',
-        h: 'fit-content',
+        h: '54px',
       },
     },
   },
@@ -157,4 +136,5 @@ const theme = extendTheme({
     Select,
   },
 });
+
 export default theme;
