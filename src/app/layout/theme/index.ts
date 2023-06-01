@@ -1,10 +1,9 @@
-import { selectAnatomy } from '@chakra-ui/anatomy';
-import { extendTheme, createMultiStyleConfigHelpers, defineStyleConfig } from '@chakra-ui/react';
+import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
 import Tabs from './tabs';
 import Accordion from './accordion';
 import Button from './button';
-
-const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(selectAnatomy.keys);
+import Select from './select';
+import Input from './input';
 
 const colors = {
   primary: {
@@ -95,24 +94,6 @@ const fonts = {
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
-const Select = defineMultiStyleConfig({
-  baseStyle: {
-    field: {
-      backgroundColor: 'white',
-      border: '1px',
-      borderColor: 'natural.300',
-    },
-  },
-  sizes: {
-    md: {
-      field: {
-        fontSize: '20px',
-        h: '54px',
-      },
-    },
-  },
-});
-
 const Checkbox = defineStyleConfig({
   sizes: {
     md: {
@@ -134,6 +115,7 @@ const theme = extendTheme({
     Accordion,
     Checkbox,
     Select,
+    Input,
   },
 });
 
