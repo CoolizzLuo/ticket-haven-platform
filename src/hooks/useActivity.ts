@@ -1,4 +1,3 @@
-import { BaseResponse } from '@/lib/api/types/baseResponse';
 import useSWR from 'swr';
 
 interface Event {
@@ -25,8 +24,8 @@ interface Activity {
 }
 
 const useActivity = (id?: string) => {
-  const { data } = useSWR<BaseResponse<Activity>>(id && `activities/${id}`);
-  return { activity: data?.data };
+  const { data, ...props } = useSWR<Activity>(id && `activities/${id}`);
+  return { activity: data, ...props };
 };
 
 export default useActivity;

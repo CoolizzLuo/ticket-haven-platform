@@ -1,9 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface BaseResponse<T = any> {
-  request_id?: string;
+export interface BaseResponse<T = unknown> {
   code: number;
   message: string;
   data?: T;
 }
 
-export default BaseResponse;
+export interface PaginationResponse<T = unknown> extends BaseResponse<T> {
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+}

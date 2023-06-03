@@ -1,5 +1,6 @@
+import axiosClient from '@/api/axiosClient';
 import { OrderStatus } from '@/constants/orderStatus';
-import { BaseResponse } from '@/lib/api/types/baseResponse';
+import { useCallback } from 'react';
 import useSWR from 'swr';
 
 interface User {
@@ -36,9 +37,12 @@ interface Order {
   seats: Seat[];
 }
 
-const useOrder = (orderNo?: string) => {
-  const { data } = useSWR<BaseResponse<Order>>(orderNo && `orders/${orderNo}`);
-  return { order: data?.data };
+const useOrder = (orderNo?: string | null) => {
+  const { data, ...props } = useSWR<Order>(orderNo && `orders/${orderNo}`);
+
+  const cancelOder = useCallback(() => axiosClient.delete(`orders/${orderNo}`), [orderNo]);
+
+  return { order: data, cancelOder, ...props };
 };
 
 export default useOrder;
