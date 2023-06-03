@@ -24,6 +24,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs, { Dayjs } from 'dayjs';
 
+const paymentUrl = process.env.NEXT_PUBLIC_NEWEB_PAYMENT_URL;
+
 const calcLeftTime = (limitTime: Dayjs) => {
   if (dayjs().isAfter(limitTime)) return { minute: '00', second: '00' };
 
@@ -36,13 +38,40 @@ const calcLeftTime = (limitTime: Dayjs) => {
   return { minute, second };
 };
 
+type PaymentForm = {
+  MerchantOrderNo: string;
+  RespondType: string;
+  TimeStamp: number;
+  Email: string;
+  Amt: number;
+  tradeInfo: string;
+  TradeSha: string;
+};
+const createPaymentForm = (paymentInfo: PaymentForm) => {
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.style.display = 'none';
+  form.action = paymentUrl;
+  for (const key in paymentInfo) {
+    if (Object.prototype.hasOwnProperty.call(paymentInfo, key)) {
+      const value = paymentInfo[key as keyof PaymentForm];
+      const input = document.createElement('input');
+      input.name = key;
+      input.value = value.toString();
+      form.appendChild(input);
+    }
+  }
+  document.body.appendChild(form);
+  return form;
+};
+
 const Confirm = () => {
   const router = useRouter();
   const activityId = useTicketPurchasingStore.use.activityId();
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder, error } = useOrder(orderNo);
+  const { order, cancelOder, getPaymentInfo, error } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
@@ -72,6 +101,12 @@ const Confirm = () => {
     cancelOder();
     clear();
     router.push(`/activities/${activityId}`);
+  };
+
+  const pay = async () => {
+    const paymentInfo = await getPaymentInfo();
+    const form = createPaymentForm(paymentInfo);
+    form.submit();
   };
 
   return (
@@ -208,7 +243,7 @@ const Confirm = () => {
           <Button as={Link} href="/purchasing-process/select-area" variant="outline" colorScheme="primary">
             繼續選購
           </Button>
-          <Button colorScheme="primary" leftIcon={<CheckIcon />}>
+          <Button onClick={pay} colorScheme="primary" leftIcon={<CheckIcon />}>
             我同意節目規則，去付款
           </Button>
         </Flex>

@@ -1,7 +1,7 @@
 export interface BaseResponse<T = unknown> {
   code: number;
   message: string;
-  data?: T;
+  data: T;
 }
 
 export interface PaginationResponse<T = unknown> extends BaseResponse<T> {
