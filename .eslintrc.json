@@ -6,9 +6,9 @@
     "linebreak-style": "off",
     "@typescript-eslint/no-shadow": "off",
     "react-hooks/exhaustive-deps": "off",
-    "linebreak-style": "off",
     "indent": "off",
     "no-console": "off",
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "consistent-return": "off"
   }
 }
