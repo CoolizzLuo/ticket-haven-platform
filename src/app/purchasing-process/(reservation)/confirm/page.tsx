@@ -39,23 +39,14 @@ const calcLeftTime = (limitTime: Dayjs) => {
   return { minute, second };
 };
 
-type PaymentForm = {
-  MerchantOrderNo: string;
-  RespondType: string;
-  TimeStamp: number;
-  Email: string;
-  Amt: number;
-  tradeInfo: string;
-  TradeSha: string;
-};
-const createPaymentForm = (paymentInfo: PaymentForm) => {
+const createPaymentForm = (paymentInfo: Record<string, string | number>) => {
   const form = document.createElement('form');
   form.method = 'post';
   form.style.display = 'none';
   form.action = paymentUrl;
   for (const key in paymentInfo) {
     if (Object.prototype.hasOwnProperty.call(paymentInfo, key)) {
-      const value = paymentInfo[key as keyof PaymentForm];
+      const value = paymentInfo[key];
       const input = document.createElement('input');
       input.name = key;
       input.value = value.toString();

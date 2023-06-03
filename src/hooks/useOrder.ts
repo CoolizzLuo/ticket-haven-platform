@@ -38,16 +38,18 @@ export interface Order {
   seats: Seat[];
 }
 
-export interface PaymentInfo {
+export type PaymentInfo = {
   MerchantOrderNo: string;
   RespondType: string;
   TimeStamp: number;
   Email: string;
   Amt: number;
+  Version: string;
   ItemDesc: string;
-  tradeInfo: string;
+  MerchantID: string;
+  TradeInfo: string;
   TradeSha: string;
-}
+};
 
 const useOrder = (orderNo?: string | null) => {
   const { data, ...props } = useSWR<Order>(orderNo && `orders/${orderNo}`);
