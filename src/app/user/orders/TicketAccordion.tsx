@@ -9,15 +9,13 @@ import {
   Box,
   Button,
   Flex,
-  Icon,
   SimpleGrid,
   Spacer,
   Text,
   VStack,
 } from '@/lib/chakra';
 import { OrderStatus, OrderStatusLabel } from '@/constants/orderStatus';
-import { LuCalendarDays } from 'react-icons/lu';
-import { GoLocation } from 'react-icons/go';
+import { CalendarIcon, LocationIcon } from '@/components/icons';
 
 export type AccordionData = {
   id: string;
@@ -47,11 +45,11 @@ const ActivityAccordion = ({ data }: { data: AccordionData }) => {
                 </Text>
                 <Flex gap="35px">
                   <Flex align="center" textStyle="t5">
-                    <Icon as={LuCalendarDays} mr="8px" />
+                    <CalendarIcon mr="8px" />
                     <Text>{startTime}</Text>
                   </Flex>
                   <Flex align="center" textStyle="t5">
-                    <Icon as={GoLocation} mr="8px" />
+                    <LocationIcon mr="8px" />
                     <Text>{location}</Text>
                   </Flex>
                 </Flex>

@@ -11,18 +11,15 @@ import {
   Divider,
   Flex,
   Heading,
-  Icon,
   Spacer,
   Text,
   VStack,
 } from '@/lib/chakra';
-import { LuCalendarDays } from 'react-icons/lu';
-import { GoLocation } from 'react-icons/go';
-import { BsCheckLg } from 'react-icons/bs';
 import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useActivity from '@/hooks/useActivity';
 import useOrder from '@/hooks/useOrder';
+import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
 import { event } from '../mocks';
 
 const Confirm = () => {
@@ -39,11 +36,11 @@ const Confirm = () => {
         </Text>
         <Flex gap="35px">
           <Flex align="center" textStyle="t5">
-            <Icon as={LuCalendarDays} mr="8px" />
+            <CalendarIcon mr="8px" />
             <Text>{activity?.startTime}</Text>
           </Flex>
           <Flex align="center" textStyle="t5">
-            <Icon as={GoLocation} mr="8px" />
+            <LocationIcon mr="8px" />
             <Text>{activity?.location}</Text>
           </Flex>
         </Flex>
@@ -87,7 +84,7 @@ const Confirm = () => {
             <CardHeader>
               <Heading size="md">{activity?.name}</Heading>
               <Flex align="center" mt="12px" textStyle="t6">
-                <Icon as={LuCalendarDays} mr="8px" />
+                <CalendarIcon mr="8px" />
                 <Text>{activity?.location}</Text>
               </Flex>
             </CardHeader>
@@ -161,7 +158,7 @@ const Confirm = () => {
         <Button as={Link} href="/purchasing-process/select-area" variant="outline" colorScheme="primary">
           繼續選購
         </Button>
-        <Button colorScheme="primary" leftIcon={<BsCheckLg />}>
+        <Button colorScheme="primary" leftIcon={<CheckIcon />}>
           我同意節目規則，去付款
         </Button>
       </Flex>
