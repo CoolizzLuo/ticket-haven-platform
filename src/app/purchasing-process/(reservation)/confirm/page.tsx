@@ -22,14 +22,17 @@ import useOrder from '@/hooks/useOrder';
 import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
-const calcLeftTime = (time: string) => {
-  const diff = dayjs(time).add(15, 'm').diff(dayjs(), 'minute', true);
+const calcLeftTime = (limitTime: Dayjs) => {
+  if (dayjs().isAfter(limitTime)) return { minute: '00', second: '00' };
+
+  const diff = limitTime.diff(dayjs(), 'minute', true);
   const minute = Math.floor(diff).toString().padStart(2, '0');
   const second = Math.floor(parseFloat(diff.toString().replace(/[0-9]*\./, '0.')) * 60)
     .toString()
     .padStart(2, '0');
+
   return { minute, second };
 };
 
@@ -39,35 +42,36 @@ const Confirm = () => {
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder } = useOrder(orderNo);
+  const { order, cancelOder, error } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
   useEffect(() => {
-    if (!orderNo) {
+    if (!orderNo || error) {
       router.back();
     }
-  }, [orderNo]);
+  }, [orderNo, error]);
 
   useEffect(() => {
-    if (order) {
-      setLeftTime(calcLeftTime(order.createAt));
+    const cb = () => {
+      if (!order) return;
+      const limitTime = dayjs(order.createAt).add(15, 'm');
+      if (dayjs().isAfter(limitTime)) {
+        clear();
+        router.push('/');
+      }
+      setLeftTime(calcLeftTime(limitTime));
+    };
 
-      const id = setInterval(() => {
-        if (dayjs().isAfter(dayjs(order.createAt).add(15, 'm'))) {
-          clear();
-          router.push('/');
-        }
-        setLeftTime(calcLeftTime(order.createAt));
-      }, 1000);
-
-      return () => clearInterval(id);
-    }
+    cb();
+    const id = setInterval(cb, 1000);
+    return () => clearInterval(id);
   }, [order]);
 
   const cancelOrder = () => {
     cancelOder();
     clear();
+    router.push(`/activities/${activityId}`);
   };
 
   return (
@@ -91,7 +95,7 @@ const Confirm = () => {
         </Box>
         <Center p="24px" border="3px solid" borderColor="primary.500" bgColor="primary.100" color="primary.500">
           <Text textStyle="t2">
-            請於 {leftTime.minute} 分 {leftTime.second} 秒內完成資料填寫，並選擇付款方式
+            請於 {leftTime.minute} 分 {leftTime.second} 秒內完成付款
           </Text>
         </Center>
         <Heading fontSize="28px" mt="32px" mb="16px">
@@ -197,7 +201,7 @@ const Confirm = () => {
           藍新金流
         </Button>
         <Flex mt="32px" gap="16px">
-          <Button as={Link} href={`/activities/${activityId}`} variant="outline" colorScheme="natural">
+          <Button onClick={cancelOrder} variant="outline" colorScheme="natural">
             取消訂單
           </Button>
           <Spacer />
