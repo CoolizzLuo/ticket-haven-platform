@@ -23,6 +23,7 @@ import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs, { Dayjs } from 'dayjs';
+import { dayFormat } from '@/lib/dayjs';
 
 const paymentUrl = process.env.NEXT_PUBLIC_NEWEB_PAYMENT_URL;
 
@@ -115,16 +116,16 @@ const Confirm = () => {
       <Container maxW="container.xl" pb="60px">
         <Box py="24px">
           <Text textStyle="h4" fontWeight="bold" mb="16px">
-            {activity?.name}
+            {activity.name}
           </Text>
           <Flex gap="35px">
             <Flex align="center" textStyle="t5">
               <CalendarIcon mr="8px" />
-              <Text>{order.activity?.eventStartTime}</Text>
+              <Text>{dayFormat(order.activity.eventStartTime)}</Text>
             </Flex>
             <Flex align="center" textStyle="t5">
               <LocationIcon mr="8px" />
-              <Text>{activity?.location}</Text>
+              <Text>{activity.location}</Text>
             </Flex>
           </Flex>
         </Box>
@@ -142,35 +143,35 @@ const Confirm = () => {
               <Text mr="16px" textStyle="t7">
                 會員姓名
               </Text>
-              <Text textStyle="t5">{order?.user.name}</Text>
+              <Text textStyle="t5">{order.user.name}</Text>
             </Flex>
             <Flex align="center">
               <Text mr="16px" textStyle="t7">
                 電子郵件
               </Text>
-              <Text textStyle="t5">{order?.user.email}</Text>
+              <Text textStyle="t5">{order.user.email}</Text>
             </Flex>
             <Flex align="center">
               <Text mr="16px" textStyle="t7">
                 連絡電話
               </Text>
-              <Text textStyle="t5">{order?.user.cellphone}</Text>
+              <Text textStyle="t5">{order.user.cellphone}</Text>
             </Flex>
           </VStack>
         </Box>
 
         <Heading fontSize="28px" mt="32px" mb="16px">
-          訂單編號 #{order?.orderNo}
+          訂單編號 #{order.orderNo}
         </Heading>
         <VStack alignItems="stretch" gap="8px">
-          {order?.seats.map((s, i) => (
+          {order.seats.map((s, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <Card key={i}>
               <CardHeader>
-                <Heading size="md">{activity?.name}</Heading>
+                <Heading size="md">{activity.name}</Heading>
                 <Flex align="center" mt="12px" textStyle="t6">
                   <CalendarIcon mr="8px" />
-                  <Text>{activity?.location}</Text>
+                  <Text>{activity.location}</Text>
                 </Flex>
               </CardHeader>
               <Divider borderColor="natural.600" />
@@ -181,7 +182,7 @@ const Confirm = () => {
                       <Text textStyle="t7" mr="16px">
                         場次
                       </Text>
-                      <Text textStyle="t5">{order.activity.eventStartTime}</Text>
+                      <Text textStyle="t5">{dayFormat(order.activity.eventStartTime)}</Text>
                     </Flex>
                     <Flex align="center">
                       <Text textStyle="t6" mr="16px">
@@ -218,13 +219,13 @@ const Confirm = () => {
             <Flex w="200px" px="20px" align="center" justify="space-between">
               <Text mr="24px">訂購張數</Text>
               <Text textStyle="t4" fontWeight="bold">
-                {order?.seats.length}
+                {order.seats.length}
               </Text>
             </Flex>
             <Flex w="200px" mt="12px" px="20px" align="center" justify="space-between">
               <Text mr="24px">總計</Text>
               <Text textStyle="t4" fontWeight="bold">
-                {order?.price}
+                {order.price}
               </Text>
             </Flex>
           </div>
