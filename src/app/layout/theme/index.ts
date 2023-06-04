@@ -4,6 +4,7 @@ import Accordion from './accordion';
 import Button from './button';
 import Select from './select';
 import Input from './input';
+import Tag from './tag';
 
 const colors = {
   primary: {
@@ -112,6 +113,7 @@ const theme = extendTheme({
   components: {
     Button,
     Tabs,
+    Tag,
     Accordion,
     Checkbox,
     Select,

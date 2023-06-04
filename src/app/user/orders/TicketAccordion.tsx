@@ -15,6 +15,8 @@ import {
   VStack,
 } from '@/lib/chakra';
 import { OrderStatus, OrderStatusLabel } from '@/constants/orderStatus';
+import { Order } from '@/hooks/useOrders';
+import { dayFormat } from '@/lib/dayjs';
 import { CalendarIcon, LocationIcon } from '@/components/icons';
 
 export type AccordionData = {
@@ -32,25 +34,25 @@ export type AccordionData = {
   }[];
 }[];
 
-const ActivityAccordion = ({ data }: { data: AccordionData }) => {
+const ActivityAccordion = ({ data }: { data: Order[] }) => {
   return (
     <Accordion allowMultiple>
       <VStack align="stretch" spacing="24px">
-        {data.map(({ id, status, price, orderNo, activityName, startTime, location, seats }) => (
+        {data.map(({ id, status, price, orderNo, activity, seats }) => (
           <AccordionItem key={id} borderRadius="6px" border="none">
             <Flex p="24px" align="center">
               <Box flex={1}>
                 <Text textStyle="h4" fontWeight="bold" mb="28px">
-                  {activityName}
+                  {activity.name}
                 </Text>
                 <Flex gap="35px">
                   <Flex align="center" textStyle="t5">
                     <CalendarIcon mr="8px" />
-                    <Text>{startTime}</Text>
+                    <Text>{dayFormat(activity.eventStartTime)}</Text>
                   </Flex>
                   <Flex align="center" textStyle="t5">
                     <LocationIcon mr="8px" />
-                    <Text>{location}</Text>
+                    <Text>{activity.location}</Text>
                   </Flex>
                 </Flex>
               </Box>
@@ -85,14 +87,14 @@ const ActivityAccordion = ({ data }: { data: AccordionData }) => {
                   {seats.map((s, i) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Text key={i}>
-                      {s.areaName} {s.row}排 {s.seat}號
+                      {s.subAreaName} {s.row}排 {s.seat}號
                     </Text>
                   ))}
                 </div>
                 <Spacer />
-                <Button size="sm" variant="ghost" colorScheme="natural" alignSelf="self-end">
+                {/* <Button size="sm" variant="ghost" colorScheme="natural" alignSelf="self-end">
                   取消訂單
-                </Button>
+                </Button> */}
               </Flex>
             </AccordionPanel>
           </AccordionItem>
