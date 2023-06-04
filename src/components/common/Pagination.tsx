@@ -1,13 +1,14 @@
-import { Box, ButtonGroup, Button } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
 
-type Props = {
+type PaginationProps = {
   currentPage: number;
-  totalPages: number;
+  totalCount: number;
+  pageSize?: number;
   onPageChange: (page: number) => void;
 };
 
-const getPageRange = ({ maxVisiable = 5, total, current }: { maxVisiable: number; total: number; current: number }) => {
-  const middlePage = Math.ceil(maxVisiable / 2);
+// logic
+const getPageRange = ({ maxVisiable, total, current }: { maxVisiable: number; total: number; current: number }) => {
   let startPage = 1;
   let endPage;
 
@@ -18,26 +19,67 @@ const getPageRange = ({ maxVisiable = 5, total, current }: { maxVisiable: number
   } else {
     // 是否後 maxVisible={5} 個
     const lastSectionStart = total - maxVisiable + 1;
-    const isLastSection = current > lastSectionStart;
-    startPage = isLastSection ? lastSectionStart : current - middlePage + 1;
-    endPage = isLastSection ? total : current + middlePage - 1;
+    const isLastSection = current >= lastSectionStart;
+
+    const leftHandNumber = maxVisiable % 2 === 0 ? Math.floor(maxVisiable / 2) : Math.ceil(maxVisiable / 2);
+    const rightHandNumber = Math.ceil(maxVisiable / 2);
+
+    startPage = isLastSection ? lastSectionStart : current - leftHandNumber + 1;
+    endPage = isLastSection ? total : current + rightHandNumber - 1;
   }
 
   return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
 };
 
-const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
-  const pageRange = getPageRange({ maxVisiable: 5, total: totalPages, current: currentPage });
+// style
+const PageContainer = chakra('div', {
+  baseStyle: {
+    display: 'flex',
+    alignItems: 'center',
+    pl: 0,
+  },
+});
+
+const arrowStyle = (isDisabled: boolean) => ({
+  color: isDisabled ? 'natural.500' : 'natural.900',
+  cursor: isDisabled ? 'not-allowed' : 'pointer',
+  backgroundColor: 'transparent',
+  _hover: isDisabled ? {} : { backgroundColor: 'natural.500' },
+});
+
+const itemStyle = (isActive: boolean) => ({
+  backgroundColor: isActive ? 'primary.500' : 'transparent',
+  color: isActive ? 'white' : 'natural.900',
+  _hover: isActive ? {} : { backgroundColor: 'natural.500' },
+});
+
+const PageItem = chakra('button', {
+  baseStyle: {
+    listStyle: 'none',
+    fontWeight: 'normal',
+    borderRadius: '50%',
+    width: '2rem',
+    height: '2rem',
+    minWidth: '2rem',
+    minHeight: '2rem',
+    cursor: 'pointer',
+  },
+});
+
+const Pagination = ({ currentPage, totalCount, pageSize = 5, onPageChange }: PaginationProps) => {
+  const total = Math.ceil(totalCount / pageSize);
+  const pageRange = getPageRange({ maxVisiable: 5, total, current: currentPage });
+
   return (
-    <Box>
-      <ButtonGroup>
-        <Button variant="pageArrow" isDisabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
+    <chakra.div display="flex" justifyContent="center">
+      <PageContainer>
+        <PageItem bgColor="red" {...arrowStyle(currentPage === 1)}>
           &lt;
-        </Button>
+        </PageItem>
         {pageRange.map((p: number) => (
-          <Button
-            variant={p === currentPage ? 'pageActive' : 'pageBase'}
+          <PageItem
             key={p}
+            {...itemStyle(p === currentPage)}
             onClick={() => {
               if (p !== currentPage) {
                 onPageChange(p);
@@ -45,17 +87,11 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
             }}
           >
             {p}
-          </Button>
+          </PageItem>
         ))}
-        <Button
-          variant="pageArrow"
-          isDisabled={currentPage === totalPages}
-          onClick={() => onPageChange(currentPage + 1)}
-        >
-          &gt;
-        </Button>
-      </ButtonGroup>
-    </Box>
+        <PageItem {...arrowStyle(currentPage === total)}>&gt;</PageItem>
+      </PageContainer>
+    </chakra.div>
   );
 };
 
