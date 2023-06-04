@@ -14,10 +14,10 @@ interface SeatsSelectorProps {
 type ButtonType = 'sale' | 'soldout';
 const btnStyleMap = {
   active: {
-    variant: '',
+    variant: 'solid',
   },
   default: {
-    variant: 'outline',
+    variant: 'customOutline',
     colorScheme: 'natural',
   },
 };

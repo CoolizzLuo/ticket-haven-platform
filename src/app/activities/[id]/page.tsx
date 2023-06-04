@@ -22,12 +22,12 @@ import {
   CardBody,
   Button,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getActivityById } from '@/api/activities';
 import { dayFormat, isBeforeToday, isAfterToday, dayFromNow } from '@/lib/dayjs';
+import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 
 type Event = {
   endTime: string;
@@ -63,6 +63,13 @@ const Activitie = () => {
   useEffect(() => {
     getEvents();
   }, []);
+
+  const router = useRouter();
+  const setEvent = useTicketPurchasingStore.use.setEvent();
+  const buyTickets = (aId: string, eId: string) => {
+    setEvent(aId, eId);
+    router.push('purchasing-process/select-area');
+  };
 
   return (
     <Container maxW="1200px" pb="80px" pt="40px">
@@ -308,14 +315,11 @@ const Activitie = () => {
                         )}
 
                         {!event.soldOut && isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
-                          <NextLink
-                            href={{ pathname: `/activities/${id}/step/1`, query: { eventId: event.id } }}
-                            key={event.id}
-                          >
-                            <Button colorScheme="primary" py="8px" px="12px">
-                              立即購票
-                            </Button>
-                          </NextLink>
+                          // <NextLink href={{ pathname: `/activities/${id}/step/1`, query: { eventId: event.id } }} key={event.id}>
+                          <Button colorScheme="primary" py="8px" px="12px" onClick={() => buyTickets(id, event.id)}>
+                            立即購票
+                          </Button>
+                          // </NextLink>
                         )}
 
                         {event.soldOut && isBeforeToday(event.sellEndTime) && (

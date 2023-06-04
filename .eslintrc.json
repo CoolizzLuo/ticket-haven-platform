@@ -4,7 +4,14 @@
     "react/jsx-boolean-value": "off",
     "react/require-default-props": "off",
     "linebreak-style": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "indent": "off",
     "no-console": "off",
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "consistent-return": "off",
+    "func-style": "off",
+    "react/function-component-definition": "off",
+    "@typescript-eslint/no-use-before-define": ["error", { "functions": false }]
   }
 }
