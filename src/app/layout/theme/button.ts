@@ -2,6 +2,16 @@ import { defineStyleConfig } from '@chakra-ui/react';
 import type { StyleFunctionProps } from '@chakra-ui/styled-system';
 import defaultTheme from '@chakra-ui/theme';
 
+const circle = {
+  fontWeight: 'normal',
+  borderRadius: '50%',
+  width: '2rem',
+  height: '2rem',
+  minWidth: '2rem',
+  minHeight: '2rem',
+  _hover: { backgroundColor: 'natural.500' },
+};
+
 const variants = {
   customOutline: (props: StyleFunctionProps) => {
     const colorScheme = props?.colorScheme || 'primary';
@@ -40,6 +50,27 @@ const variants = {
       border: '1px solid',
       borderColor: props.isDisabled ? 'natural.500' : 'primary.500',
       _hover: props.isDisabled ? { bg: 'white' } : { bg: 'primary.500', color: 'white' },
+    };
+  },
+  pageArrow: (props: StyleFunctionProps) => {
+    return {
+      ...circle,
+      color: props.isDisabled ? 'natural.500' : 'natural.900',
+      backgroundColor: 'transparent',
+    };
+  },
+  pageBase: () => {
+    return {
+      ...circle,
+      backgroundColor: 'transparent',
+      color: 'natural.900',
+    };
+  },
+  pageActive: () => {
+    return {
+      ...circle,
+      backgroundColor: 'primary.500',
+      color: 'white',
     };
   },
 };
