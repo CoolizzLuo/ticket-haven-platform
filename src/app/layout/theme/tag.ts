@@ -8,6 +8,7 @@ const md = defineStyle({
   py: '4px',
   fontSize: '14px',
   lineHeight: '21px',
+  fontWeight: 700,
 });
 
 const warning = definePartsStyle({

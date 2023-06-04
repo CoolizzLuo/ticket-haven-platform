@@ -25,26 +25,12 @@ const TicketInfo = ({ tickets }: { tickets: Ticket[] }) => {
                 {!ticket.isUsed && !ticket.isShare && <Tag variant="info">未使用</Tag>}
               </Box>
               <Box>
-                <Button
-                  color="primary.500"
-                  bg="white"
-                  border="1px"
-                  _hover={{ bg: 'primary.500', color: 'white' }}
-                  mr="16px"
-                  isDisabled={ticket.isShare || ticket.isUsed}
-                >
+                <Button variant="outLine" mr="16px" size="sm" isDisabled={ticket.isShare || ticket.isUsed}>
                   <Icon as={LuQrCode} mr="8px" />
                   使用
                 </Button>
-                <Button
-                  color="primary.500"
-                  bg="white"
-                  border="1px"
-                  isDisabled={ticket.isShare || ticket.isUsed}
-                  _hover={{ bg: 'primary.500', color: 'white' }}
-                >
-                  <Icon as={SlActionRedo} mr="8px" />
-                  分票
+                <Button variant="outLine" size="sm" isDisabled={ticket.isShare || ticket.isUsed}>
+                  <Icon as={SlActionRedo} mr="8px" /> 分票
                 </Button>
               </Box>
             </SimpleGrid>

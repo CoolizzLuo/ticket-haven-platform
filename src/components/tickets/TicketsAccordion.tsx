@@ -39,7 +39,7 @@ const TicketsAccordion = ({ list }: { list: TicketCard[] }) => {
                     </Flex>
                   </Flex>
                 </Box>
-                <AccordionButton>
+                <AccordionButton as="div">
                   <Button rightIcon={<AccordionIcon />}>票券資訊</Button>
                 </AccordionButton>
               </Flex>
