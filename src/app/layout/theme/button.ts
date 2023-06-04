@@ -33,6 +33,15 @@ const variants = {
       },
     };
   },
+  outLine: (props: StyleFunctionProps) => {
+    return {
+      color: props.isDisabled ? 'natural.500' : 'primary.500',
+      backgroundColor: 'white',
+      border: '1px solid',
+      borderColor: props.isDisabled ? 'natural.500' : 'primary.500',
+      _hover: props.isDisabled ? { bg: 'white' } : { bg: 'primary.500', color: 'white' },
+    };
+  },
 };
 
 // Button Theme
