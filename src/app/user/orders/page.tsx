@@ -1,51 +1,8 @@
-import { Center, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/lib/chakra';
-import { OrderStatus } from '@/constants/orderStatus';
-import ActivityAccordion from './TicketAccordion';
+'use client';
 
-const orders = [
-  {
-    id: 'asdfa',
-    status: OrderStatus.PAID,
-    price: 3800,
-    orderNo: '20230520efco4n',
-    activityName: 'BLACKPINK WORLD TOUR [BORN PINK] KAOHSIUNG',
-    startTime: '2022/03/18 19:30',
-    location: '高雄國家體育場 (世運主場館)',
-    seats: [
-      {
-        areaName: '紅 218 區',
-        row: 34,
-        seat: 4,
-      },
-      {
-        areaName: '紅 218 區',
-        row: 34,
-        seat: 5,
-      },
-    ],
-  },
-  {
-    id: 'awd13p',
-    status: OrderStatus.PAID,
-    price: 3800,
-    orderNo: '20230520efco4n',
-    activityName: 'BLACKPINK WORLD TOUR [BORN PINK] KAOHSIUNG',
-    startTime: '2022/03/18 19:30',
-    location: '高雄國家體育場 (世運主場館)',
-    seats: [
-      {
-        areaName: '紅 218 區',
-        row: 34,
-        seat: 4,
-      },
-      {
-        areaName: '紅 218 區',
-        row: 34,
-        seat: 5,
-      },
-    ],
-  },
-];
+import { Center, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/lib/chakra';
+import useOrders from '@/hooks/useOrders';
+import ActivityAccordion from './TicketAccordion';
 
 const Order = () => {
   return (
@@ -60,15 +17,27 @@ const Order = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <ActivityAccordion data={orders} />
+            <CompletedOrders />
           </TabPanel>
           <TabPanel>
-            <ActivityAccordion data={orders} />
+            <UnpaidOrders />
           </TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
   );
 };
+
+function CompletedOrders() {
+  const { orders = [] } = useOrders({ page: 1, pageSize: 5, status: 'completed' });
+
+  return <ActivityAccordion data={orders} />;
+}
+
+function UnpaidOrders() {
+  const { orders = [] } = useOrders({ page: 1, pageSize: 5, status: 'unpaid' });
+
+  return <ActivityAccordion data={orders} />;
+}
 
 export default Order;
