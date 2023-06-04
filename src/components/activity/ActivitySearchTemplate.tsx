@@ -3,7 +3,7 @@
 import { Box, Heading, Container, Grid, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ActivityCard from '@/components/activity/ActivityCard';
 import { Activities, ActivitiesSearch } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 import { useEffect, useState } from 'react';
 
 type Content = {
@@ -48,7 +48,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
                   borderWidth="1px"
                   borderRadius="md"
                   mr="8px"
-                  _selected={{ color: 'white', bg: 'brand.100' }}
+                  _selected={{ color: 'white', bg: 'primary.500' }}
                 >
                   {opt.name}
                 </Tab>

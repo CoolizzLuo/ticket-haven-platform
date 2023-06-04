@@ -53,7 +53,7 @@ const Dialog = () => {
                 {dialogSettings[type].cancelText}
               </Button>
             )}
-            <Button colorScheme="red" bgColor="brand.100" onClick={handleConfirm} minW={90} ml={3}>
+            <Button colorScheme="red" bgColor="primary.500" onClick={handleConfirm} minW={90} ml={3}>
               {dialogSettings[type].confirmText}
             </Button>
           </AlertDialogFooter>

@@ -1,12 +1,12 @@
 import { extendTheme, defineStyleConfig } from '@chakra-ui/react';
-
 import Tabs from './tabs';
 import Accordion from './accordion';
+import Button from './button';
+import Select from './select';
+import Input from './input';
+import Tag from './tag';
 
 const colors = {
-  brand: {
-    100: '#8D2048',
-  },
   primary: {
     100: '#FFF3F8',
     500: '#8D2048',
@@ -90,23 +90,21 @@ const textStyles = {
   },
 };
 
-// Button Theme
-const Button = defineStyleConfig({
-  sizes: {
-    md: {
-      px: '24px',
-      py: '12px',
-      borderRadius: '8px',
-      fontSize: '20px',
-      h: 'auto',
-    },
-  },
-});
-
 const fonts = {
   heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
+
+const Checkbox = defineStyleConfig({
+  sizes: {
+    md: {
+      control: {
+        width: '20px',
+        h: '20px',
+      },
+    },
+  },
+});
 
 const theme = extendTheme({
   colors,
@@ -115,7 +113,11 @@ const theme = extendTheme({
   components: {
     Button,
     Tabs,
+    Tag,
     Accordion,
+    Checkbox,
+    Select,
+    Input,
   },
 });
 
