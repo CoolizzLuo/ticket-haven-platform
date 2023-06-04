@@ -37,9 +37,8 @@ const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
   const router = useRouter();
   const pathName = usePathname();
   const clickHandler = (selectArea: ChoseArea) => {
-    localStorage.setItem('activity-choseArea', JSON.stringify(selectArea));
     areaCookie.setChoseArea(selectArea);
-    router.push(pathName.replace(/\d$/g, '2'));
+    router.push(pathName.replace(/(?<=step\/)1/g, '2'));
   };
   return (
     <VStack align="stretch" gap="48px" bg="natural.50" borderRadius="6px" padding="40px 24px">

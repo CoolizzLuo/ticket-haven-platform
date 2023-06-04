@@ -11,9 +11,9 @@ export const getActivityById = async (id: string) => {
   return axiosClient.get(`activities/${id}`);
 };
 
-// export const getSeatsArea = async (eventId: string) => {
-//   return axiosClient.get(`activities/${eventId}/seat-sell-status`)
-// }
+export const getSeatsArea = async (eventId: string) => {
+  return axiosClient.get(`events/${eventId}/seat-sell-status`)
+}
 
 export const areaCookie = {
     key: 'user-chose-area',

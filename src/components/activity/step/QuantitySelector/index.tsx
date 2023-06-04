@@ -37,7 +37,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
         <Box>
           <Flex alignItems="center" gap="10px" marginBottom="8px">
             <Icon as={MdOutlineCalendarMonth} />
-            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(dd) HH:mm')}</Text>
+            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
           </Flex>
           <Flex alignItems="center" gap="10px">
             <Icon as={GoLocation} />

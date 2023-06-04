@@ -308,7 +308,10 @@ const Activitie = () => {
                         )}
 
                         {!event.soldOut && isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
-                          <NextLink href={`/activities/${event.id}/step/1`} key={event.id}>
+                          <NextLink
+                            href={{ pathname: `/activities/${id}/step/1`, query: { eventId: event.id } }}
+                            key={event.id}
+                          >
                             <Button colorScheme="primary" py="8px" px="12px">
                               立即購票
                             </Button>

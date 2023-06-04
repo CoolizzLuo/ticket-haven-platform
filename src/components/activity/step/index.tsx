@@ -10,7 +10,17 @@ import QuantitySelector from '@/components/activity/step/QuantitySelector';
 import { Area, Activity } from '@/types/activityTypes';
 import { areaCookie } from '@/api/activities';
 
-const StepPage = ({ step, activity, areas }: { step: number; activity: Activity; areas: Area[] }) => {
+const StepPage = ({
+  step,
+  activity,
+  areas,
+  seatImgUrl,
+}: {
+  step: number;
+  activity: Activity;
+  areas: Area[];
+  seatImgUrl: string;
+}) => {
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
   const stepSwitcher = () => {
@@ -35,7 +45,7 @@ const StepPage = ({ step, activity, areas }: { step: number; activity: Activity;
       <ProgressBar step={step} />
       <Grid gridTemplateColumns="1fr 1fr" margin="60px auto" gap="24px" w="1296px">
         <Box position="relative">
-          <Image fill alt="seats" src={activity.seatMapUrl} />
+          <Image fill alt="seats" src={seatImgUrl} />
         </Box>
         {stepSwitcher()}
       </Grid>
