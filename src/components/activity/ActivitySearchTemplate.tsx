@@ -22,7 +22,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   const handleFetchEvents = async (params: ActivitiesSearch) => {
-    const res = await fetchEvents(params);
+    const res = await fetchActivities(params);
     const { data = [], message } = res.data;
     if (message === 'success') {
       setResult(data);
