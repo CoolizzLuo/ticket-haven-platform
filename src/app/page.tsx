@@ -1,7 +1,7 @@
 'use client';
 
 import { Text, Box, useBreakpointValue, Button, Image } from '@chakra-ui/react';
-import { dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
+import { calendarFormat, dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -49,7 +49,12 @@ const Home = () => {
 
   return (
     <>
-      {!isMobile && <ActivitySearchForm onChange={redirectEventsResultPage} />}
+      {!isMobile && (
+        <ActivitySearchForm
+          onChange={redirectEventsResultPage}
+          searchParams={{ startAfter: calendarFormat(new Date()) }}
+        />
+      )}
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
       <Box as="section" py="120px" bgColor="#F7F4F6" textAlign="center">
