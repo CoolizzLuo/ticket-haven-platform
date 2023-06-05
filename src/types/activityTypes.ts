@@ -16,6 +16,7 @@ export type Activities = {
 export interface SearchFormState {
   region?: number | '';
   startAfter?: string;
+  page?: number;
   q?: string;
 }
 

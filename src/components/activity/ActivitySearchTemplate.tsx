@@ -18,20 +18,22 @@ type ActivitySearchProps = {
 };
 
 const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
-  const [result, setResult] = useState<Activities[]>([]);
-  const [tabIndex, setTabIndex] = useState<number>(0);
+  const [activitiesResult, setActivitiesResult] = useState<object>({});
 
   const handleFetchEvents = async (params: ActivitiesSearch) => {
     const res = await fetchActivities(params);
     const { data = [], message } = res.data;
     if (message === 'success') {
-      setResult(data);
+      return data;
     }
   };
 
   useEffect(() => {
-    handleFetchEvents({ ...tabs[tabIndex].params, page: 1, pageSize: 6 });
-  }, [tabIndex]);
+    tabs.forEach(async (tab) => {
+      const result = await handleFetchEvents({ ...tab.params, page: 1, pageSize: 6 });
+      setActivitiesResult((val) => ({ ...val, [tab.id]: result }));
+    });
+  }, []);
 
   return (
     <Container maxW="1200px" py="80px">
@@ -39,7 +41,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
         <Heading as="h2" fontSize="28px" mb="32px">
           {title}
         </Heading>
-        <Tabs variant="unstyled" onChange={(index) => setTabIndex(index)}>
+        <Tabs variant="unstyled">
           <TabList mb="24px">
             {tabs.map((opt) => {
               return (
@@ -56,10 +58,10 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
             })}
           </TabList>
           <TabPanels>
-            {tabs.map((tab) => {
+            {Object.entries(activitiesResult).map(([key, result]) => {
               return (
                 result && (
-                  <TabPanel p="0" key={tab.id}>
+                  <TabPanel p="0" key={`tabPanel${key}`}>
                     <Grid
                       templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
                       gap="30px"

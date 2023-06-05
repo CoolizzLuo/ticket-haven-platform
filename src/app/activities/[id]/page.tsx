@@ -148,7 +148,12 @@ const Activitie = () => {
                 <Image my="24px" src={result?.seatMapUrl} borderRadius="lg" alt="eventImg" width="100%" />
               </TabPanel>
               <TabPanel p="0">
-                <Box pt="20px" borderRadius="6px" dangerouslySetInnerHTML={{ __html: result?.notice || '' }} />
+                <Box
+                  pl="32px"
+                  pt="20px"
+                  borderRadius="6px"
+                  dangerouslySetInnerHTML={{ __html: result?.notice || '' }}
+                />
               </TabPanel>
               <TabPanel p="0">
                 <Text mb="20px"> 親愛的客戶，感謝您的購票興趣！為確保順利完成購票，請您遵循以下提醒：</Text>

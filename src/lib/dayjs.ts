@@ -12,10 +12,10 @@ dayjs.extend(relativeTime);
 
 export const dayFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD HH:mm A (ddd.)');
 export const dayYMDFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD');
+export const calendarFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY-MM-DD');
 
 export const dayAfterToday = (num: number) =>
   dayjs()
-    .utc(false)
     .add(dayjs.duration({ days: num }))
     .format('YYYY/MM/DD');
 
