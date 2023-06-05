@@ -21,7 +21,7 @@ const Activities = () => {
   const [result, setResult] = useState<ActType[]>([]);
 
   const handleFetchEvents = async (search?: SearchFormState) => {
-    const res = await fetchActivities({ ...search, page: 1, pageSize: 10 });
+    const res = await fetchActivities({ ...search, page: 1, pageSize: 12, sort: 'start_at' });
     const { data } = res.data;
     setResult(Array.isArray(data) ? data : []);
   };
