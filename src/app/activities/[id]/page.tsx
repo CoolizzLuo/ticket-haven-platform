@@ -142,29 +142,16 @@ const Activitie = () => {
             <TabPanels bg="#F7F4F6" borderRadius="6px" p="32px" pb="100px">
               <TabPanel p="0">
                 <Text mb="40px"> {result?.name}</Text>
-                <Box
-                  bg="#FFF3F8"
-                  pt="20px"
-                  pl="36px"
-                  borderRadius="6px"
-                  dangerouslySetInnerHTML={{ __html: result?.notice || '' }}
-                />
+                <Box pt="20px" borderRadius="6px" dangerouslySetInnerHTML={{ __html: result?.content || '' }} />
               </TabPanel>
               <TabPanel p="0">
                 <Image my="24px" src={result?.seatMapUrl} borderRadius="lg" alt="eventImg" width="100%" />
               </TabPanel>
               <TabPanel p="0">
-                <Box
-                  bg="#FFF3F8"
-                  pt="20px"
-                  pl="36px"
-                  borderRadius="6px"
-                  dangerouslySetInnerHTML={{ __html: result?.notice || '' }}
-                />
+                <Box pt="20px" borderRadius="6px" dangerouslySetInnerHTML={{ __html: result?.notice || '' }} />
               </TabPanel>
               <TabPanel p="0">
                 <Text mb="20px"> 親愛的客戶，感謝您的購票興趣！為確保順利完成購票，請您遵循以下提醒：</Text>
-
                 <List spacing={3} mb="20px">
                   <ListItem textIndent="-16px" pl="16px">
                     ※

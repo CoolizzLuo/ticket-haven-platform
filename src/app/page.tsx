@@ -14,12 +14,6 @@ const Home = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const defaultParams = () => ({
-    page: 1,
-    pageSize: 10,
-    sort: 'startAt',
-  });
-
   // 近期開賣
   const today = dayYMDFormat(`${new Date()}`);
   const tommorrow = dayAfterToday(1);
@@ -28,8 +22,8 @@ const Home = () => {
   const section1 = {
     title: '近期開賣',
     tabs: [
-      { id: '1', name: '今天', params: { startAfter: today } },
-      { id: '2', name: '明天', params: { startAfter: tommorrow } },
+      { id: '1', name: '今天', params: { startAfter: today, startBefore: today } },
+      { id: '2', name: '明天', params: { startAfter: tommorrow, startBefore: tommorrow } },
       {
         id: '3',
         name: '未來一週',
