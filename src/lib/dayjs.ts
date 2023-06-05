@@ -15,7 +15,6 @@ export const dayYMDFormat = (date: string | Date | Dayjs) => dayjs(date).format(
 
 export const dayAfterToday = (num: number) =>
   dayjs()
-    .utc(false)
     .add(dayjs.duration({ days: num }))
     .format('YYYY/MM/DD');
 
