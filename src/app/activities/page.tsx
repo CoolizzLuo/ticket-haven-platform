@@ -53,6 +53,7 @@ const Activities = () => {
                 startAt={r.startAt}
                 soldOut={r.soldOut}
                 coverImgUrl={r.coverImgUrl}
+                sellAt={r.sellAt}
               />
             ))
           ) : (

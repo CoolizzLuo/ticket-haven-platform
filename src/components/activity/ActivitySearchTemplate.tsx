@@ -72,6 +72,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
                             key={r.id}
                             id={r.id}
                             name={r.name}
+                            sellAt={r.sellAt}
                             startAt={r.startAt}
                             soldOut={r.soldOut}
                             coverImgUrl={r.coverImgUrl}

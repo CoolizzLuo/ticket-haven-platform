@@ -20,11 +20,11 @@ export const dayAfterToday = (num: number) =>
     .format('YYYY/MM/DD');
 
 export const isBeforeToday = (date: string | Date) => {
-  return dayjs().isSameOrBefore(dayjs(date));
+  return dayjs(date).isSameOrBefore(dayjs());
 };
 
 export const isAfterToday = (date: string | Date) => {
-  return dayjs().isAfter(dayjs(date));
+  return dayjs(date).isAfter(dayjs());
 };
 
 export const dayFromNow = (date: string | Date) => {
