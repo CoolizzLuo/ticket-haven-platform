@@ -33,7 +33,7 @@ const TicketPicker = ({
   return (
     <Grid bg="white" borderRadius="6px" padding="16px 16px 26px 16px" gridTemplateColumns="160px 163px 1fr" gap="16px">
       {fieldsTitle.map((title) => (
-        <Text key="title" color="natural.700">
+        <Text key={title} color="natural.700">
           {title}
         </Text>
       ))}

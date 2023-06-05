@@ -12,18 +12,22 @@ import TicketPicker from './TicketPicker';
 interface QuantitySelectorProps {
   activity: Activity;
   selectArea: SelectArea;
+  createOrder: (quantity: number) => void;
 }
 
-const QuantitySelector = ({ activity, selectArea }: QuantitySelectorProps) => {
+const QuantitySelector = ({ activity, selectArea, createOrder }: QuantitySelectorProps) => {
   const [isCheck, setIsCheck] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
-  const actionsHandler = (type: string) => {
+  const actionsHandler = async (type: string) => {
     switch (type) {
       case 'back':
         router.back();
         break;
       case 'next':
+        if (isCheck) {
+          createOrder(quantity);
+        }
         break;
       default:
         break;
