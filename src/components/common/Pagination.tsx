@@ -1,7 +1,7 @@
 import { chakra } from '@chakra-ui/react';
 
 type PaginationProps = {
-  currentPage: number;
+  page: number;
   totalCount: number;
   pageSize?: number;
   onPageChange: (page: number) => void;
@@ -61,27 +61,25 @@ const PageItem = chakra('button', {
     width: '2rem',
     height: '2rem',
     minWidth: '2rem',
-    minHeight: '2rem',
-    cursor: 'pointer',
   },
 });
 
-const Pagination = ({ currentPage, totalCount, pageSize = 5, onPageChange }: PaginationProps) => {
+const Pagination = ({ page, totalCount, pageSize = 5, onPageChange }: PaginationProps) => {
   const total = Math.ceil(totalCount / pageSize);
-  const pageRange = getPageRange({ maxVisiable: 5, total, current: currentPage });
+  const pageRange = getPageRange({ maxVisiable: 5, total, current: page });
 
   return (
     <chakra.div display="flex" justifyContent="center">
       <PageContainer>
-        <PageItem bgColor="red" {...arrowStyle(currentPage === 1)}>
+        <PageItem bgColor="red" {...arrowStyle(page === 1)} onClick={() => onPageChange(page - 1)}>
           &lt;
         </PageItem>
         {pageRange.map((p: number) => (
           <PageItem
             key={p}
-            {...itemStyle(p === currentPage)}
+            {...itemStyle(p === page)}
             onClick={() => {
-              if (p !== currentPage) {
+              if (p !== page) {
                 onPageChange(p);
               }
             }}
@@ -89,7 +87,9 @@ const Pagination = ({ currentPage, totalCount, pageSize = 5, onPageChange }: Pag
             {p}
           </PageItem>
         ))}
-        <PageItem {...arrowStyle(currentPage === total)}>&gt;</PageItem>
+        <PageItem {...arrowStyle(page === total)} onClick={() => onPageChange(page + 1)}>
+          &gt;
+        </PageItem>
       </PageContainer>
     </chakra.div>
   );
