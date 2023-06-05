@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { chakra, Card, CardHeader, CardBody, Heading, Divider, VStack, Square, Text } from '@chakra-ui/react';
-import { SubArea, Area, ChoseArea } from '@/types/activityTypes';
+import { SubArea, Area } from '@/types/activityTypes';
 
 interface AreaPickerProps extends Area {
-  clickHandler: (ChoseArea: ChoseArea) => void;
+  clickHandler: (subAreaId: string) => void;
 }
 
 const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) => {
@@ -60,7 +60,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                     w="100%"
                     padding="10px 8px"
                     sx={{ ':hover': { bg: 'natural.100' } }}
-                    onClick={() => clickHandler({ price, ...subArea })}
+                    onClick={() => clickHandler(subArea.id)}
                   >
                     <Square size="20px" bg={subArea.color} marginRight="8px" />
                     <Text marginRight="20px">{subArea.name}</Text>

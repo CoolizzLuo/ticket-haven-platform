@@ -1,19 +1,22 @@
 import { Grid, Text, Flex, Square, InputGroup, InputLeftAddon, InputRightAddon, Input, Button } from '@chakra-ui/react';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import React from 'react';
+import { SelectArea } from '@/types/activityTypes';
 
 const fieldsTitle = ['區域', '票價(NTD)', '張數(上限4張)'];
 
-interface TicketPickerProps {
+interface TicketPickerProps extends SelectArea {
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
-  name: string;
-  color: string;
-  remainingSeats: number;
-  price: number;
 }
 
-const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, price }: TicketPickerProps) => {
+const TicketPicker = ({
+  quantity,
+  setQuantity,
+  name,
+  price,
+  subArea: { color, remainingSeats },
+}: TicketPickerProps) => {
   const maxCount = remainingSeats < 4 ? remainingSeats : 4;
   const countHandler = (type: string) => {
     switch (type) {
@@ -38,16 +41,19 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
         <Square size="20px" backgroundColor={color} marginRight="8px" />
         <Text>{name}</Text>
       </Flex>
-      <Text color="primary.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
-        {price}
-      </Text>
-      <InputGroup>
-        <InputLeftAddon padding="0" borderColor="natural.100">
+      <Flex alignItems="center">
+        <Text color="primary.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
+          {price}
+        </Text>
+      </Flex>
+      <InputGroup display="flex">
+        <InputLeftAddon height="fit-content" padding="0" borderColor="natural.100">
           <Button variant="light" colorScheme="natural" size="sm" onClick={() => countHandler('minus')}>
             <MinusIcon />
           </Button>
         </InputLeftAddon>
         <Input
+          height="100%"
           borderColor="natural.100"
           type="number"
           textAlign="center"
@@ -65,7 +71,7 @@ const TicketPicker = ({ quantity, setQuantity, name, color, remainingSeats, pric
             })
           }
         />
-        <InputRightAddon padding="0" borderColor="natural.100">
+        <InputRightAddon height="fit-content" padding="0" borderColor="natural.100">
           <Button variant="light" colorScheme="natural" size="sm" onClick={() => countHandler('plus')}>
             <AddIcon />
           </Button>

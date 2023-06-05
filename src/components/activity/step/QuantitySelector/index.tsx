@@ -1,21 +1,22 @@
+'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, VStack, Heading, Flex, Icon, Text, Checkbox, Button } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import dayjs from 'dayjs';
-import { Activity, ChoseArea } from '@/types/activityTypes';
+import { Activity, SelectArea } from '@/types/activityTypes';
 import TicketPicker from './TicketPicker';
 
 interface QuantitySelectorProps {
-  quantity: number;
-  setQuantity: React.Dispatch<React.SetStateAction<number>>;
   activity: Activity;
-  area: ChoseArea;
+  selectArea: SelectArea;
 }
 
-const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySelectorProps) => {
+const QuantitySelector = ({ activity, selectArea }: QuantitySelectorProps) => {
   const [isCheck, setIsCheck] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const router = useRouter();
   const actionsHandler = (type: string) => {
     switch (type) {
@@ -37,7 +38,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
         <Box>
           <Flex alignItems="center" gap="10px" marginBottom="8px">
             <Icon as={MdOutlineCalendarMonth} />
-            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(dd) HH:mm')}</Text>
+            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
           </Flex>
           <Flex alignItems="center" gap="10px">
             <Icon as={GoLocation} />
@@ -45,7 +46,7 @@ const QuantitySelector = ({ setQuantity, quantity, activity, area }: QuantitySel
           </Flex>
         </Box>
         <VStack alignItems="flex-start" gap="16px">
-          {area && <TicketPicker quantity={quantity} setQuantity={setQuantity} {...area} />}
+          {selectArea && <TicketPicker quantity={quantity} setQuantity={setQuantity} {...selectArea} />}
           <Text color="primary.500">* 請注意，多視窗操作或單一頁面停留過久，可能導致購票失敗</Text>
         </VStack>
       </VStack>

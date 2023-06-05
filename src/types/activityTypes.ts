@@ -62,6 +62,14 @@ export interface Area {
   subAreas: SubArea[];
 }
 
-export interface ChoseArea extends SubArea {
+export interface SeatAreas {
+  seatImgUrl: string;
+  seats: Area[];
+}
+
+export interface SelectArea {
+  id: string;
+  name: string;
   price: number;
+  subArea: SubArea;
 }

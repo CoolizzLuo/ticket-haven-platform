@@ -1,14 +1,16 @@
+'use client';
+
 import { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { Area, Activity, ChoseArea } from '@/types/activityTypes';
-import { areaCookie } from '@/api/activities';
+import { Area, Activity } from '@/types/activityTypes';
+import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import AreaPicker from './AreaPicker';
 
 interface SeatsSelectorProps {
   activity: Activity;
-  areas: Area[];
+  seats: Area[];
 }
 
 type ButtonType = 'sale' | 'soldout';
@@ -32,14 +34,13 @@ const buttonProps = (isActive: boolean) => {
 const formatDateLocationStr = (date: string, location: string) =>
   `${dayjs(date).format('YYYY/MM/DD(ddd) HH:mm')} ${location}`;
 
-const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
+const SeatSelector = ({ activity, seats }: SeatsSelectorProps) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
   const router = useRouter();
-  const pathName = usePathname();
-  const clickHandler = (selectArea: ChoseArea) => {
-    localStorage.setItem('activity-choseArea', JSON.stringify(selectArea));
-    areaCookie.setChoseArea(selectArea);
-    router.push(pathName.replace(/\d$/g, '2'));
+  const setSelectArea = useTicketPurchasingStore.use.setArea();
+  const clickHandler = (areaId: string) => (subAreaId: string) => {
+    setSelectArea(areaId, subAreaId);
+    router.push('/purchasing-process/select-seats');
   };
   return (
     <VStack align="stretch" gap="48px" bg="natural.50" borderRadius="6px" padding="40px 24px">
@@ -66,8 +67,8 @@ const SeatSelector = ({ activity, areas }: SeatsSelectorProps) => {
           </Button>
         </HStack>
         <VStack align="stretch" gap="24px">
-          {areas.map((props) => (
-            <AreaPicker key={props.id} {...props} clickHandler={clickHandler} />
+          {seats.map((area) => (
+            <AreaPicker key={area.id} {...area} clickHandler={clickHandler(area.id)} />
           ))}
         </VStack>
       </Box>
