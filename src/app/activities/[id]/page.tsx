@@ -246,26 +246,26 @@ const Activitie = () => {
                         <Text mb="4px"> {event.startTime && dayFormat(event.startTime)}</Text>
                       </Box>
                       <Box textAlign="center" p="20px" alignSelf="center">
-                        {isBeforeToday(event.sellStartTime) && (
+                        {isAfterToday(event.sellStartTime) && (
                           <Text color="#BF7506" mb="8px">
                             {dayFromNow(event.sellStartTime)}後開賣
                           </Text>
                         )}
 
-                        {isBeforeToday(event.sellStartTime) && (
-                          <Button size="md" bg="white" py="8px" px="12px">
+                        {isAfterToday(event.sellStartTime) && (
+                          <Button py="8px" px="12px" colorScheme="natural" variant="outline" isDisabled>
                             即將開賣
                           </Button>
                         )}
 
-                        {isAfterToday(event.sellEndTime) && (
+                        {isBeforeToday(event.sellEndTime) && (
                           <Button colorScheme="natural" variant="outline" py="8px" px="12px" isDisabled>
                             結束售票
                           </Button>
                         )}
 
-                        {!event.soldOut && isAfterToday(event.sellStartTime) && isBeforeToday(event.sellEndTime) && (
-                          // <NextLink href={{ pathname: `/activities/${id}/step/1`, query: { eventId: event.id } }} key={event.id}>
+                        {!event.soldOut && isBeforeToday(event.sellStartTime) && isAfterToday(event.sellEndTime) && (
+                          // <NextLink href={`/activities/${event.id}/step/1`} key={event.id}>
                           <Button colorScheme="primary" py="8px" px="12px" onClick={() => buyTickets(id, event.id)}>
                             立即購票
                           </Button>
