@@ -46,7 +46,14 @@ const Activities = () => {
         <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="30px" as="ul" alignItems="stretch">
           {result.length ? (
             result.map((r: ActType) => (
-              <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
+              <ActivityCard
+                key={r.id}
+                id={r.id}
+                name={r.name}
+                startAt={r.startAt}
+                soldOut={r.soldOut}
+                coverImgUrl={r.coverImgUrl}
+              />
             ))
           ) : (
             <Text>搜尋條件查無活動</Text>

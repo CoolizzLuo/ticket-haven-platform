@@ -41,11 +41,13 @@ type Event = {
 type DetailType = {
   address: string;
   content: string;
-  converImageUrl: string;
+  coverImageUrl: string;
   startTime: string;
   endTime: string;
   name: string;
   notice: string;
+  news: string;
+  seatMapUrl: string;
   events: Event[];
 };
 
@@ -87,7 +89,7 @@ const Activitie = () => {
       <Box as="section" mb="48px">
         <Image
           my="24px"
-          src={`/image/${id}.jpg`}
+          src={result?.coverImageUrl}
           borderRadius="lg"
           alt="eventImg"
           width="100%"
@@ -103,13 +105,15 @@ const Activitie = () => {
           </Text>
           /<Text>{result?.address}</Text>
         </Flex>
-        <List bg="#FFF3F8" pt="20px" pl="36px" borderRadius="6px">
-          {result?.notice.split('\n').map((item) => (
-            <ListItem pb="20px" listStyleType="none" key={item}>
-              {item}
-            </ListItem>
-          ))}
-        </List>
+        {result?.news && (
+          <List bg="#FFF3F8" pt="20px" pl="36px" borderRadius="6px">
+            {result?.news?.split('\n').map((item) => (
+              <ListItem pb="20px" listStyleType="none" key={item}>
+                {item}
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
 
       <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} gap="30px" as="ul" alignItems="stretch">
@@ -138,66 +142,25 @@ const Activitie = () => {
             <TabPanels bg="#F7F4F6" borderRadius="6px" p="32px" pb="100px">
               <TabPanel p="0">
                 <Text mb="40px"> {result?.name}</Text>
-                {result?.content}
-                {/* <Text mb="40px">【TOMORROW X TOGETHER WORLD TOUR &lt;ACT: SWEET MIRAGE&gt; IN TAIPEI】加場公告</Text>
-                <List mb="40px">
-                  <ListItem mb="24px">
-                    <Flex>
-                      <Text>■ 演出日期：</Text>
-                      <Box>
-                        <Text>2023/04/04 (二) 7PM 加場</Text>
-                        <Text>2023/04/05 (三) 7PM</Text>
-                        <Text>(實際演出時間以現場公告為準)</Text>
-                      </Box>
-                    </Flex>
-                  </ListItem>
-                  <ListItem listStyleType="none" mb="24px">
-                    <Flex>
-                      <Text>■ 演出地點：</Text>
-                      <Box>
-                        <Text>台北南港展覽館1館</Text>
-                      </Box>
-                    </Flex>
-                  </ListItem>
-                  <ListItem listStyleType="none">
-                    <Flex alignItems="center">
-                      <Text>■ 加場售票時間：</Text>
-                      <Box>
-                        <Text>2023/02/19(日) 12PM 全面開賣</Text>
-                      </Box>
-                    </Flex>
-                  </ListItem>
-                  <ListItem listStyleType="none">
-                    <Text>*每人限購4張</Text>
-                    <Text>*本次加場演出無提供會員預購， 全面開賣時會設提問。</Text>
-                  </ListItem>
-                </List>
-                <List spacing={3}>
-                  <ListItem textIndent="-16px" pl="16px">
-                    ※
-                    一人一票，憑票入場，孩童亦需購票。因考量人身安全及整體音量恐對孩童造成影響及其身高受限而影響視線，故孕婦及身高未滿110公分或7歲以下之孩童不建議購買搖滾站區，主辦方將有權謝絕入場，購票前請自行斟酌。
-                  </ListItem>
-                  <ListItem listStyleType="none" textIndent="-16px" pl="16px">
-                    ※ 活動現場禁止使用任何器材拍照、攝影、直播、錄音，違者須依照工作人員指示離場。
-                  </ListItem>
-                  <ListItem listStyleType="none" textIndent="-16px" pl="16px">
-                    ※
-                    請務必於演出日前至主辦單位官方網站及社群頁面確認入場規範、粉絲福利入場流程等相關資訊，以免損害自身權益。如未能於公佈的進場/福利整隊時間內報到，將視為放棄排隊序號或福利權利。
-                  </ListItem>
-                  <ListItem listStyleType="none" textIndent="-16px" pl="16px">
-                    ※ 活動當天入場時需配合嚴格安檢，活動相關內容及詳細辦法請關注活動主辦單位
-                  </ListItem>
-                </List> */}
+                <Box
+                  bg="#FFF3F8"
+                  pt="20px"
+                  pl="36px"
+                  borderRadius="6px"
+                  dangerouslySetInnerHTML={{ __html: result?.notice || '' }}
+                />
               </TabPanel>
-              <TabPanel p="0">座位示意</TabPanel>
               <TabPanel p="0">
-                <List>
-                  {result?.notice.split('\n').map((item) => (
-                    <ListItem pb="20px" listStyleType="none" key={item}>
-                      {item}
-                    </ListItem>
-                  ))}
-                </List>
+                <Image my="24px" src={result?.seatMapUrl} borderRadius="lg" alt="eventImg" width="100%" />
+              </TabPanel>
+              <TabPanel p="0">
+                <Box
+                  bg="#FFF3F8"
+                  pt="20px"
+                  pl="36px"
+                  borderRadius="6px"
+                  dangerouslySetInnerHTML={{ __html: result?.notice || '' }}
+                />
               </TabPanel>
               <TabPanel p="0">
                 <Text mb="20px"> 親愛的客戶，感謝您的購票興趣！為確保順利完成購票，請您遵循以下提醒：</Text>

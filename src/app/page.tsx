@@ -4,7 +4,6 @@ import { Text, Box, useBreakpointValue, Button, Image } from '@chakra-ui/react';
 import { dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 
-import { Activities } from '@/types/activityTypes';
 import { usePathname, useRouter } from 'next/navigation';
 
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
@@ -28,14 +27,13 @@ const Home = () => {
 
   const section1 = {
     title: '近期開賣',
-    params: { startAfter: today, startBefore: endOfWeek },
     tabs: [
-      { id: '1', name: '今天', fnRule: (item: Activities) => dayYMDFormat(item.startAt) === today },
-      { id: '2', name: '明天', fnRule: (item: Activities) => dayYMDFormat(item.startAt) === tommorrow },
+      { id: '1', name: '今天', params: { startAfter: today } },
+      { id: '2', name: '明天', params: { startAfter: tommorrow } },
       {
         id: '3',
         name: '未來一週',
-        fnRule: (item: Activities) => dayYMDFormat(item.startAt) >= today && dayYMDFormat(item.startAt) < endOfWeek,
+        params: { startAfter: today, startBefore: endOfWeek },
       },
     ],
   };
@@ -43,12 +41,11 @@ const Home = () => {
   // 近期演出
   const section2 = {
     title: '近期演出',
-    params: {},
     tabs: [
-      { id: '1', name: '全部', fnRule: (item: Activities) => item },
-      { id: '2', name: '北部', fnRule: (item: Activities) => item.region === 0 },
-      { id: '3', name: '中部', fnRule: (item: Activities) => item.region === 1 },
-      { id: '4', name: '南部', fnRule: (item: Activities) => item.region === 2 },
+      { id: '1', name: '全部', params: {} },
+      { id: '2', name: '北部', params: { region: 0 } },
+      { id: '3', name: '中部', params: { region: 1 } },
+      { id: '4', name: '南部', params: { region: 2 } },
     ],
   };
 
@@ -59,12 +56,8 @@ const Home = () => {
   return (
     <>
       {!isMobile && <ActivitySearchForm onChange={redirectEventsResultPage} />}
-      <ActivitySearchTemplate
-        title={section1.title}
-        tabs={section1.tabs}
-        params={{ ...defaultParams(), ...section1.params }}
-      />
-      <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} params={defaultParams()} />
+      <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
+      <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
       <Box as="section" py="120px" bgColor="#F7F4F6" textAlign="center">
         <Image w="200px" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
         <Text>採用 QR code 電子票券</Text>

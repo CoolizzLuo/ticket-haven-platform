@@ -9,20 +9,20 @@ import { useEffect, useState } from 'react';
 type Content = {
   id: string;
   name: string;
-  fnRule: (item: Activities) => void;
+  params: object;
 };
 
 type ActivitySearchProps = {
   title: string;
   tabs: Content[];
-  params: ActivitiesSearch;
 };
 
-const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProps) => {
+const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
   const [result, setResult] = useState<Activities[]>([]);
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
-  const handleFetchEvents = async () => {
-    const res = await fetchActivities({ ...params, page: 1, pageSize: 10 });
+  const handleFetchEvents = async (params: ActivitiesSearch) => {
+    const res = await fetchActivities(params);
     const { data = [], message } = res.data;
     if (message === 'success') {
       setResult(data);
@@ -30,9 +30,8 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
   };
 
   useEffect(() => {
-    handleFetchEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    handleFetchEvents({ ...tabs[tabIndex].params, page: 1, pageSize: 6 });
+  }, [tabIndex]);
 
   return (
     <Container maxW="1200px" py="80px">
@@ -40,7 +39,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
         <Heading as="h2" fontSize="28px" mb="32px">
           {title}
         </Heading>
-        <Tabs variant="unstyled">
+        <Tabs variant="unstyled" onChange={(index) => setTabIndex(index)}>
           <TabList mb="24px">
             {tabs.map((opt) => {
               return (
@@ -67,12 +66,17 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                       as="ul"
                       alignItems="stretch"
                     >
-                      {tab.fnRule && result.filter(tab.fnRule).length ? (
-                        result
-                          .filter(tab.fnRule)
-                          .map((r: Activities) => (
-                            <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
-                          ))
+                      {result.length ? (
+                        result.map((r: Activities) => (
+                          <ActivityCard
+                            key={r.id}
+                            id={r.id}
+                            name={r.name}
+                            startAt={r.startAt}
+                            soldOut={r.soldOut}
+                            coverImgUrl={r.coverImgUrl}
+                          />
+                        ))
                       ) : (
                         <>無活動資訊</>
                       )}
