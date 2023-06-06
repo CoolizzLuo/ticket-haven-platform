@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { Area, Activity } from '@/types/activityTypes';
-import useTicketPurchasingStore from '@/stores/ticketPurchasing';
+import useTicketPurchasingStore, { SubArea } from '@/stores/ticketPurchasing';
 import AreaPicker from './AreaPicker';
 
 interface SeatsSelectorProps {
@@ -38,8 +38,8 @@ const SeatSelector = ({ activity, seats }: SeatsSelectorProps) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
   const router = useRouter();
   const setSelectArea = useTicketPurchasingStore.use.setArea();
-  const clickHandler = (areaId: string) => (subAreaId: string) => {
-    setSelectArea(areaId, subAreaId);
+  const clickHandler = (area: Area) => (subArea: SubArea) => {
+    setSelectArea(area, subArea);
     router.push('/purchasing-process/select-seats');
   };
   return (
@@ -68,7 +68,7 @@ const SeatSelector = ({ activity, seats }: SeatsSelectorProps) => {
         </HStack>
         <VStack align="stretch" gap="24px">
           {seats.map((area) => (
-            <AreaPicker key={area.id} {...area} clickHandler={clickHandler(area.id)} />
+            <AreaPicker key={area.id} {...area} clickHandler={clickHandler(area)} />
           ))}
         </VStack>
       </Box>

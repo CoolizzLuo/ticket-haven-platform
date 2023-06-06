@@ -1,24 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, VStack, Heading, Flex, Icon, Text, Checkbox, Button } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import dayjs from 'dayjs';
-import { Activity, SelectArea } from '@/types/activityTypes';
+import { Activity } from '@/types/activityTypes';
+import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import TicketPicker from './TicketPicker';
 
 interface QuantitySelectorProps {
   activity: Activity;
-  selectArea: SelectArea;
   createOrder: (quantity: number) => void;
 }
 
-const QuantitySelector = ({ activity, selectArea, createOrder }: QuantitySelectorProps) => {
+const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
   const [isCheck, setIsCheck] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
+
+  const selectArea = useTicketPurchasingStore.use.selectArea();
+  const selectSubArea = useTicketPurchasingStore.use.selectSubArea();
+
+  useEffect(() => {
+    if (!selectArea || !selectSubArea) {
+      router.push('/purchasing-process/select-area');
+    }
+  }, []);
+
   const actionsHandler = async (type: string) => {
     switch (type) {
       case 'back':
@@ -33,6 +43,7 @@ const QuantitySelector = ({ activity, selectArea, createOrder }: QuantitySelecto
         break;
     }
   };
+
   return (
     <VStack alignItems="flex-start" gap="40px">
       <VStack alignItems="stretch" gap="24px" bg="natural.50" borderRadius="6px" padding="40px 24px">
@@ -50,7 +61,9 @@ const QuantitySelector = ({ activity, selectArea, createOrder }: QuantitySelecto
           </Flex>
         </Box>
         <VStack alignItems="flex-start" gap="16px">
-          {selectArea && <TicketPicker quantity={quantity} setQuantity={setQuantity} {...selectArea} />}
+          {selectArea && selectSubArea && (
+            <TicketPicker quantity={quantity} setQuantity={setQuantity} area={selectArea} subArea={selectSubArea} />
+          )}
           <Text color="primary.500">* 請注意，多視窗操作或單一頁面停留過久，可能導致購票失敗</Text>
         </VStack>
       </VStack>

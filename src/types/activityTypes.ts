@@ -45,6 +45,7 @@ export interface Activity {
   content: string;
   notice: string;
   seatMapUrl: string;
+  selectSeatImageUrl: string;
   events: Event[];
 }
 
