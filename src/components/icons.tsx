@@ -1,8 +1,9 @@
+import { ComponentProps, ComponentType } from 'react';
 import { GoLocation } from 'react-icons/go';
 import { BsCheckLg } from 'react-icons/bs';
 import { LuCalendarDays } from 'react-icons/lu';
+import { GiTicket } from 'react-icons/gi';
 import { Icon } from '@/lib/chakra';
-import { ComponentProps, ComponentType } from 'react';
 
 const createIcon = (Source: ComponentType) =>
   function IconWrap(props: ComponentProps<typeof Icon>) {
@@ -12,3 +13,4 @@ const createIcon = (Source: ComponentType) =>
 export const CheckIcon = createIcon(BsCheckLg);
 export const LocationIcon = createIcon(GoLocation);
 export const CalendarIcon = createIcon(LuCalendarDays);
+export const TicketIcon = createIcon(GiTicket);

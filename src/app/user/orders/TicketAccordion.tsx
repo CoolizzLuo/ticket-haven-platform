@@ -9,15 +9,20 @@ import {
   Box,
   Button,
   Flex,
+  List,
+  ListIcon,
+  ListItem,
   SimpleGrid,
   Spacer,
+  Tag,
   Text,
   VStack,
+  chakra,
 } from '@/lib/chakra';
 import { OrderStatus, OrderStatusLabel } from '@/constants/orderStatus';
 import { Order } from '@/hooks/api/useOrders';
 import { dayFormat } from '@/lib/dayjs';
-import { CalendarIcon, LocationIcon } from '@/components/icons';
+import { CalendarIcon, LocationIcon, TicketIcon } from '@/components/icons';
 
 export type AccordionData = {
   id: string;
@@ -58,7 +63,7 @@ const ActivityAccordion = ({ data }: { data: Order[] }) => {
               </Box>
               <AccordionButton as="div" _hover={{ background: 'transparent' }}>
                 <Button rightIcon={<AccordionIcon />} colorScheme="primary">
-                  票券資訊
+                  訂單資訊
                 </Button>
               </AccordionButton>
             </Flex>
@@ -66,11 +71,13 @@ const ActivityAccordion = ({ data }: { data: Order[] }) => {
               <SimpleGrid columns={4}>
                 <div>
                   <Text>訂單編號</Text>
-                  <Text>{orderNo}</Text>
+                  <Text>#{orderNo}</Text>
                 </div>
                 <div>
                   <Text>狀態</Text>
-                  <Text>{OrderStatusLabel[status]}</Text>
+                  <Text>
+                    <Tag variant={status === OrderStatus.PAID ? 'warning' : 'info'}>{OrderStatusLabel[status]}</Tag>
+                  </Text>
                 </div>
                 <div>
                   <Text>票卷張數</Text>
@@ -78,18 +85,24 @@ const ActivityAccordion = ({ data }: { data: Order[] }) => {
                 </div>
                 <div>
                   <Text>總金額</Text>
-                  <Text>{price}</Text>
+                  <Text>${price}</Text>
                 </div>
               </SimpleGrid>
               <Flex mt="16px">
                 <div>
-                  <Text mb="4px">座位</Text>
-                  {seats.map((s, i) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <Text key={i}>
-                      {s.subAreaName} {s.row}排 {s.seat}號
-                    </Text>
-                  ))}
+                  <Text mb="6px">座位</Text>
+                  <List>
+                    {seats.map((s, i) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <ListItem key={i}>
+                        <ListIcon as={TicketIcon} color="primary.500" />
+                        <chakra.span mr="32px">{s.subAreaName}</chakra.span>
+                        <span>
+                          {s.row}排 {s.seat}號
+                        </span>
+                      </ListItem>
+                    ))}
+                  </List>
                 </div>
                 <Spacer />
                 {/* <Button size="sm" variant="ghost" colorScheme="natural" alignSelf="self-end">
