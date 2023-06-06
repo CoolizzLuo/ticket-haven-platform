@@ -20,15 +20,6 @@ const Demo = () => {
         OpenConfirm
       </Button>
       <Divider my="24px" />
-      <Button
-        type="button"
-        onClick={() => {
-          purchasingStore.setEvent('activity', 'event');
-          router.push('/demo/process/1');
-        }}
-      >
-        start ticket purchasing process
-      </Button>
     </div>
   );
 };

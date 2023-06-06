@@ -11,6 +11,7 @@ const SelectArea = () => {
   const eventId = useTicketPurchasingStore.use.eventId();
   const { activity } = useActivity(activityId);
   const { seatAreas } = useSeatAreas(eventId);
+
   if (activity && seatAreas) {
     return (
       <StepPage step={1} seatImgUrl={seatAreas.seatImgUrl}>
