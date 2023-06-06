@@ -1,6 +1,6 @@
 'use client';
 
-import { Center, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/lib/chakra';
+import { Center, Container, Skeleton, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@/lib/chakra';
 import useOrders from '@/hooks/api/useOrders';
 import { useState } from 'react';
 import Pagination from '@/components/common/Pagination';
@@ -19,10 +19,10 @@ const Order = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <CompletedOrders />
+            <OrderList status="completed" />
           </TabPanel>
           <TabPanel>
-            <UnpaidOrders />
+            <OrderList status="unpaid" />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -30,25 +30,15 @@ const Order = () => {
   );
 };
 
-function CompletedOrders() {
+function OrderList({ status }: { status: 'completed' | 'unpaid' }) {
   const [page, setPage] = useState(1);
-  const { orders = [], totalCount = 0 } = useOrders({ page, pageSize: 5, status: 'completed' });
+  const { orders = [], totalCount = 0, isLoading } = useOrders({ page, pageSize: 5, status });
 
   return (
     <>
-      <ActivityAccordion data={orders} />
-      <Pagination page={page} totalCount={totalCount} onPageChange={setPage} mt="40px" />
-    </>
-  );
-}
-
-function UnpaidOrders() {
-  const [page, setPage] = useState(1);
-  const { orders = [], totalCount = 0 } = useOrders({ page, pageSize: 5, status: 'unpaid' });
-
-  return (
-    <>
-      <ActivityAccordion data={orders} />
+      <Skeleton minH="150px" isLoaded={!isLoading}>
+        <ActivityAccordion data={orders} />
+      </Skeleton>
       <Pagination page={page} totalCount={totalCount} onPageChange={setPage} mt="40px" />
     </>
   );
