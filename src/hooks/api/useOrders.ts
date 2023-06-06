@@ -1,8 +1,5 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
-import useSWR from 'swr';
-import { paginationFetcher } from '@/api/swrFetcher';
 import { OrderStatus } from '@/constants/orderStatus';
-import { PaginationResponse } from '@/api/types/baseResponse';
+import useSWRWithPage from '@/hooks/useSWRWithPage';
 
 export interface User {
   id: string;
@@ -37,18 +34,9 @@ export interface Order {
 }
 
 const useOrders = ({ page, pageSize, status }: { page: number; pageSize: number; status: 'unpaid' | 'completed' }) => {
-  const { data: { data: orders, totalCount } = {}, isLoading } = useSWR<PaginationResponse<Order[]>>(
-    ['orders', { page, pageSize, status }],
-    paginationFetcher,
-  );
+  const { data: orders, ...others } = useSWRWithPage<Order[]>(['orders', { page, pageSize, status }]);
 
-  const countRef = useRef(totalCount);
-
-  if (!isLoading) {
-    countRef.current = totalCount;
-  }
-
-  return { orders, totalCount: countRef.current };
+  return { orders, ...others };
 };
 
 export default useOrders;
