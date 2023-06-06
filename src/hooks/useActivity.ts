@@ -11,7 +11,7 @@ export interface Event {
 export interface Activity {
   id: string;
   name: string;
-  converImageUrl: string;
+  coverImageUrl: string;
   startTime: string;
   endTime: string;
   location: string;
