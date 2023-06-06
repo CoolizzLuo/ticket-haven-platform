@@ -60,6 +60,21 @@ const Button = defineStyleConfig({
       fontSize: '16px',
       h: '44px',
     },
+    'icon-xs': {
+      fontSize: '16px',
+      h: '34px',
+      minW: '34px',
+    },
+    'icon-sm': {
+      fontSize: '20px',
+      h: '44px',
+      minW: '44px',
+    },
+    'icon-md': {
+      fontSize: '20px',
+      h: '54px',
+      minW: '54px',
+    },
   },
   defaultProps: {
     colorScheme: 'primary',

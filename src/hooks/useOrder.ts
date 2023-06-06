@@ -52,7 +52,7 @@ export type PaymentInfo = {
 };
 
 const useOrder = (orderNo?: string | null) => {
-  const { data, ...props } = useSWR<Order>(orderNo && `orders/${orderNo}`);
+  const { data, mutate, ...props } = useSWR<Order>(orderNo && `orders/${orderNo}`);
 
   const cancelOder = useCallback(() => axiosClient.delete(`orders/${orderNo}`), [orderNo]);
 
@@ -61,7 +61,26 @@ const useOrder = (orderNo?: string | null) => {
     [orderNo],
   );
 
-  return { order: data, cancelOder, getPaymentInfo, ...props };
+  const deleteSeat = useCallback(
+    async (seatData: { subAreaId: string; row: number; seat: number }) => {
+      axiosClient
+        .delete<BaseResponse<boolean>>(`orders/${orderNo}/seats`, { data: seatData })
+        .then((res) => res.data.data);
+      mutate((prevData) => {
+        if (prevData) {
+          return {
+            ...prevData,
+            seats: prevData.seats.filter(
+              (s) => !(s.subAreaId === seatData.subAreaId && s.row === seatData.row && s.seat === seatData.seat),
+            ),
+          };
+        }
+      });
+    },
+    [orderNo],
+  );
+
+  return { order: data, cancelOder, getPaymentInfo, deleteSeat, mutate, ...props };
 };
 
 export default useOrder;

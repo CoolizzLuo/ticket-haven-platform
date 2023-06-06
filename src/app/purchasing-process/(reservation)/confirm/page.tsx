@@ -11,6 +11,7 @@ import {
   Divider,
   Flex,
   Heading,
+  IconButton,
   Spacer,
   Text,
   VStack,
@@ -19,7 +20,7 @@ import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useActivity from '@/hooks/useActivity';
 import useOrder from '@/hooks/useOrder';
-import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
+import { CalendarIcon, CheckIcon, LocationIcon, MdDeleteIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs, { Dayjs } from 'dayjs';
@@ -63,7 +64,7 @@ const Confirm = () => {
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder, getPaymentInfo, error } = useOrder(orderNo);
+  const { order, cancelOder, getPaymentInfo, error, deleteSeat } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
@@ -164,13 +165,27 @@ const Confirm = () => {
                   <CalendarIcon mr="8px" />
                   <Text>{activity.location}</Text>
                 </Flex>
+                {order.seats.length > 1 && (
+                  <IconButton
+                    pos="absolute"
+                    top="1.25rem"
+                    right="1.25rem"
+                    isRound
+                    size="icon-sm"
+                    colorScheme="natural"
+                    variant="light"
+                    icon={<MdDeleteIcon />}
+                    aria-label="Delete seat"
+                    onClick={() => deleteSeat(s)}
+                  />
+                )}
               </CardHeader>
               <Divider borderColor="natural.600" />
               <CardBody>
                 <Flex>
                   <VStack align="flex-start">
                     <Flex align="center">
-                      <Text textStyle="t7" mr="16px">
+                      <Text textStyle="t6" mr="16px">
                         場次
                       </Text>
                       <Text textStyle="t5">{dayFormat(order.activity.eventStartTime)}</Text>

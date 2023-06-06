@@ -1,6 +1,7 @@
 import { GoLocation } from 'react-icons/go';
 import { BsCheckLg } from 'react-icons/bs';
 import { LuCalendarDays } from 'react-icons/lu';
+import { MdDelete } from 'react-icons/md';
 import { Icon } from '@/lib/chakra';
 import { ComponentProps, ComponentType } from 'react';
 
@@ -12,3 +13,4 @@ const createIcon = (Source: ComponentType) =>
 export const CheckIcon = createIcon(BsCheckLg);
 export const LocationIcon = createIcon(GoLocation);
 export const CalendarIcon = createIcon(LuCalendarDays);
+export const MdDeleteIcon = createIcon(MdDelete);
