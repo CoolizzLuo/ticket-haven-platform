@@ -155,10 +155,10 @@ const Confirm = () => {
         <Heading fontSize="28px" mt="32px" mb="16px">
           訂單編號 #{order.orderNo}
         </Heading>
-        <VStack alignItems="stretch" gap="8px">
+        <VStack alignItems="stretch" gap="16px">
           {order.seats.map((s, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Card key={i}>
+            <Card key={i} borderLeft="4px" borderColor="primary.500">
               <CardHeader>
                 <Heading size="md">{activity.name}</Heading>
                 <Flex align="center" mt="12px" textStyle="t6">
@@ -180,7 +180,7 @@ const Confirm = () => {
                   />
                 )}
               </CardHeader>
-              <Divider borderColor="natural.600" />
+              <Divider borderColor="natural.600" w="auto" mx="20px" />
               <CardBody>
                 <Flex>
                   <VStack align="flex-start">
@@ -211,7 +211,7 @@ const Confirm = () => {
                       票種 / 票價
                     </Text>
                     <Text textStyle="t5" fontWeight="bold">
-                      全票 / {s.price}
+                      全票 / ${s.price}
                     </Text>
                   </Box>
                 </Flex>
@@ -231,7 +231,7 @@ const Confirm = () => {
             <Flex w="200px" mt="12px" px="20px" align="center" justify="space-between">
               <Text mr="24px">總計</Text>
               <Text textStyle="t4" fontWeight="bold">
-                {order.price}
+                ${order.price}
               </Text>
             </Flex>
           </div>
