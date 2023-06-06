@@ -3,7 +3,7 @@
 import StepPage from '@/components/activity/step';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import SeatSelector from '@/components/activity/step/SeatsSelector';
-import useActivity from '@/hooks/useActivity';
+import useActivity from '@/hooks/api/useActivity';
 import useSeatAreas from '@/hooks/useSeatAreas';
 
 const SelectArea = () => {

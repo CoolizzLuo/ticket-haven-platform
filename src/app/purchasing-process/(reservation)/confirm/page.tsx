@@ -17,8 +17,8 @@ import {
 } from '@/lib/chakra';
 import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
-import useActivity from '@/hooks/useActivity';
-import useOrder from '@/hooks/useOrder';
+import useActivity from '@/hooks/api/useActivity';
+import useOrder from '@/hooks/api/useOrder';
 import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
