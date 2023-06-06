@@ -78,7 +78,7 @@ const Activities = () => {
             <Text>搜尋條件查無活動</Text>
           )}
         </Grid>
-        {result.length && (
+        {!!result.length && (
           <Box py="20px">
             <Pagination
               page={pageInfo.page}

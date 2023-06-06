@@ -1,3 +1,4 @@
+import { useState, useEffect, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import { paginationFetcher } from '@/api/swrFetcher';
 import { OrderStatus } from '@/constants/orderStatus';
@@ -36,12 +37,18 @@ export interface Order {
 }
 
 const useOrders = ({ page, pageSize, status }: { page: number; pageSize: number; status: 'unpaid' | 'completed' }) => {
-  const { data: { data: orders } = {} } = useSWR<PaginationResponse<Order[]>>(
+  const { data: { data: orders, totalCount } = {}, isLoading } = useSWR<PaginationResponse<Order[]>>(
     ['orders', { page, pageSize, status }],
     paginationFetcher,
   );
 
-  return { orders };
+  const countRef = useRef(totalCount);
+
+  if (!isLoading) {
+    countRef.current = totalCount;
+  }
+
+  return { orders, totalCount: countRef.current };
 };
 
 export default useOrders;

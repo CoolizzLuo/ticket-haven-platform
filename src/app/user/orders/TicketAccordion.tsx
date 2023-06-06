@@ -15,7 +15,7 @@ import {
   VStack,
 } from '@/lib/chakra';
 import { OrderStatus, OrderStatusLabel } from '@/constants/orderStatus';
-import { Order } from '@/hooks/useOrders';
+import { Order } from '@/hooks/api/useOrders';
 import { dayFormat } from '@/lib/dayjs';
 import { CalendarIcon, LocationIcon } from '@/components/icons';
 
