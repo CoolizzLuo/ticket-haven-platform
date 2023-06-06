@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     if (!activityId) {
       router.push('/');
     }
-  }, [activityId]);
+  }, []);
 
   return children;
 };
