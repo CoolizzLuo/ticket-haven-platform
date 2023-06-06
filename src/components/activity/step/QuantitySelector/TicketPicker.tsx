@@ -1,23 +1,25 @@
 import { Grid, Text, Flex, Square, InputGroup, InputLeftAddon, InputRightAddon, Input, Button } from '@chakra-ui/react';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import React from 'react';
-import { SelectArea } from '@/types/activityTypes';
 
 const fieldsTitle = ['區域', '票價(NTD)', '張數(上限4張)'];
 
-interface TicketPickerProps extends SelectArea {
+interface TicketPickerProps {
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  area: {
+    name: string;
+    price: number;
+  };
+  subArea: {
+    name: string;
+    color: string;
+    remainingSeats: number;
+  };
 }
 
-const TicketPicker = ({
-  quantity,
-  setQuantity,
-  name,
-  price,
-  subArea: { color, remainingSeats },
-}: TicketPickerProps) => {
-  const maxCount = remainingSeats < 4 ? remainingSeats : 4;
+const TicketPicker = ({ quantity, setQuantity, area, subArea }: TicketPickerProps) => {
+  const maxCount = subArea.remainingSeats < 4 ? subArea.remainingSeats : 4;
   const countHandler = (type: string) => {
     switch (type) {
       case 'plus':
@@ -33,17 +35,17 @@ const TicketPicker = ({
   return (
     <Grid bg="white" borderRadius="6px" padding="16px 16px 26px 16px" gridTemplateColumns="160px 163px 1fr" gap="16px">
       {fieldsTitle.map((title) => (
-        <Text key="title" color="natural.700">
+        <Text key={title} color="natural.700">
           {title}
         </Text>
       ))}
       <Flex alignItems="center">
-        <Square size="20px" backgroundColor={color} marginRight="8px" />
-        <Text>{name}</Text>
+        <Square size="20px" backgroundColor={subArea.color} marginRight="8px" />
+        <Text>{subArea.name}</Text>
       </Flex>
       <Flex alignItems="center">
         <Text color="primary.500" fontSize="24px" fontWeight="bold" fontFamily="Noto Sans">
-          {price}
+          {area.price}
         </Text>
       </Flex>
       <InputGroup display="flex">

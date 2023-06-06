@@ -3,7 +3,7 @@ import { chakra, Card, CardHeader, CardBody, Heading, Divider, VStack, Square, T
 import { SubArea, Area } from '@/types/activityTypes';
 
 interface AreaPickerProps extends Area {
-  clickHandler: (subAreaId: string) => void;
+  clickHandler: (subArea: SubArea) => void;
 }
 
 const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) => {
@@ -60,7 +60,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                     w="100%"
                     padding="10px 8px"
                     sx={{ ':hover': { bg: 'natural.100' } }}
-                    onClick={() => clickHandler(subArea.id)}
+                    onClick={() => clickHandler(subArea)}
                   >
                     <Square size="20px" bg={subArea.color} marginRight="8px" />
                     <Text marginRight="20px">{subArea.name}</Text>

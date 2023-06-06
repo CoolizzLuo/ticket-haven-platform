@@ -38,7 +38,7 @@ export interface Event {
 export interface Activity {
   id: string;
   name: string;
-  converImageUrl: string;
+  coverImageUrl: string;
   startTime: string;
   endTime: string;
   location: string;
@@ -46,6 +46,7 @@ export interface Activity {
   content: string;
   notice: string;
   seatMapUrl: string;
+  selectSeatImageUrl: string;
   events: Event[];
 }
 
