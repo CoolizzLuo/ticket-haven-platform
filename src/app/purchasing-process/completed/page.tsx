@@ -16,7 +16,7 @@ import {
   VStack,
 } from '@/lib/chakra';
 import Link from 'next/link';
-import useOrder from '@/hooks/useOrder';
+import useOrder from '@/hooks/api/useOrder';
 import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';

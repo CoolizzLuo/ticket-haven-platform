@@ -1,7 +1,5 @@
-import useSWR from 'swr';
-import { paginationFetcher } from '@/api/swrFetcher';
 import { OrderStatus } from '@/constants/orderStatus';
-import { PaginationResponse } from '@/api/types/baseResponse';
+import useSWRWithPage from '@/hooks/useSWRWithPage';
 
 export interface User {
   id: string;
@@ -36,12 +34,9 @@ export interface Order {
 }
 
 const useOrders = ({ page, pageSize, status }: { page: number; pageSize: number; status: 'unpaid' | 'completed' }) => {
-  const { data: { data: orders } = {} } = useSWR<PaginationResponse<Order[]>>(
-    ['orders', { page, pageSize, status }],
-    paginationFetcher,
-  );
+  const { data: orders, ...others } = useSWRWithPage<Order[]>(['orders', { page, pageSize, status }]);
 
-  return { orders };
+  return { orders, ...others };
 };
 
 export default useOrders;
