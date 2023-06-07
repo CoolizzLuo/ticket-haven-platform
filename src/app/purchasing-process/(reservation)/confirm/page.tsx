@@ -63,15 +63,15 @@ const Confirm = () => {
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder, getPaymentInfo, error } = useOrder(orderNo);
+  const { order, cancelOder, getPaymentInfo } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
   useEffect(() => {
-    if (!orderNo || error) {
+    if (!orderNo) {
       router.back();
     }
-  }, [orderNo, error]);
+  }, []);
 
   useEffect(() => {
     const cb = () => {
