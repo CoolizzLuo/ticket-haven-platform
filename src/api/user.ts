@@ -1,5 +1,5 @@
 import { User, SigninForm, SignupForm } from '@/types/userTyps';
-import axiosClient from './axiosClient';
+import { axiosClient } from './axiosClient';
 
 export const getUserInfo = () => {
   return axiosClient.get('user');

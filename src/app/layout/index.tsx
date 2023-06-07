@@ -19,7 +19,7 @@ const RootLayout = ({ children }: Props) => {
         <Providers>
           <Dialog />
           <Header />
-          {children}
+          <div style={{ minHeight: 'calc(100vh - 379px)' }}>{children}</div>
           <Footer />
         </Providers>
       </body>

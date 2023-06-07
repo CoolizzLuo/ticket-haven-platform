@@ -3,34 +3,36 @@
 import { Box, Heading, Container, Grid, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ActivityCard from '@/components/activity/ActivityCard';
 import { Activities, ActivitiesSearch } from '@/types/activityTypes';
-import { fetchEvents } from '@/api/activities';
+import { fetchActivities } from '@/api/activities';
 import { useEffect, useState } from 'react';
 
 type Content = {
   id: string;
   name: string;
-  rule: (item: Activities) => void;
+  params: object;
 };
 
 type ActivitySearchProps = {
   title: string;
   tabs: Content[];
-  params: ActivitiesSearch;
 };
 
-const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProps) => {
-  const [result, setResult] = useState<Activities[]>([]);
+const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
+  const [activitiesResult, setActivitiesResult] = useState<object>({});
 
-  const handleFetchEvents = async () => {
-    const res = await fetchEvents({ ...params, page: 1, pageSize: 10 });
+  const handleFetchEvents = async (params: ActivitiesSearch) => {
+    const res = await fetchActivities(params);
     const { data = [], message } = res.data;
     if (message === 'success') {
-      setResult(data);
+      return data;
     }
   };
 
   useEffect(() => {
-    handleFetchEvents();
+    tabs.forEach(async (tab) => {
+      const result = await handleFetchEvents({ ...tab.params, page: 1, pageSize: 6 });
+      setActivitiesResult((val) => ({ ...val, [tab.id]: result }));
+    });
   }, []);
 
   return (
@@ -48,7 +50,7 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
                   borderWidth="1px"
                   borderRadius="md"
                   mr="8px"
-                  _selected={{ color: 'white', bg: 'brand.100' }}
+                  _selected={{ color: 'white', bg: 'primary.500' }}
                 >
                   {opt.name}
                 </Tab>
@@ -56,19 +58,31 @@ const ActivitySearchTemplate = ({ params, title, tabs = [] }: ActivitySearchProp
             })}
           </TabList>
           <TabPanels>
-            {tabs.map((tab) => {
+            {Object.entries(activitiesResult).map(([key, result]) => {
               return (
                 result && (
-                  <TabPanel p="0" key={tab.id}>
+                  <TabPanel p="0" key={`tabPanel${key}`}>
                     <Grid
                       templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
                       gap="30px"
                       as="ul"
                       alignItems="stretch"
                     >
-                      {result.filter(tab.rule).map((r: Activities) => (
-                        <ActivityCard key={r.id} id={r.id} name={r.name} startAt={r.startAt} soldOut={r.soldOut} />
-                      ))}
+                      {result.length ? (
+                        result.map((r: Activities) => (
+                          <ActivityCard
+                            key={r.id}
+                            id={r.id}
+                            name={r.name}
+                            sellAt={r.sellAt}
+                            startAt={r.startAt}
+                            soldOut={r.soldOut}
+                            coverImgUrl={r.coverImgUrl}
+                          />
+                        ))
+                      ) : (
+                        <>無活動資訊</>
+                      )}
                     </Grid>
                   </TabPanel>
                 )
