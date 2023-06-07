@@ -11,6 +11,7 @@ import {
   Divider,
   Flex,
   Heading,
+  IconButton,
   Spacer,
   Text,
   VStack,
@@ -19,7 +20,7 @@ import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useActivity from '@/hooks/api/useActivity';
 import useOrder from '@/hooks/api/useOrder';
-import { CalendarIcon, CheckIcon, LocationIcon } from '@/components/icons';
+import { CalendarIcon, CheckIcon, LocationIcon, MdDeleteIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs, { Dayjs } from 'dayjs';
@@ -63,7 +64,7 @@ const Confirm = () => {
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder, getPaymentInfo } = useOrder(orderNo);
+  const { order, cancelOder, getPaymentInfo, deleteSeat } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
@@ -154,23 +155,37 @@ const Confirm = () => {
         <Heading fontSize="28px" mt="32px" mb="16px">
           訂單編號 #{order.orderNo}
         </Heading>
-        <VStack alignItems="stretch" gap="8px">
+        <VStack alignItems="stretch" gap="16px">
           {order.seats.map((s, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Card key={i}>
+            <Card key={i} borderLeft="4px" borderColor="primary.500">
               <CardHeader>
                 <Heading size="md">{activity.name}</Heading>
                 <Flex align="center" mt="12px" textStyle="t6">
                   <CalendarIcon mr="8px" />
                   <Text>{activity.location}</Text>
                 </Flex>
+                {order.seats.length > 1 && (
+                  <IconButton
+                    pos="absolute"
+                    top="1.25rem"
+                    right="1.25rem"
+                    isRound
+                    size="icon-sm"
+                    colorScheme="natural"
+                    variant="light"
+                    icon={<MdDeleteIcon />}
+                    aria-label="Delete seat"
+                    onClick={() => deleteSeat(s)}
+                  />
+                )}
               </CardHeader>
-              <Divider borderColor="natural.600" />
+              <Divider borderColor="natural.600" w="auto" mx="20px" />
               <CardBody>
                 <Flex>
                   <VStack align="flex-start">
                     <Flex align="center">
-                      <Text textStyle="t7" mr="16px">
+                      <Text textStyle="t6" mr="16px">
                         場次
                       </Text>
                       <Text textStyle="t5">{dayFormat(order.activity.eventStartTime)}</Text>
@@ -196,7 +211,7 @@ const Confirm = () => {
                       票種 / 票價
                     </Text>
                     <Text textStyle="t5" fontWeight="bold">
-                      全票 / {s.price}
+                      全票 / ${s.price}
                     </Text>
                   </Box>
                 </Flex>
@@ -216,7 +231,7 @@ const Confirm = () => {
             <Flex w="200px" mt="12px" px="20px" align="center" justify="space-between">
               <Text mr="24px">總計</Text>
               <Text textStyle="t4" fontWeight="bold">
-                {order.price}
+                ${order.price}
               </Text>
             </Flex>
           </div>
