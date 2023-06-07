@@ -5,6 +5,7 @@ import Button from './button';
 import Select from './select';
 import Input from './input';
 import Tag from './tag';
+import Skeleton from './skeleton';
 
 const colors = {
   primary: {
@@ -118,6 +119,7 @@ const theme = extendTheme({
     Checkbox,
     Select,
     Input,
+    Skeleton,
   },
 });
 

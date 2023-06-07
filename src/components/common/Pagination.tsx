@@ -1,11 +1,11 @@
-import { chakra } from '@chakra-ui/react';
+import { ChakraProps, chakra } from '@chakra-ui/react';
 
 type PaginationProps = {
   page: number;
   totalCount: number;
   pageSize?: number;
   onPageChange: (page: number) => void;
-};
+} & ChakraProps;
 
 // logic
 const getPageRange = ({ maxVisiable, total, current }: { maxVisiable: number; total: number; current: number }) => {
@@ -64,14 +64,19 @@ const PageItem = chakra('button', {
   },
 });
 
-const Pagination = ({ page, totalCount, pageSize = 5, onPageChange }: PaginationProps) => {
-  const total = Math.ceil(totalCount / pageSize);
+const Pagination = ({ page, totalCount, pageSize = 5, onPageChange, ...props }: PaginationProps) => {
+  const total = Math.ceil(totalCount / pageSize) || 1; // 最少顯示一頁
   const pageRange = getPageRange({ maxVisiable: 5, total, current: page });
 
   return (
-    <chakra.div display="flex" justifyContent="center">
+    <chakra.div display="flex" justifyContent="center" {...props}>
       <PageContainer>
-        <PageItem bgColor="red" {...arrowStyle(page === 1)} onClick={() => onPageChange(page - 1)}>
+        <PageItem
+          bgColor="red"
+          {...arrowStyle(page === 1)}
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 1}
+        >
           &lt;
         </PageItem>
         {pageRange.map((p: number) => (
@@ -87,7 +92,7 @@ const Pagination = ({ page, totalCount, pageSize = 5, onPageChange }: Pagination
             {p}
           </PageItem>
         ))}
-        <PageItem {...arrowStyle(page === total)} onClick={() => onPageChange(page + 1)}>
+        <PageItem {...arrowStyle(page === total)} onClick={() => onPageChange(page + 1)} disabled={page === total}>
           &gt;
         </PageItem>
       </PageContainer>

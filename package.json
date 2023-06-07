@@ -10,7 +10,7 @@
     "lint": "next lint",
     "postinstall": "husky install",
     "theme": "chakra-cli tokens src/app/layout/theme.ts",
-    "theme:watch": "chakra-cli tokens src/app/layout/theme.ts --watch"
+    "theme:watch": "chakra-cli tokens src/app/layout/theme/index.ts --watch"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",

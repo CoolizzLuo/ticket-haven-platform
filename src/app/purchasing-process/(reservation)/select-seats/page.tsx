@@ -5,7 +5,7 @@ import StepPage from '@/components/activity/step';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useDialogStore from '@/stores/dialogStore';
 import QuantitySelector from '@/components/activity/step/QuantitySelector';
-import useActivity from '@/hooks/useActivity';
+import useActivity from '@/hooks/api/useActivity';
 import axiosClient from '@/api/axiosClient';
 
 const SelectSeat = () => {

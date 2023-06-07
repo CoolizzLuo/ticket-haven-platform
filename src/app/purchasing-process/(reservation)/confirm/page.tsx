@@ -18,8 +18,8 @@ import {
 } from '@/lib/chakra';
 import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
-import useActivity from '@/hooks/useActivity';
-import useOrder from '@/hooks/useOrder';
+import useActivity from '@/hooks/api/useActivity';
+import useOrder from '@/hooks/api/useOrder';
 import { CalendarIcon, CheckIcon, LocationIcon, MdDeleteIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -64,15 +64,15 @@ const Confirm = () => {
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const clear = useTicketPurchasingStore.use.clear();
   const { activity } = useActivity(activityId);
-  const { order, cancelOder, getPaymentInfo, error, deleteSeat } = useOrder(orderNo);
+  const { order, cancelOder, getPaymentInfo, deleteSeat } = useOrder(orderNo);
 
   const [leftTime, setLeftTime] = useState({ minute: '15', second: '00' });
 
   useEffect(() => {
-    if (!orderNo || error) {
+    if (!orderNo) {
       router.back();
     }
-  }, [orderNo, error]);
+  }, []);
 
   useEffect(() => {
     const cb = () => {
