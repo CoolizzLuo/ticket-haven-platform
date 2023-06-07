@@ -1,6 +1,3 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Providers from './providers';
@@ -16,19 +13,13 @@ type Props = {
 };
 
 const RootLayout = ({ children }: Props) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <html lang="zh-TW">
       <body>
         <Providers>
           <Dialog />
           <Header />
-          <div style={{ minHeight: 'calc(100vh - 379px)' }}>{mounted && children}</div>
+          <div style={{ minHeight: 'calc(100vh - 379px)' }}>{children}</div>
           <Footer />
         </Providers>
       </body>

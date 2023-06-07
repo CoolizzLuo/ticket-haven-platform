@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getTokenFromLS, clearTokenFromLS } from '@/api/auth';
+import { getSession } from 'next-auth/react';
 
 export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://ticket-haven-dev.onrender.com',
@@ -11,27 +11,14 @@ export const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const conf = { ...config };
-    conf.headers.Authorization = getTokenFromLS();
+    const session = await getSession();
+
+    conf.headers.Authorization = session?.token && `Bearer ${session.token}`;
     return conf;
   },
   (error) => {
-    return Promise.reject(error);
-  },
-);
-
-axiosClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    const { status } = error?.response || {};
-
-    if (status === 401) {
-      alert('請重新登入');
-      clearTokenFromLS();
-    }
     return Promise.reject(error);
   },
 );
