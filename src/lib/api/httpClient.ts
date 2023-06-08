@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { getServerSession } from 'next-auth';
-// import { getSession } from 'next-auth/react';
+import authOptions from '@/app/api/auth/[...nextauth]/authOptions';
+import { Session } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { HttpStatusError } from './HttpStatusError';
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 export type RequestData<
@@ -11,7 +13,7 @@ export type RequestData<
   searchParams?: RequestSearchParams;
 };
 
-const BASE_URL = process?.env?.API_URL || '';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -32,45 +34,45 @@ const parseData = (response: Response) => {
 };
 
 const processResponse = async <T>(response: Response) => {
-  try {
-    const data = await parseData(response);
-
-    console.log('Data:', data);
-    return data as T;
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
+  const data = await parseData(response);
+  if (!response.ok) {
+    if (response.status === 401) {
+      redirect('/signin?signOut=true');
+    }
+    throw new HttpStatusError(response.status, response.statusText, data);
   }
+  return data as T;
 };
 
-// export const getSessionToken = async (requireAuth: boolean) => {
-//   let token;
-//   if (requireAuth) {
-//     const isServerSide = typeof window === 'undefined';
-//     const session = isServerSide ? await getServerSession() : await getSession();
-//     if (!session) {
-//       throw new Error('Unauthorized');
-//     }
-//     token = session.user;
-//   }
-//   return token;
-// };
+const isServerSide = typeof window === 'undefined';
+const getAuthToken = async () => {
+  let session: Session | null;
+
+  if (isServerSide) {
+    const { getServerSession } = await import('next-auth');
+    session = await getServerSession(authOptions);
+  } else {
+    const { getSession } = await import('next-auth/react');
+    session = await getSession();
+  }
+  return session?.token;
+};
 
 const createRequest =
   (method: Method) =>
-  (endpoint: string, requireAuth = false) =>
+  (endpoint: string) =>
   async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
     requestData?: RequestData<RequestParams, RequestSearchParams>,
     options: RequestInit = {},
   ) => {
-    // const token = await getSessionToken(requireAuth);
+    const token = await getAuthToken();
 
     const fetchOptions: RequestInit = {
       ...options,
       method,
       headers: {
         ...DEFAULT_HEADERS,
-        // Authorization: `Bearer ${token}`,
+        Authorization: token ? `Bearer ${token}` : '',
         ...(options.headers ?? {}),
       },
     };
