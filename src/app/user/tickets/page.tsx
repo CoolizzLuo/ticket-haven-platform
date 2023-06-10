@@ -1,56 +1,43 @@
 'use client';
 
-import { Container, Text, Tabs, Tab, TabList, TabPanels, TabPanel, Flex, Button, Center } from '@chakra-ui/react';
-import { useEffect, useReducer, useState } from 'react';
-import { getTickets } from '@/api/tickets';
+import { Container, Text, Tabs, Tab, TabList, TabPanels, TabPanel, Flex, Button, Skeleton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import { TicketCard } from '@/types/ticketTypes';
+import { useState } from 'react';
+import useTickets from '@/hooks/api/useTickets';
+import TicketDialog from '@/components/tickets/TicketDialog';
 import TicketsAccordion from '@/components/tickets/TicketsAccordion';
+import Pagination from '@/components/common/Pagination';
 
-type TicketState = { page: number; total: number; items: TicketCard[] };
-interface InitTicketsState {
-  valid: TicketState;
-  invalid: TicketState;
-}
+const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
+  const PAGE_SIZE = 3;
+  const [page, setPage] = useState(1);
+  const { tickets = [], isLoading, totalCount = 0 } = useTickets({ page, pageSize: PAGE_SIZE, isValid });
 
-const initTickets: InitTicketsState = {
-  valid: { page: 1, total: 0, items: [] },
-  invalid: { page: 1, total: 0, items: [] },
-};
-
-const ticketsReducer = (state: InitTicketsState, { type, payload }: { type: string; payload: TicketState }) => {
-  return { ...state, [type]: payload };
+  return (
+    <Skeleton minH="150px" isLoaded={!isLoading}>
+      {tickets.length ? (
+        <>
+          <TicketsAccordion list={tickets} />
+          <Pagination pageSize={PAGE_SIZE} page={page} totalCount={totalCount} onPageChange={(page) => setPage(page)} />
+        </>
+      ) : (
+        <Text>沒有票券</Text>
+      )}
+    </Skeleton>
+  );
 };
 
 const Tickets = () => {
-  const [tabIndex, setTabIndex] = useState<number>(0);
-  const [tickets, dispatch] = useReducer(ticketsReducer, initTickets);
-
-  const onChangeHandler = (type: string, payload: TicketState) => dispatch({ type, payload });
-  const fetchTickets = async ({ page, isValid, pageSize }: { page: number; isValid: number; pageSize: number }) => {
-    try {
-      const res = await getTickets({ page, isValid, pageSize });
-      const { data, message, totalCount } = res.data;
-      if (message === 'success') {
-        const type = isValid ? 'valid' : 'invalid';
-        onChangeHandler(type, { page, items: data, total: totalCount });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchTickets({ page: 1, isValid: 1, pageSize: 3 });
-    fetchTickets({ page: 1, isValid: 0, pageSize: 3 });
-  }, []);
+  const VALID = 1;
+  const INVALID = 0;
 
   return (
     <Container maxW="1200px" py="80px">
-      <Center mb="80px">
-        <Text textStyle="h1">我的票券</Text>
-      </Center>
-      <Tabs variant="card" size="lg" index={tabIndex} onChange={(index) => setTabIndex(index)}>
+      <TicketDialog />
+      <Text textStyle="h1" textAlign="center" mb="80px">
+        我的票券
+      </Text>
+      <Tabs variant="card" size="lg">
         <TabList mb="24px" justifyContent="space-between">
           <Flex>
             <Tab mr="8px">可使用</Tab>
@@ -60,10 +47,10 @@ const Tickets = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            {tickets.valid.items.length ? <TicketsAccordion list={tickets.valid.items} /> : <Text>沒有票券</Text>}
+            <TicketList isValid={VALID} />
           </TabPanel>
           <TabPanel>
-            {tickets.invalid.items.length ? <TicketsAccordion list={tickets.invalid.items} /> : <Text>沒有票券</Text>}
+            <TicketList isValid={INVALID} />
           </TabPanel>
         </TabPanels>
       </Tabs>
