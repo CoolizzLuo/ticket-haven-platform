@@ -1,3 +1,4 @@
+import { httpClient } from '@/lib/api/httpClient';
 import axiosClient from './axiosClient';
 
 export const getTickets = ({ page, isValid, pageSize }: { page: number; isValid: number; pageSize: number }) => {
@@ -5,5 +6,5 @@ export const getTickets = ({ page, isValid, pageSize }: { page: number; isValid:
 };
 
 export const createTicketCode = (ticketCode: string) => {
-  return axiosClient.post(`tickets/${ticketCode}/qrcode`);
+  return httpClient.post(`tickets/${ticketCode}/qrcode`);
 };

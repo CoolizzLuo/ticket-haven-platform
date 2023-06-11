@@ -11,7 +11,7 @@ export type RequestData<
   searchParams?: RequestSearchParams;
 };
 
-const BASE_URL = process?.env?.API_URL || '';
+const BASE_URL = process?.env?.NEXT_PUBLIC_API_URL || '';
 const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -35,7 +35,6 @@ const processResponse = async <T>(response: Response) => {
   try {
     const data = await parseData(response);
 
-    console.log('Data:', data);
     return data as T;
   } catch (error) {
     console.error('Error:', error);

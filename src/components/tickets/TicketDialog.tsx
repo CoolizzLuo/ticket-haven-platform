@@ -28,7 +28,7 @@ import useTicketDialogStore from '@/stores/ticketDialogStore';
 const circleStyle = {
   content: `''`,
   position: 'absolute',
-  border: '1px solid',
+  border: '2px solid',
   borderColor: 'natural.500',
   w: '20px',
   h: '20px',
@@ -43,10 +43,10 @@ const TicketDialog = () => {
   const { content, isOpen } = dialogState;
 
   const { openAlert } = useDialogStore();
+
   const getQrcode = async (ticketCode: string) => {
     try {
-      const res = await createTicketCode(ticketCode);
-      const { message, data } = res.data;
+      const { message, data } = await createTicketCode(ticketCode)<void, void, { message: string; data: any }>();
       if (message === 'success') {
         setQrcode(data);
       } else {
@@ -121,7 +121,7 @@ const TicketDialog = () => {
                 </Stack>
               </Box>
 
-              <Button minW={90} onClick={closeDialog} leftIcon={<LuRefreshCw />}>
+              <Button minW={90} onClick={() => getQrcode(content.ticketNo)} leftIcon={<LuRefreshCw />}>
                 重新整理
               </Button>
             </VStack>

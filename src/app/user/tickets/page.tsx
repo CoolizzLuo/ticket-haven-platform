@@ -8,6 +8,9 @@ import TicketDialog from '@/components/tickets/TicketDialog';
 import TicketsAccordion from '@/components/tickets/TicketsAccordion';
 import Pagination from '@/components/common/Pagination';
 
+const INVALID = 0;
+const VALID = 1;
+
 const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
   const PAGE_SIZE = 3;
   const [page, setPage] = useState(1);
@@ -28,9 +31,6 @@ const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
 };
 
 const Tickets = () => {
-  const VALID = 1;
-  const INVALID = 0;
-
   return (
     <Container maxW="1200px" py="80px">
       <TicketDialog />
