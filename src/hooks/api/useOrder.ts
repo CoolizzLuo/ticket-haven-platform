@@ -54,7 +54,7 @@ export type PaymentInfo = {
 const useOrder = (orderNo?: string | null) => {
   const { data, mutate, ...props } = useSWR<Order>(orderNo && `orders/${orderNo}`);
 
-  const cancelOder = useCallback(() => axiosClient.delete(`orders/${orderNo}`), [orderNo]);
+  const cancelOder = useCallback(() => httpClient.delete(`orders/${orderNo}`)(), [orderNo]);
 
   const getPaymentInfo = useCallback(
     () => axiosClient.get<BaseResponse<PaymentInfo>>(`orders/${orderNo}/payment`).then((res) => res.data.data),
