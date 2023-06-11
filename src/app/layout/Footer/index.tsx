@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 import Link from 'next/link';

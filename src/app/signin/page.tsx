@@ -1,13 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from '@chakra-ui/next-js';
 import { Container, VStack, Button } from '@chakra-ui/react';
 import InputWithErrMsg from '@/components/common/InputWithErrMsg';
+import { useSearchParams } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import useSigninForm from './useSigninForm';
 
 const Signin = () => {
   const { onChangeHandler, form, errMsgMap, onSubmit } = useSigninForm();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('signOut')) {
+      signOut({ redirect: false });
+    }
+  }, []);
 
   return (
     <Container w="50%" margin="auto" py="80px">
