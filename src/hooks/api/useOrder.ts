@@ -58,7 +58,10 @@ const useOrder = (orderNo?: string | null) => {
   const cancelOder = useCallback(() => httpClient.delete(`orders/${orderNo}`)(), [orderNo]);
 
   const getPaymentInfo = useCallback(
-    () => httpClient.get(`orders/${orderNo}/payment`)<void, void, BaseResponse<PaymentInfo>>(),
+    () =>
+      httpClient
+        .get(`orders/${orderNo}/payment`)<void, void, BaseResponse<PaymentInfo>>()
+        .then((data) => data.data),
     [orderNo],
   );
 
