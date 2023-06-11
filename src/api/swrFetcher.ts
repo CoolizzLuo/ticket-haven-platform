@@ -1,9 +1,8 @@
 import { httpClient } from '@/lib/api/httpClient';
-import { BaseResponse } from '@/lib/api/types/baseResponse';
 
 type Args = string | [string, URLSearchParams | Record<string, any>];
 
-const BaseFetcher = (args: Args): Promise<BaseResponse> => {
+const BaseFetcher = (args: Args): Promise<any> => {
   if (Array.isArray(args)) {
     const [url, searchParams] = args;
     return httpClient.get(url as string)(searchParams && { searchParams });

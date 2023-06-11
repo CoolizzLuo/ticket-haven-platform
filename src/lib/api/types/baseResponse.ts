@@ -1,5 +1,5 @@
 export interface BaseResponse<T = void> {
-  code: string;
+  code: number;
   message: string;
   data?: T;
 }
