@@ -1,6 +1,7 @@
 import axiosClient from '@/api/axiosClient';
 import { BaseResponse } from '@/api/types/baseResponse';
 import { OrderStatus } from '@/constants/orderStatus';
+import { httpClient } from '@/lib/api/httpClient';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 
@@ -57,25 +58,35 @@ const useOrder = (orderNo?: string | null) => {
   const cancelOder = useCallback(() => httpClient.delete(`orders/${orderNo}`)(), [orderNo]);
 
   const getPaymentInfo = useCallback(
-    () => axiosClient.get<BaseResponse<PaymentInfo>>(`orders/${orderNo}/payment`).then((res) => res.data.data),
+    () => httpClient.get(`orders/${orderNo}/payment`)<void, void, BaseResponse<PaymentInfo>>(),
     [orderNo],
   );
 
   const deleteSeat = useCallback(
     async (seatData: { subAreaId: string; row: number; seat: number }) => {
-      axiosClient
-        .delete<BaseResponse<boolean>>(`orders/${orderNo}/seats`, { data: seatData })
-        .then((res) => res.data.data);
-      mutate((prevData) => {
-        if (prevData) {
-          return {
-            ...prevData,
-            seats: prevData.seats.filter(
-              (s) => !(s.subAreaId === seatData.subAreaId && s.row === seatData.row && s.seat === seatData.seat),
-            ),
-          };
-        }
-      });
+      mutate(
+        async () => {
+          await httpClient.delete(`orders/${orderNo}/seats`)<
+            { subAreaId: string; row: number; seat: number },
+            void,
+            BaseResponse<boolean>
+          >({ params: seatData });
+          return undefined;
+        },
+        {
+          populateCache: false,
+          optimisticData: (prevData): any => {
+            if (prevData) {
+              return {
+                ...prevData,
+                seats: prevData.seats.filter(
+                  (s) => !(s.subAreaId === seatData.subAreaId && s.row === seatData.row && s.seat === seatData.seat),
+                ),
+              };
+            }
+          },
+        },
+      );
     },
     [orderNo],
   );
