@@ -1,13 +1,78 @@
 'use client';
 
-import { Text, Box, useBreakpointValue, Button, Image } from '@chakra-ui/react';
+import { Text, Box, useBreakpointValue, Button, Image, border } from '@chakra-ui/react';
 import { calendarFormat, dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
+import Slider from 'react-slick';
+import useActivities from '@/hooks/api/useActivities';
 
 import { usePathname, useRouter } from 'next/navigation';
 
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
 import ActivitySearchTemplate from '@/components/activity/ActivitySearchTemplate';
+
+const settings = {
+  dots: true,
+  swipeToSlide: true,
+  infinite: true,
+  autoplay: true,
+  speed: 600,
+  autoplaySpeed: 5000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  appendDots: (dots: number) => (
+    <div style={{ position: 'absolute', bottom: '32px' }}>
+      <ul>{dots}</ul>
+    </div>
+  ),
+};
+const CAROUSEL_HEIGHT = { base: '300px', md: '400px', lg: '500px' };
+
+type CarouselProps = {
+  id: string;
+  url: string;
+};
+
+function Carousel({ list }: { list: CarouselProps[] }) {
+  return (
+    <Box position="relative" width="full" height={CAROUSEL_HEIGHT} overflow="hidden">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        charSet="UTF-8"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
+
+      <Slider {...settings} pauseOnDotsHover>
+        {list.map((item) => (
+          <NextLink href={`/activities/${item.id}`} key={item.id}>
+            <Box position="relative">
+              <Image src={item.url} width="100%" height={CAROUSEL_HEIGHT} objectFit="contain" />
+              <Box
+                width="100%"
+                height={CAROUSEL_HEIGHT}
+                position="absolute"
+                backgroundPosition="center"
+                backgroundRepeat="no-repeat"
+                backgroundSize="120%"
+                backgroundImage={`url(${item.url})`}
+                top="0"
+                opacity="0.9"
+                filter="blur(60px)"
+                zIndex="-1"
+              />
+            </Box>
+          </NextLink>
+        ))}
+      </Slider>
+    </Box>
+  );
+}
 
 const Home = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -47,8 +112,12 @@ const Home = () => {
     router.push(`/activities?${queryStr}`);
   };
 
+  // carousel
+  const { activities = [] } = useActivities({ page: 1, pageSize: 8, startAfter: today });
+
   return (
     <>
+      <Carousel list={activities.map((a) => ({ url: a.coverImgUrl, id: a.id }))} />
       {!isMobile && (
         <ActivitySearchForm
           onChange={redirectEventsResultPage}
@@ -57,7 +126,7 @@ const Home = () => {
       )}
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
-      <Box as="section" py="120px" bgColor="#F7F4F6" textAlign="center">
+      <Box as="section" py={{ base: '40px', md: '120px' }} bgColor="#F7F4F6" textAlign="center">
         <Image w="200px" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
         <Text>採用 QR code 電子票券</Text>
         <Text mb="60px">掃描即可輕鬆入場</Text>
