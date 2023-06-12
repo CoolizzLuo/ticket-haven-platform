@@ -24,7 +24,6 @@ import { GoLocation } from 'react-icons/go';
 import { GrClose } from 'react-icons/gr';
 import useDialogStore from '@/stores/dialogStore';
 import TicketContext from '@/app/user/tickets/TicketContext';
-// import useTicketDialogStore from '@/stores/ticketDialogStore';
 
 const circleStyle = {
   content: `''`,
