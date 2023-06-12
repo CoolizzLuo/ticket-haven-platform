@@ -31,8 +31,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
-    "react-slick": "^0.29.0",
     "react-qr-code": "^2.0.11",
+    "react-slick": "^0.29.0",
     "swr": "^2.1.5",
     "typescript": "5.0.4",
     "zustand": "^4.3.7"
