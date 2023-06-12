@@ -93,7 +93,7 @@ const Header = () => {
                           borderColor: 'black',
                         }}
                         mr={2}
-                        onClick={() => signIn()}
+                        onClick={() => signIn(undefined, { callbackUrl: pathname })}
                       >
                         登入
                       </Button>
