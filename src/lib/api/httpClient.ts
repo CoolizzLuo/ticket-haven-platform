@@ -13,7 +13,7 @@ export type RequestData<
   searchParams?: RequestSearchParams;
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://ticket-haven-dev.onrender.com';
 
 const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',
