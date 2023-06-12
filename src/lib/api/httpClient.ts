@@ -112,5 +112,3 @@ export const httpClient = {
   delete: createRequest('DELETE'),
   patch: createRequest('PATCH'),
 };
-
-export default httpClient;
