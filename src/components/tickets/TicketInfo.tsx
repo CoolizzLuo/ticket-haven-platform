@@ -1,13 +1,13 @@
 import { List, ListItem, Button, Tag, Text, SimpleGrid, Box, Icon } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { LuQrCode } from 'react-icons/lu';
 import { SlActionRedo } from 'react-icons/sl';
-import useTicketDialogStore from '@/stores/ticketDialogStore';
 import { isAfterToday } from '@/lib/dayjs';
-
+import TicketContext from '@/app/user/tickets/TicketContext';
 import { ETicketInfo as TicketProps } from '@/types/ticketTypes';
 
 const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
-  const { openTicket } = useTicketDialogStore();
+  const { openTicket } = useContext(TicketContext);
 
   return (
     <Box>
@@ -35,7 +35,7 @@ const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
                   mr="16px"
                   size="sm"
                   isDisabled={ticket.isShare || ticket.isUsed || !isAfterToday(ticket.startAt)}
-                  onClick={() => openTicket(ticket)}
+                  onClick={() => openTicket({ content: ticket, isOpen: true })}
                 >
                   <Icon as={LuQrCode} mr="8px" />
                   使用

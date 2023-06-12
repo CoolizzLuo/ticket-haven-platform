@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import QRCode from 'react-qr-code';
 import {
   AlertDialog,
@@ -23,7 +23,7 @@ import { LuRefreshCw, LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import { GrClose } from 'react-icons/gr';
 import useDialogStore from '@/stores/dialogStore';
-import useTicketDialogStore from '@/stores/ticketDialogStore';
+import TicketContext from '@/app/user/tickets/TicketContext';
 
 const circleStyle = {
   content: `''`,
@@ -37,12 +37,13 @@ const circleStyle = {
 };
 
 const TicketDialog = () => {
+  const { openAlert } = useDialogStore();
   const cancelRef = useRef(null);
   const [qrcode, setQrcode] = useState<string>('');
-  const { dialogState, closeDialog } = useTicketDialogStore();
-  const { content, isOpen } = dialogState;
 
-  const { openAlert } = useDialogStore();
+  // context
+  const { dialogState, closeDialog } = useContext(TicketContext);
+  const { isOpen, content } = dialogState;
 
   const getQrcode = async (ticketCode: string) => {
     try {
