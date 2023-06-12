@@ -5,12 +5,21 @@ export type Ticket = {
   isShare: boolean;
 };
 
-export interface TicketCard {
-  orderId: string;
+export type ETicketInfo = Ticket & {
+  coverImageUrl: string;
+  name: string;
+  address: string;
+  startAt: string;
+};
+
+export interface Tickets {
   activityId: string;
+  orderId: string;
+  address: string;
+  eventId: string;
   name: string;
   startAt: string;
   endAt: string;
-  address: string;
+  coverImageUrl: string;
   tickets: Ticket[];
 }

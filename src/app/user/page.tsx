@@ -78,18 +78,16 @@ const User = () => {
         });
       }
     } catch (e) {
-      console.log(e);
+      //  regarless
     }
   };
 
   const onSubmit = async (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      const res = await updatUserInfo(user);
-      const { data, message } = res.data;
-      console.log(data, message);
+      await updatUserInfo(user);
     } catch (error) {
-      console.log(error);
+      //  regarless
     }
   };
 

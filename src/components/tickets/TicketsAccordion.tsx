@@ -10,17 +10,17 @@ import {
   Button,
   Icon,
 } from '@chakra-ui/react';
-import { TicketCard } from '@/types/ticketTypes';
+import { Tickets } from '@/types/ticketTypes';
 import { dayFormat } from '@/lib/dayjs';
 import { LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import TicketInfo from './TicketInfo';
 
-const TicketsAccordion = ({ list }: { list: TicketCard[] }) => {
+const TicketsAccordion = ({ list }: { list: Tickets[] }) => {
   return (
     <Accordion allowMultiple>
       {list &&
-        list.map((item: TicketCard) => {
+        list.map((item: Tickets) => {
           return (
             <AccordionItem borderColor="transparent" mb="24px" key={item.orderId} bg="none">
               <Flex p="24px" align="center" bg="white" mb="4px">
@@ -45,7 +45,15 @@ const TicketsAccordion = ({ list }: { list: TicketCard[] }) => {
               </Flex>
 
               <AccordionPanel bg="white" p="24px">
-                <TicketInfo tickets={item.tickets} />
+                <TicketInfo
+                  tickets={item.tickets.map((ticket) => ({
+                    ...ticket,
+                    name: item.name,
+                    address: item.address,
+                    coverImageUrl: item.coverImageUrl || '',
+                    startAt: item.startAt,
+                  }))}
+                />
               </AccordionPanel>
             </AccordionItem>
           );

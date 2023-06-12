@@ -14,6 +14,7 @@ export type RequestData<
 };
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 const DEFAULT_HEADERS: HeadersInit = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
@@ -112,5 +113,3 @@ export const httpClient = {
   delete: createRequest('DELETE'),
   patch: createRequest('PATCH'),
 };
-
-export default httpClient;
