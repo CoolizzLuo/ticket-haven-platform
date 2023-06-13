@@ -60,7 +60,7 @@ const Activities = () => {
   return (
     <div>
       <ActivitySearchForm onChange={handleSearchChange} searchParams={{ region, startAfter, q: keyword }} />
-      <Container maxW="1200px" py="80px">
+      <Container maxW="container.xl" py="80px">
         <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="30px" as="ul" alignItems="stretch">
           {result.length ? (
             result.map((r: ActType) => (
