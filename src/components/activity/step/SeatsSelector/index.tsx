@@ -11,6 +11,7 @@ import AreaPicker from './AreaPicker';
 interface SeatsSelectorProps {
   activity: Activity;
   seats: Area[];
+  eventId: string;
   updateSeats: (id: string) => void;
 }
 
@@ -35,7 +36,7 @@ const buttonProps = (isActive: boolean) => {
 const formatDateLocationStr = (date: string, location: string) =>
   `${dayjs(date).format('YYYY/MM/DD(ddd) HH:mm')} ${location}`;
 
-const SeatSelector = ({ activity, seats, updateSeats }: SeatsSelectorProps) => {
+const SeatSelector = ({ activity, seats, eventId, updateSeats }: SeatsSelectorProps) => {
   const [seatsFiltered, setSeatsFiltered] = useState<Area[]>([]);
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
   const router = useRouter();
@@ -77,7 +78,7 @@ const SeatSelector = ({ activity, seats, updateSeats }: SeatsSelectorProps) => {
       <Heading as="h2" fontSize="28px">
         {activity.name}
       </Heading>
-      <Select defaultValue={activity.events && activity.events[0].id} onChange={selectHandler}>
+      <Select defaultValue={eventId} onChange={selectHandler}>
         {activity.events?.map(({ startTime, id }) => {
           const str = formatDateLocationStr(startTime, activity.location);
           return (

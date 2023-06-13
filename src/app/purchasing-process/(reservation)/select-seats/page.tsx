@@ -44,8 +44,14 @@ const SelectSeat = () => {
         }
       } catch (err: any) {
         if (err) {
-          const message = '系統發生問題，請稍後再試';
-          openAlert(message, () => router.push(`/activities/${activityId}`));
+          switch (err.response.status) {
+            case 401:
+              openAlert('請先登入', () => router.push(`/signin`));
+              break;
+            default:
+              openAlert('系統發生問題，請稍後再試', () => router.push(`/activities/${activityId}`));
+              break;
+          }
           console.log(err);
         }
       }
