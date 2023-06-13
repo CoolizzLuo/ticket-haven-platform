@@ -19,7 +19,8 @@ const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) return null;
 
         try {
-          const res = await fetch('http://localhost:8080/user/signin', {
+          const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://ticket-haven-dev.onrender.com';
+          const res = await fetch(`${BASE_URL}/user/signin`, {
             method: 'post',
             body: JSON.stringify({
               email: credentials.email,

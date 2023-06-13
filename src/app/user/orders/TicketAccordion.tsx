@@ -39,7 +39,7 @@ export type AccordionData = {
   }[];
 }[];
 
-const ActivityAccordion = ({ data }: { data: Order[] }) => {
+const OrderAccordion = ({ data }: { data: Order[] }) => {
   return (
     <Accordion allowMultiple>
       <VStack align="stretch" spacing="24px">
@@ -117,4 +117,4 @@ const ActivityAccordion = ({ data }: { data: Order[] }) => {
   );
 };
 
-export default ActivityAccordion;
+export default OrderAccordion;

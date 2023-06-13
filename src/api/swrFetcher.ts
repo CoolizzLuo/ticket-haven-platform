@@ -1,26 +1,15 @@
-import { objectToUrlSearchParams } from '@/lib/tools';
-import axiosClient from './axiosClient';
+import { httpClient } from '@/lib/api/httpClient';
 
 type Args = string | [string, URLSearchParams | Record<string, any>];
 
-const BaseFetcher = (args: Args) => {
-  let url = args;
-  let params: URLSearchParams | undefined;
-
+const BaseFetcher = (args: Args): Promise<any> => {
   if (Array.isArray(args)) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const [_url, _params] = args;
-    url = _url;
-    if (_params instanceof URLSearchParams) {
-      params = _params;
-    } else {
-      params = objectToUrlSearchParams(_params);
-    }
+    const [url, searchParams] = args;
+    return httpClient.get(url as string)(searchParams && { searchParams });
   }
-
-  return axiosClient.get(url as string, params && { params });
+  return httpClient.get(args as string)();
 };
 
-export const fetcher = (args: Args) => BaseFetcher(args).then((res) => res.data?.data);
+export const fetcher = (args: Args) => BaseFetcher(args).then((data) => data?.data);
 
-export const paginationFetcher = (args: Args) => BaseFetcher(args).then((res) => res.data);
+export const paginationFetcher = (args: Args) => BaseFetcher(args);
