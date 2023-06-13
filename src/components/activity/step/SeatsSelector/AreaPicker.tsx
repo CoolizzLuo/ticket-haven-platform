@@ -29,48 +29,54 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
       </CardHeader>
       <Divider color="natural.200" />
       <CardBody padding="26px 8px" display="grid" gridTemplateColumns="1fr 1fr" gap="16px">
-        {areas.map((group: SubArea[]) => {
-          return (
-            <VStack key={group[0].name} align="start" spacing="0px">
-              {group.map((subArea: SubArea) => {
-                const getStatus = () => {
-                  if (subArea.remainingSeats === 0) return 'soldout';
-                  if (subArea.remainingSeats < 10) return 'remainFew';
-                  return 'hotsell';
-                };
-                const statusMap = {
-                  soldout: {
-                    text: '完售',
-                    color: 'natural.600',
-                  },
-                  hotsell: {
-                    text: '熱賣中',
-                    color: 'black',
-                  },
-                  remainFew: {
-                    text: `剩餘${subArea.remainingSeats}`,
-                    color: 'primary.500',
-                  },
-                };
-                return (
-                  <chakra.button
-                    key={subArea.id}
-                    display="flex"
-                    type="button"
-                    w="100%"
-                    padding="10px 8px"
-                    sx={{ ':hover': { bg: 'natural.100' } }}
-                    onClick={() => clickHandler(subArea)}
-                  >
-                    <Square size="20px" bg={subArea.color} marginRight="8px" />
-                    <Text marginRight="20px">{subArea.name}</Text>
-                    <Text color={statusMap[getStatus()].color}>{statusMap[getStatus()].text}</Text>
-                  </chakra.button>
-                );
-              })}
-            </VStack>
-          );
-        })}
+        {areas.length > 0 ? (
+          areas.map((group: SubArea[]) => {
+            return (
+              <VStack key={group[0].name} align="start" spacing="0px">
+                {group.map((subArea: SubArea) => {
+                  const getStatus = () => {
+                    if (subArea.remainingSeats === 0) return 'soldout';
+                    if (subArea.remainingSeats < 10) return 'remainFew';
+                    return 'hotsell';
+                  };
+                  const statusMap = {
+                    soldout: {
+                      text: '完售',
+                      color: 'natural.600',
+                    },
+                    hotsell: {
+                      text: '熱賣中',
+                      color: 'black',
+                    },
+                    remainFew: {
+                      text: `剩餘${subArea.remainingSeats}`,
+                      color: 'primary.500',
+                    },
+                  };
+                  return (
+                    <chakra.button
+                      key={subArea.id}
+                      display="flex"
+                      type="button"
+                      w="100%"
+                      padding="10px 8px"
+                      sx={{ ':hover': { bg: 'natural.100' } }}
+                      onClick={() => clickHandler(subArea)}
+                    >
+                      <Square size="20px" bg={subArea.color} marginRight="8px" />
+                      <Text marginRight="20px">{subArea.name}</Text>
+                      <Text color={statusMap[getStatus()].color}>{statusMap[getStatus()].text}</Text>
+                    </chakra.button>
+                  );
+                })}
+              </VStack>
+            );
+          })
+        ) : (
+          <Text size="12px" color="natural.700" marginLeft="8px">
+            無符合的座位區
+          </Text>
+        )}
       </CardBody>
     </Card>
   );
