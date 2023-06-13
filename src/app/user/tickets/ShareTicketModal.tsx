@@ -49,7 +49,7 @@ export const ShareTicketModal = () => {
       <ModalOverlay />
       <ModalContent overflow="hidden">
         <ModalHeader p={0}>
-          <Box h="250px" bgImage={imageUrl} bgSize="cover" />
+          <Box h="250px" bgImage={imageUrl} bgSize="cover" bgPosition="center" />
         </ModalHeader>
         <ModalCloseButton color="white" />
         <ModalBody py="32px" px="40px">
@@ -92,7 +92,7 @@ export const ShareTicketModal = () => {
             }
           />
           <Center mt="16px">
-            <Button leftIcon={<CopyIcon />} onClick={copyShareCode}>
+            <Button size="sm" leftIcon={<CopyIcon />} onClick={copyShareCode}>
               複製
             </Button>
           </Center>

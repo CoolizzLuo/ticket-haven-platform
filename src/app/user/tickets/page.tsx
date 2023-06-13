@@ -11,6 +11,7 @@ import TicketContext from './TicketContext';
 import useTicketContext from './useTicketContext';
 import { ShareModalProvider } from './ShareModalContext';
 import { ShareTicketModal } from './ShareTicketModal';
+import { ExchangeTicketModal } from './ExchangeTicketModal';
 
 const INVALID = 0;
 const VALID = 1;
@@ -49,6 +50,8 @@ const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
 };
 
 const Tickets = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Container maxW="container.lg" py="120px">
       <Text textStyle="h1" textAlign="center" mb="80px">
@@ -61,7 +64,9 @@ const Tickets = () => {
               <Tab mr="8px">可使用</Tab>
               <Tab mr="8px">已過期</Tab>
             </Flex>
-            <Button leftIcon={<AddIcon />}>兌換票券</Button>
+            <Button leftIcon={<AddIcon />} onClick={() => setIsOpen(true)}>
+              兌換票券
+            </Button>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -73,6 +78,7 @@ const Tickets = () => {
           </TabPanels>
         </Tabs>
         <ShareTicketModal />
+        <ExchangeTicketModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </ShareModalProvider>
     </Container>
   );
