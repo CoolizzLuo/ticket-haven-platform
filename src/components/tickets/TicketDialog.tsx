@@ -95,7 +95,7 @@ const TicketDialog = () => {
                     borderColor="natural.600"
                     bg="white"
                   >
-                    {content?.ticketNo && (
+                    {content.ticketNo && (
                       <QRCode
                         value={qrcode}
                         style={{ margin: 'auto', height: 'auto', maxWidth: '140px', paddingBottom: '12px' }}
