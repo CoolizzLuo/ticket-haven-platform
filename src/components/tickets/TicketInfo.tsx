@@ -6,10 +6,12 @@ import { isAfterToday } from '@/lib/dayjs';
 import TicketContext from '@/app/user/tickets/TicketContext';
 import { ETicketInfo as TicketProps } from '@/types/ticketTypes';
 import { ShareTicketModal } from '@/app/user/tickets/ShareTicketModal';
+import { useShareModel } from '@/app/user/tickets/ShareModalContext';
 
 const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
   const { openTicket } = useContext(TicketContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const { open: openShareModal } = useShareModel();
+
   return (
     <Box>
       <SimpleGrid columns={4} borderBottom="1px" borderColor="natural.300" py="20px">
@@ -45,19 +47,12 @@ const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
                   variant="outLine"
                   size="sm"
                   isDisabled={ticket.isShare || ticket.isUsed || !isAfterToday(ticket.startAt)}
-                  onClick={() => setIsOpen(true)}
+                  onClick={() =>
+                    openShareModal({ ...ticket, imageUrl: ticket.coverImageUrl, activityName: ticket.name })
+                  }
                 >
                   <Icon as={SlActionRedo} mr="8px" /> 分票
                 </Button>
-                <ShareTicketModal
-                  ticketNo={ticket.ticketNo}
-                  activityName={ticket.name}
-                  location={ticket.address}
-                  imageUrl={ticket.coverImageUrl}
-                  startAt={ticket.startAt}
-                  isOpen={isOpen}
-                  onClose={() => setIsOpen(false)}
-                />
               </Box>
             </SimpleGrid>
           </ListItem>

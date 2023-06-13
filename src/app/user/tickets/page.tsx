@@ -9,6 +9,8 @@ import Pagination from '@/components/common/Pagination';
 import useTickets from '@/hooks/api/useTickets';
 import TicketContext from './TicketContext';
 import useTicketContext from './useTicketContext';
+import { ShareModalProvider } from './ShareModalContext';
+import { ShareTicketModal } from './ShareTicketModal';
 
 const INVALID = 0;
 const VALID = 1;
@@ -52,23 +54,26 @@ const Tickets = () => {
       <Text textStyle="h1" textAlign="center" mb="80px">
         我的票券
       </Text>
-      <Tabs variant="card" size="lg">
-        <TabList mb="24px" justifyContent="space-between">
-          <Flex>
-            <Tab mr="8px">可使用</Tab>
-            <Tab mr="8px">已過期</Tab>
-          </Flex>
-          <Button leftIcon={<AddIcon />}>兌換票券</Button>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <TicketList isValid={VALID} />
-          </TabPanel>
-          <TabPanel>
-            <TicketList isValid={INVALID} />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <ShareModalProvider>
+        <Tabs variant="card" size="lg">
+          <TabList mb="24px" justifyContent="space-between">
+            <Flex>
+              <Tab mr="8px">可使用</Tab>
+              <Tab mr="8px">已過期</Tab>
+            </Flex>
+            <Button leftIcon={<AddIcon />}>兌換票券</Button>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <TicketList isValid={VALID} />
+            </TabPanel>
+            <TabPanel>
+              <TicketList isValid={INVALID} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+        <ShareTicketModal />
+      </ShareModalProvider>
     </Container>
   );
 };

@@ -1,5 +1,5 @@
 import { TicketCard } from '@/components/common/TicketCard';
-import { CalendarIcon, LocationIcon } from '@/components/icons';
+import { CalendarIcon, CopyIcon, LocationIcon } from '@/components/icons';
 import {
   Box,
   Button,
@@ -18,26 +18,14 @@ import {
   Text,
 } from '@/lib/chakra';
 import { dayFormat } from '@/lib/dayjs';
-import { MdContentCopy } from 'react-icons/md';
+import { useShareModel } from './ShareModalContext';
 
-export const ShareTicketModal = ({
-  ticketNo,
-  activityName,
-  startAt,
-  location,
-  imageUrl,
-  ...props
-}: {
-  ticketNo: string;
-  activityName: string;
-  startAt: string;
-  location: string;
-  isOpen: boolean;
-  imageUrl: string;
-  onClose: () => void;
-}) => {
+export const ShareTicketModal = () => {
+  const { isOpen, close, data } = useShareModel();
+  const { imageUrl, activityName, startAt, address, ticketNo } = data;
+
   return (
-    <Modal isCentered={true} {...props}>
+    <Modal isOpen={isOpen} onClose={close} isCentered={true}>
       <ModalOverlay />
       <ModalContent overflow="hidden">
         <ModalHeader p={0}>
@@ -60,7 +48,7 @@ export const ShareTicketModal = ({
                 </Flex>
                 <Flex align="center">
                   <LocationIcon mr="6px" />
-                  {location}
+                  {address}
                 </Flex>
               </Box>
             }
@@ -70,19 +58,19 @@ export const ShareTicketModal = ({
                   <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
                     票券編號
                   </InputLeftAddon>
-                  <Input value={ticketNo} />
+                  <Input value={ticketNo} readOnly />
                 </InputGroup>
                 <InputGroup size="sm">
                   <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
                     驗證碼
                   </InputLeftAddon>
-                  <Input value={ticketNo} />
+                  <Input value={ticketNo} readOnly />
                 </InputGroup>
               </Box>
             }
           />
           <Center mt="16px">
-            <Button leftIcon={<MdContentCopy />}>複製</Button>
+            <Button leftIcon={<CopyIcon />}>複製</Button>
           </Center>
         </ModalBody>
       </ModalContent>
