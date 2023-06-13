@@ -48,7 +48,7 @@ const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
 
 const Tickets = () => {
   return (
-    <Container maxW="1200px" py="80px">
+    <Container maxW="container.lg" py="120px">
       <Text textStyle="h1" textAlign="center" mb="80px">
         我的票券
       </Text>

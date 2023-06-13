@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <Box as="section" p="5" bg="primary.500">
       <Box as="nav" width="100%">
-        <Container maxW="1200px">
+        <Container maxW="container.xl">
           <HStack justifyContent="space-between">
             <NextLink href="/">
               <Image w="180px" src="/brand-white.svg" alt="Logo" />

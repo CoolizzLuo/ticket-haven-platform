@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <Box as="section" py={{ base: '20px', lg: '108px' }} bg="#383537">
       <Box as="nav" width="100%">
-        <Container maxW="1200px">
+        <Container maxW="container.xl">
           <Flex alignItems="center" justifyContent="space-between">
             <Flex as="ul" pl="0">
               <Box as="li" listStyleType="none" mr="40px" color="white">

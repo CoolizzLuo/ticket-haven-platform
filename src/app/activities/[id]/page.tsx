@@ -74,7 +74,7 @@ const Activitie = () => {
   };
 
   return (
-    <Container maxW="1200px" pb="80px" pt="40px">
+    <Container maxW="container.xl" pb="80px" pt="40px">
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">首頁 </BreadcrumbLink>
