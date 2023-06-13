@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { TicketCard } from '@/components/common/TicketCard';
 import { CalendarIcon, CopyIcon, LocationIcon } from '@/components/icons';
 import {
@@ -15,14 +16,33 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   Text,
 } from '@/lib/chakra';
 import { dayFormat } from '@/lib/dayjs';
+import api from '@/lib/api';
+import { copyTextToClipboard } from '@/lib/copyTextToClipboard';
 import { useShareModel } from './ShareModalContext';
 
 export const ShareTicketModal = () => {
   const { isOpen, close, data } = useShareModel();
   const { imageUrl, activityName, startAt, address, ticketNo } = data;
+
+  const [shareCode, setShareCode] = useState('');
+
+  useEffect(() => {
+    if (ticketNo) {
+      api.createShareCode(ticketNo).then(({ data }) => {
+        setShareCode(data.shareCode);
+      });
+    } else {
+      setShareCode('');
+    }
+  }, [ticketNo]);
+
+  const copyShareCode = () => {
+    copyTextToClipboard(shareCode);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={close} isCentered={true}>
@@ -60,17 +80,21 @@ export const ShareTicketModal = () => {
                   </InputLeftAddon>
                   <Input value={ticketNo} readOnly />
                 </InputGroup>
-                <InputGroup size="sm">
-                  <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
-                    驗證碼
-                  </InputLeftAddon>
-                  <Input value={ticketNo} readOnly />
-                </InputGroup>
+                <Skeleton minH="44px" isLoaded={!!shareCode}>
+                  <InputGroup size="sm">
+                    <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
+                      驗證碼
+                    </InputLeftAddon>
+                    <Input value={shareCode} readOnly />
+                  </InputGroup>
+                </Skeleton>
               </Box>
             }
           />
           <Center mt="16px">
-            <Button leftIcon={<CopyIcon />}>複製</Button>
+            <Button leftIcon={<CopyIcon />} onClick={copyShareCode}>
+              複製
+            </Button>
           </Center>
         </ModalBody>
       </ModalContent>

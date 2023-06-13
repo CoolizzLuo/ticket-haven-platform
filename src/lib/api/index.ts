@@ -17,7 +17,7 @@ interface APIEndpoints {
 const api: APIEndpoints = {
   signin: httpClient.post('/user/signin'),
   signup: httpClient.post('/user/signup'),
-  createShareCode: (ticketNo) => httpClient.post(`tickets/${ticketNo}/share-code`)(),
+  createShareCode: (ticketNo) => httpClient.post(`/tickets/${ticketNo}/share-code`)(),
 };
 
 export default api;
