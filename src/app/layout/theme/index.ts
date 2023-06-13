@@ -96,6 +96,12 @@ const fonts = {
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 };
 
+const global = {
+  'html, body': {
+    color: 'natural.800',
+  },
+};
+
 const Checkbox = defineStyleConfig({
   sizes: {
     md: {
@@ -111,6 +117,9 @@ const theme = extendTheme({
   colors,
   fonts,
   textStyles,
+  styles: {
+    global,
+  },
   components: {
     Button,
     Tabs,

@@ -4,7 +4,7 @@ import { Center, Container, Skeleton, Tab, TabList, TabPanel, TabPanels, Tabs, T
 import useOrders from '@/hooks/api/useOrders';
 import { useState } from 'react';
 import Pagination from '@/components/common/Pagination';
-import ActivityAccordion from './TicketAccordion';
+import OrderAccordion from './TicketAccordion';
 
 const Order = () => {
   return (
@@ -35,12 +35,16 @@ function OrderList({ status }: { status: 'completed' | 'unpaid' }) {
   const { orders = [], totalCount = 0, isLoading } = useOrders({ page, pageSize: 5, status });
 
   return (
-    <>
-      <Skeleton minH="150px" isLoaded={!isLoading}>
-        <ActivityAccordion data={orders} />
-      </Skeleton>
-      <Pagination page={page} totalCount={totalCount} onPageChange={setPage} mt="40px" />
-    </>
+    <Skeleton minH="150px" isLoaded={!isLoading}>
+      {orders.length ? (
+        <>
+          <OrderAccordion data={orders} />
+          <Pagination page={page} totalCount={totalCount} onPageChange={setPage} mt="40px" />
+        </>
+      ) : (
+        '沒有訂單'
+      )}
+    </Skeleton>
   );
 }
 
