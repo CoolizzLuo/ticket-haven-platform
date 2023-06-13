@@ -2,23 +2,22 @@ import { BaseResponse } from '@/lib/api/types/baseResponse';
 import { UserSinginReq, UserSinginRes } from '@/lib/api/types/userSignin';
 import { UserSingupReq } from '@/lib/api/types/userSignup';
 import { httpClient, RequestData } from './httpClient';
+import { CreateShareCodeRes } from './types/createShareCode';
 
-interface API<Req extends RequestData, Res = void> {
-  (req?: Req, options?: RequestInit): Promise<BaseResponse<Res> | undefined>;
+interface API<Req extends RequestData | void, Res = void> {
+  (req?: Req, options?: RequestInit): Promise<BaseResponse<Res>>;
 }
 
 interface APIEndpoints {
-  demo: (id: string) => API<RequestData<void, { page: string }>, void>;
   signin: API<RequestData<UserSinginReq>, UserSinginRes>;
   signup: API<RequestData<UserSingupReq>>;
-  uploadFile: API<RequestData<FormData>>;
+  createShareCode: (ticketNo: string) => Promise<BaseResponse<CreateShareCodeRes>>;
 }
 
 const api: APIEndpoints = {
-  demo: (id: string) => httpClient.get(`/demo/${id}`), // GET /demo/:id?page=1
   signin: httpClient.post('/user/signin'),
   signup: httpClient.post('/user/signup'),
-  uploadFile: httpClient.post('/file/upload'),
+  createShareCode: (ticketNo) => httpClient.post(`tickets/${ticketNo}/share-code`)(),
 };
 
 export default api;
