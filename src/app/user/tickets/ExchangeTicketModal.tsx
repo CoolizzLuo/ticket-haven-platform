@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { mutate } from 'swr';
 import { PlusIcon } from '@/components/icons';
 import {
   Button,
@@ -38,6 +39,7 @@ export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onCl
   const onSubmit: SubmitHandler<ExchangeFormValues> = async (data) => {
     try {
       await api.exchangeTicket({ params: data });
+      mutate((key) => Array.isArray(key) && key[0] === 'tickets');
       onClose();
     } catch (error) {
       setError('root.submitError', { type: 'fail' });
