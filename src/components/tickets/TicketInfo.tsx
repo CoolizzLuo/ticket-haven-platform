@@ -1,17 +1,19 @@
 import { List, ListItem, Button, Tag, Text, SimpleGrid, Box, Icon } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
 import { LuQrCode } from 'react-icons/lu';
 import { SlActionRedo } from 'react-icons/sl';
-import { isAfterToday } from '@/lib/dayjs';
-import TicketContext from '@/app/user/tickets/TicketContext';
-import { ETicketInfo as TicketProps } from '@/types/ticketTypes';
-import { ShareTicketModal } from '@/app/user/tickets/ShareTicketModal';
-import { useShareModel } from '@/app/user/tickets/ShareModalContext';
+import { Ticket } from '@/hooks/api/useTickets';
 
-const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
-  const { openTicket } = useContext(TicketContext);
-  const { open: openShareModal } = useShareModel();
-
+const TicketInfo = ({
+  tickets,
+  isExpire,
+  onUse,
+  onShare,
+}: {
+  tickets: Ticket[];
+  isExpire: boolean;
+  onUse: (ticket: Ticket) => void;
+  onShare: (ticket: Ticket) => void;
+}) => {
   return (
     <Box>
       <SimpleGrid columns={4} borderBottom="1px" borderColor="natural.300" py="20px">
@@ -28,17 +30,21 @@ const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
               <Text>#{ticket.ticketNo}</Text>
               <Text>{ticket.seat}</Text>
               <Box>
-                {ticket.isShare && <Tag variant="warning">已分票</Tag>}
-                {ticket.isUsed && <Tag variant="light">已使用</Tag>}
-                {!ticket.isUsed && !ticket.isShare && <Tag variant="info">未使用</Tag>}
+                {ticket.isShared ? (
+                  <Tag variant="warning">已分票</Tag>
+                ) : ticket.isUsed ? (
+                  <Tag variant="light">已使用</Tag>
+                ) : (
+                  <Tag variant="info">未使用</Tag>
+                )}
               </Box>
               <Box>
                 <Button
                   variant="outLine"
                   mr="16px"
                   size="sm"
-                  isDisabled={ticket.isShare || ticket.isUsed || !isAfterToday(ticket.startAt)}
-                  onClick={() => openTicket({ content: ticket, isOpen: true })}
+                  isDisabled={ticket.isShared || ticket.isUsed || isExpire}
+                  onClick={() => onUse(ticket)}
                 >
                   <Icon as={LuQrCode} mr="8px" />
                   使用
@@ -46,10 +52,8 @@ const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
                 <Button
                   variant="outLine"
                   size="sm"
-                  isDisabled={ticket.isShare || ticket.isUsed || !isAfterToday(ticket.startAt)}
-                  onClick={() =>
-                    openShareModal({ ...ticket, imageUrl: ticket.coverImageUrl, activityName: ticket.name })
-                  }
+                  isDisabled={ticket.isShared || ticket.isUsed || !!ticket.sharedBy || isExpire}
+                  onClick={() => onShare(ticket)}
                 >
                   <Icon as={SlActionRedo} mr="8px" /> 分票
                 </Button>

@@ -6,5 +6,5 @@ export const getTickets = ({ page, isValid, pageSize }: { page: number; isValid:
 };
 
 export const createTicketCode = (ticketCode: string) => {
-  return httpClient.post(`tickets/${ticketCode}/qrcode`);
+  return httpClient.post(`tickets/${ticketCode}/check-in-token`);
 };

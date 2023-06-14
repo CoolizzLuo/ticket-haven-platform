@@ -6,7 +6,7 @@ import { useState, useMemo } from 'react';
 import TicketDialog from '@/components/tickets/TicketDialog';
 import TicketsAccordion from '@/components/tickets/TicketsAccordion';
 import Pagination from '@/components/common/Pagination';
-import useTickets from '@/hooks/api/useTickets';
+import useTicketGroups from '@/hooks/api/useTickets';
 import TicketContext from './TicketContext';
 import useTicketContext from './useTicketContext';
 import { ShareModalProvider } from './ShareModalContext';
@@ -19,7 +19,7 @@ const VALID = 1;
 const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
   const PAGE_SIZE = 3;
   const [page, setPage] = useState(1);
-  const { tickets = [], isLoading, totalCount = 0 } = useTickets({ page, pageSize: PAGE_SIZE, isValid });
+  const { ticketGroups = [], isLoading, totalCount = 0 } = useTicketGroups({ page, pageSize: PAGE_SIZE, isValid });
   // detailContext
   const { dialogState, closeDialog, openTicket } = useTicketContext();
   const contextValue = useMemo(
@@ -30,10 +30,10 @@ const TicketList = ({ isValid }: { isValid: 0 | 1 }) => {
   return (
     <Skeleton minH="150px" isLoaded={!isLoading}>
       <TicketContext.Provider value={contextValue}>
-        {tickets.length ? (
+        {ticketGroups.length ? (
           <>
             <TicketDialog />
-            <TicketsAccordion list={tickets} />
+            <TicketsAccordion list={ticketGroups} />
             <Pagination
               pageSize={PAGE_SIZE}
               page={page}

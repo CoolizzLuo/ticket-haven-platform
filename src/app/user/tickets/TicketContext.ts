@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { DialogState } from './useTicketContext';
 
 interface TicketContextValue {
   dialogState: any;
-  openTicket: (content: any) => void;
+  openTicket: (content: DialogState) => void;
   closeDialog: () => void;
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ETicketInfo as ContentState } from '@/types/ticketTypes';
 
-type DialogState = {
+export type DialogState = {
   content: ContentState;
   isOpen: boolean;
 };
