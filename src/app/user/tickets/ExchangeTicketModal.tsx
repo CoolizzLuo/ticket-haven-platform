@@ -1,3 +1,4 @@
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { PlusIcon } from '@/components/icons';
 import {
   Button,
@@ -11,12 +12,24 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Skeleton,
 } from '@/lib/chakra';
 
+type ExchangeFormValues = {
+  ticketNo: string;
+  shareCode: string;
+};
+
 export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const ticketNo = '123456789';
-  const shareCode = '123456789';
+  const { register, handleSubmit } = useForm<ExchangeFormValues>({
+    defaultValues: {
+      ticketNo: '',
+      shareCode: '',
+    },
+  });
+
+  const onSubmit: SubmitHandler<ExchangeFormValues> = (data) => {
+    console.log(data);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
@@ -27,25 +40,25 @@ export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onCl
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody pb="32px" px="40px">
-          <InputGroup size="sm" mb="12px">
-            <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
-              票券編號
-            </InputLeftAddon>
-            <Input value={ticketNo} />
-          </InputGroup>
-          <Skeleton minH="44px" isLoaded={!!shareCode}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <InputGroup size="sm" mb="12px">
+              <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
+                票券編號
+              </InputLeftAddon>
+              <Input {...register('ticketNo', { required: true })} />
+            </InputGroup>
             <InputGroup size="sm">
               <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
                 驗證碼
               </InputLeftAddon>
-              <Input value={shareCode} />
+              <Input {...register('shareCode', { required: true })} />
             </InputGroup>
-          </Skeleton>
-          <Center mt="24px">
-            <Button size="sm" leftIcon={<PlusIcon />}>
-              兌換
-            </Button>
-          </Center>
+            <Center mt="24px">
+              <Button type="submit" size="sm" leftIcon={<PlusIcon />}>
+                兌換
+              </Button>
+            </Center>
+          </form>
         </ModalBody>
       </ModalContent>
     </Modal>
