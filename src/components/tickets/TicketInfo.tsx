@@ -28,7 +28,7 @@ const TicketInfo = ({ tickets }: { tickets: TicketProps[] }) => {
               <Text>#{ticket.ticketNo}</Text>
               <Text>{ticket.seat}</Text>
               <Box>
-                {ticket.isShare && <Tag variant="warning">分票中</Tag>}
+                {ticket.isShare && <Tag variant="warning">已分票</Tag>}
                 {ticket.isUsed && <Tag variant="light">已使用</Tag>}
                 {!ticket.isUsed && !ticket.isShare && <Tag variant="info">未使用</Tag>}
               </Box>
