@@ -12,7 +12,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
 } from '@/lib/chakra';
+import api from '@/lib/api';
 
 type ExchangeFormValues = {
   ticketNo: string;
@@ -20,15 +22,30 @@ type ExchangeFormValues = {
 };
 
 export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const { register, handleSubmit } = useForm<ExchangeFormValues>({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
+  } = useForm<ExchangeFormValues>({
     defaultValues: {
       ticketNo: '',
       shareCode: '',
     },
   });
 
-  const onSubmit: SubmitHandler<ExchangeFormValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ExchangeFormValues> = async (data) => {
+    try {
+      await api.exchangeTicket({ params: data });
+      onClose();
+    } catch (error) {
+      setError('root.submitError', { type: 'fail' });
+    }
+  };
+
+  const clearSubmitError = () => {
+    clearErrors('root.submitError');
   };
 
   return (
@@ -45,18 +62,23 @@ export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onCl
               <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
                 票券編號
               </InputLeftAddon>
-              <Input {...register('ticketNo', { required: true })} />
+              <Input {...register('ticketNo', { required: true, onChange: clearSubmitError })} />
             </InputGroup>
             <InputGroup size="sm">
               <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">
                 驗證碼
               </InputLeftAddon>
-              <Input {...register('shareCode', { required: true })} />
+              <Input {...register('shareCode', { required: true, onChange: clearSubmitError })} />
             </InputGroup>
-            <Center mt="24px">
-              <Button type="submit" size="sm" leftIcon={<PlusIcon />}>
+            <Center mt="24px" flexDirection="column">
+              <Button type="submit" size="sm" leftIcon={<PlusIcon />} disabled={isSubmitting}>
                 兌換
               </Button>
+              {errors?.root?.submitError && (
+                <Text mt="8px" color="alert">
+                  票卷編號或驗證碼錯誤
+                </Text>
+              )}
             </Center>
           </form>
         </ModalBody>
