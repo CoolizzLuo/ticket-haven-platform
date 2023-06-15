@@ -17,10 +17,9 @@ const CheckIn = () => {
     }
   }, [event, isLoading]);
 
-  console.log(event);
   return (
     <Skeleton minH="300px" isLoaded={!isLoading}>
-      <Box h="200px" bgImage={event?.coverImgUrl} bgSize="cover" bgPosition="center" />
+      <Box h="250px" bgImage={event?.coverImgUrl} bgSize="cover" bgPosition="center" />
     </Skeleton>
   );
 };

@@ -15,8 +15,8 @@ import { dayFormat, isBeforeToday } from '@/lib/dayjs';
 import { LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import { TicketGroup } from '@/hooks/api/useTickets';
-import { useShareModel } from '@/app/user/tickets/ShareModalContext';
-import TicketContext from '@/app/user/tickets/TicketContext';
+import { useShareModel } from '@/app/(main)/user/tickets/ShareModalContext';
+import TicketContext from '@/app/(main)/user/tickets/TicketContext';
 import TicketInfo from './TicketInfo';
 
 const TicketsAccordion = ({ list }: { list: TicketGroup[] }) => {
