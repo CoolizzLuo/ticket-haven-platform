@@ -11,15 +11,3 @@ export type ETicketInfo = Ticket & {
   address: string;
   startAt: string;
 };
-
-export interface Tickets {
-  activityId: string;
-  orderId: string;
-  address: string;
-  eventId: string;
-  name: string;
-  startAt: string;
-  endAt: string;
-  coverImageUrl: string;
-  tickets: Ticket[];
-}

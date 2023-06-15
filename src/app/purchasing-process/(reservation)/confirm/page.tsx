@@ -20,7 +20,7 @@ import Link from 'next/link';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useActivity from '@/hooks/api/useActivity';
 import useOrder from '@/hooks/api/useOrder';
-import { CalendarIcon, CheckIcon, LocationIcon, MdDeleteIcon } from '@/components/icons';
+import { CalendarIcon, CheckIcon, LocationIcon, DeleteIcon } from '@/components/icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dayjs, { Dayjs } from 'dayjs';
@@ -174,7 +174,7 @@ const Confirm = () => {
                     size="icon-sm"
                     colorScheme="natural"
                     variant="light"
-                    icon={<MdDeleteIcon />}
+                    icon={<DeleteIcon />}
                     aria-label="Delete seat"
                     onClick={() => deleteSeat(s)}
                   />
