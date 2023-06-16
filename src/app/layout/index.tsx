@@ -1,5 +1,4 @@
 import Providers from '../providers';
-import Dialog from './Dialog';
 
 export const metadata = {
   title: 'Next.js',
@@ -10,7 +9,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-TW">
       <body>
-        <Dialog />
         <Providers>{children}</Providers>
       </body>
     </html>
