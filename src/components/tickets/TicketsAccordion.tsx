@@ -11,7 +11,7 @@ import {
   Button,
   Icon,
 } from '@chakra-ui/react';
-import { dayFormat, isBeforeToday } from '@/lib/dayjs';
+import { dateFormatWithoutday, isBeforeToday } from '@/lib/dayjs';
 import { LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import { TicketGroup } from '@/hooks/api/useTickets';
@@ -29,28 +29,35 @@ const TicketsAccordion = ({ list }: { list: TicketGroup[] }) => {
         list.map(({ activity, tickets }) => {
           return (
             <AccordionItem borderColor="transparent" mb="24px" key={activity.eventId} bg="none">
-              <Flex p="24px" align="center" bg="white" mb="4px">
+              <Box display={{ md: 'flex' }} p="24px" alignItems="center" bg="white" mb="4px">
                 <Box flex={1} textAlign="left">
-                  <Text fontWeight="600" fontSize="24px" mb="28px" color="natural.900">
+                  <Text
+                    fontWeight="600"
+                    textStyle={{ base: 't5', md: 't4' }}
+                    mb={{ base: '18px', md: '28px' }}
+                    color="natural.900"
+                  >
                     {activity.name}
                   </Text>
-                  <Flex fontSize="20px" color="natural.800">
-                    <Flex alignItems="center" mr="30px">
+                  <Box display={{ md: 'flex' }} textStyle={{ base: 't6', md: 't5' }} color="natural.800">
+                    <Flex alignItems="center" mr="30px" mb={{ base: '12px', md: 0 }}>
                       <Icon as={LuCalendarDays} mr="8px" />
-                      <Text textStyle="t5">{dayFormat(activity.startAt)}</Text>
+                      <Text>{dateFormatWithoutday(activity.startAt)}</Text>
                     </Flex>
-                    <Flex alignItems="center">
+                    <Flex alignItems="center" mb={{ base: '12px', md: 0 }}>
                       <Icon as={GoLocation} mr="8px" />
                       <Text>{activity.address}</Text>
                     </Flex>
-                  </Flex>
+                  </Box>
                 </Box>
                 <AccordionButton as="div">
-                  <Button rightIcon={<AccordionIcon />}>票券資訊</Button>
+                  <Button rightIcon={<AccordionIcon />} width="100%">
+                    票券資訊
+                  </Button>
                 </AccordionButton>
-              </Flex>
+              </Box>
 
-              <AccordionPanel bg="white" p="24px">
+              <AccordionPanel bg="white" px="24px" py={{ md: '24px' }}>
                 <TicketInfo
                   tickets={tickets}
                   isExpire={isBeforeToday(activity.endAt)}
