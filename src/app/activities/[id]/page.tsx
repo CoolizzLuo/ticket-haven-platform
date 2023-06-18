@@ -1,8 +1,8 @@
 'use client';
 
 import {
+  Skeleton,
   Grid,
-  Heading,
   Text,
   Container,
   Image,
@@ -74,7 +74,7 @@ const Activitie = () => {
   };
 
   return (
-    <Container maxW="container.xl" pb="80px" pt="40px">
+    <Container maxW="container.xl" pb={{ base: '80px', md: '40px' }} pt="40px">
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">首頁 </BreadcrumbLink>
@@ -87,23 +87,26 @@ const Activitie = () => {
       </Breadcrumb>
 
       <Box as="section" mb="48px">
-        <Image
-          my="24px"
-          src={result?.coverImageUrl}
-          borderRadius="lg"
-          alt="eventImg"
-          width="100%"
-          maxH="500px"
-          objectFit="cover"
-        />
-        <Heading as="h2" fontSize="28px" my="24px">
+        <Skeleton isLoaded={Boolean(result?.coverImageUrl)} minH={{ base: '100px', md: '330px' }}>
+          <Image
+            my="24px"
+            src={result?.coverImageUrl}
+            borderRadius="lg"
+            alt="eventImg"
+            width="100%"
+            maxH="500px"
+            objectFit="cover"
+          />
+        </Skeleton>
+        <Text textStyle={{ base: 'h5', md: 'h3' }} fontWeight="700" my={{ base: '20px', md: '24px' }}>
           {result?.name}
-        </Heading>
-        <Flex mb="48px">
-          <Text>
+        </Text>
+        <Flex mb={{ base: '40px', md: '48px' }} flexDir={{ base: 'column', md: 'row' }}>
+          <Text textAlign="center">
             {result?.startTime && dayFormat(result.startTime)} - {result?.endTime && dayFormat(result.endTime)}
           </Text>
-          /<Text>{result?.address}</Text>
+          <Text display={{ base: 'none', md: 'block' }}>/</Text>
+          <Text textAlign="center">{result?.address}</Text>
         </Flex>
         {result?.news && (
           <List bg="#FFF3F8" pt="20px" pl="36px" borderRadius="6px">
@@ -117,27 +120,28 @@ const Activitie = () => {
       </Box>
 
       <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} gap="30px" as="ul" alignItems="stretch">
-        <Box order={{ base: 2, md: 1 }}>
+        <Box order={{ base: 2, md: 1 }} width="100%" overflow="hidden">
           <Tabs variant="unstyled">
-            <TabList mb="24px">
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                節目介紹
-              </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                座位示意
-              </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                注意事項
-              </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                購票提醒
-              </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                取票提醒
-              </Tab>
-              <Tab borderWidth="1px" borderRadius="md" mr="8px" _selected={{ color: 'white', bg: 'primary.500' }}>
-                退票說明
-              </Tab>
+            <TabList
+              overflowX="scroll"
+              whiteSpace="nowrap"
+              sx={{
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
+              }}
+            >
+              {['節目介紹', '座位示意', '注意事項', '購票提醒', '退票說明'].map((title) => (
+                <Tab
+                  key={title}
+                  borderWidth="1px"
+                  borderRadius="md"
+                  mr="8px"
+                  _selected={{ color: 'white', bg: 'primary.500' }}
+                >
+                  {title}
+                </Tab>
+              ))}
             </TabList>
             <TabPanels bg="#F7F4F6" borderRadius="6px" p="32px" pb="100px">
               <TabPanel p="0">
@@ -230,10 +234,10 @@ const Activitie = () => {
           </Tabs>
         </Box>
         <Box order={{ base: 1, md: 2 }}>
-          <Text color="primary.500" fontWeight="700">
+          <Text color="primary.500" fontWeight="700" textAlign={{ base: 'center', md: 'left' }}>
             開始售票
           </Text>
-          <Text color="primary.500" mb="24px" fontWeight="700">
+          <Text color="primary.500" mb="24px" fontWeight="700" textAlign={{ base: 'center', md: 'left' }}>
             {result &&
               !!result.events.length &&
               dayFormat(
