@@ -119,10 +119,12 @@ const Home = () => {
     <>
       <Carousel list={activities.map((a) => ({ url: a.coverImgUrl, id: a.id }))} />
       {!isMobile && (
-        <ActivitySearchForm
-          onChange={redirectEventsResultPage}
-          searchParams={{ startAfter: calendarFormat(new Date()) }}
-        />
+        <Box bg="natural.50">
+          <ActivitySearchForm
+            onChange={redirectEventsResultPage}
+            searchParams={{ startAfter: calendarFormat(new Date()) }}
+          />
+        </Box>
       )}
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />

@@ -55,7 +55,7 @@ export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onCl
       <ModalOverlay />
       <ModalContent overflow="hidden">
         <ModalHeader pt="40px" textAlign="center">
-          兌換票卷
+          兌換票券
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody pb="32px" px="40px">
@@ -78,7 +78,7 @@ export const ExchangeTicketModal = ({ isOpen, onClose }: { isOpen: boolean; onCl
               </Button>
               {errors?.root?.submitError && (
                 <Text mt="8px" color="alert">
-                  票卷編號或驗證碼錯誤
+                  票券編號或驗證碼錯誤
                 </Text>
               )}
             </Center>
