@@ -23,7 +23,7 @@ import { LuRefreshCw, LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import { GrClose } from 'react-icons/gr';
 import useDialogStore from '@/stores/dialogStore';
-import TicketContext from '@/app/user/tickets/TicketContext';
+import TicketContext from '@/app/(main)/user/tickets/TicketContext';
 
 const circleStyle = {
   content: `''`,
