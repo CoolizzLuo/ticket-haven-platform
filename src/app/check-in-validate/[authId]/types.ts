@@ -5,6 +5,7 @@ export type TicketInfo = {
   };
   activityName: string;
   ticketNo: string;
+  subAreaName: string;
   row: number;
   seat: number;
   isUsed: boolean;

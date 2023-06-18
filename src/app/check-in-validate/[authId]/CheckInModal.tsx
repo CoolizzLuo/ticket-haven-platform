@@ -48,7 +48,7 @@ export const CheckInModal = ({
                 <Text>{data?.ticketNo}</Text>
                 <Text textAlign="right">座位</Text>
                 <Text>
-                  {data?.row}排 {data?.seat}號
+                  {data?.subAreaName} {data?.row}排 {data?.seat}號
                 </Text>
               </SimpleGrid>
             }
