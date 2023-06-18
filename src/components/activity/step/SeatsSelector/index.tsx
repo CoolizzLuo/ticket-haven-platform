@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
@@ -37,21 +37,10 @@ const formatDateLocationStr = (date: string, location: string) =>
   `${dayjs(date).format('YYYY/MM/DD(ddd) HH:mm')} ${location}`;
 
 const SeatSelector = ({ activity, seats, eventId, updateSeats }: SeatsSelectorProps) => {
-  const [seatsFiltered, setSeatsFiltered] = useState<Area[]>([]);
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
   const router = useRouter();
   const setSelectArea = useTicketPurchasingStore.use.setArea();
-
-  const clickHandler = (area: Area) => (subArea: SubArea) => {
-    setSelectArea(area, subArea);
-    router.push('/purchasing-process/select-seats');
-  };
-
-  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    updateSeats(e.target.value);
-  };
-
-  useEffect(() => {
+  const seatsFiltered = useMemo(() => {
     const conditions = (remainingSeats: number) => {
       if (btnStatus === 'soldout') {
         return remainingSeats === 0;
@@ -70,9 +59,20 @@ const SeatSelector = ({ activity, seats, eventId, updateSeats }: SeatsSelectorPr
         }, []);
         return { ...area, subAreas: filterdSubAreas };
       }, []);
-      setSeatsFiltered(filtered);
+      return filtered;
     }
-  }, [seats, btnStatus, setSeatsFiltered]);
+    return [];
+  }, [btnStatus, seats]);
+
+  const clickHandler = (area: Area) => (subArea: SubArea) => {
+    setSelectArea(area, subArea);
+    router.push('/purchasing-process/select-seats');
+  };
+
+  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    updateSeats(e.target.value);
+  };
+
   return (
     <VStack align="stretch" gap="48px" bg="natural.50" borderRadius="6px" padding="40px 24px">
       <Heading as="h2" fontSize="28px">

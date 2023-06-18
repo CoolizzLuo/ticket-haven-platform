@@ -6,6 +6,25 @@ interface AreaPickerProps extends Area {
   clickHandler: (subArea: SubArea) => void;
 }
 
+const statusContent = (remainingSeats: number) => {
+  const getStatus = remainingSeats === 0 ? 'soldout' : remainingSeats < 10 ? 'remainFew' : 'hotsell';
+  const statusMap = {
+    soldout: {
+      text: '完售',
+      color: 'natural.600',
+    },
+    hotsell: {
+      text: '熱賣中',
+      color: 'black',
+    },
+    remainFew: {
+      text: `剩餘${remainingSeats}`,
+      color: 'primary.500',
+    },
+  };
+  return statusMap[getStatus];
+};
+
 const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) => {
   const [areas, setAreas] = useState<SubArea[][]>([]);
   useEffect(() => {
@@ -34,25 +53,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
             return (
               <VStack key={group[0].name} align="start" spacing="0px">
                 {group.map((subArea: SubArea) => {
-                  const getStatus = () => {
-                    if (subArea.remainingSeats === 0) return 'soldout';
-                    if (subArea.remainingSeats < 10) return 'remainFew';
-                    return 'hotsell';
-                  };
-                  const statusMap = {
-                    soldout: {
-                      text: '完售',
-                      color: 'natural.600',
-                    },
-                    hotsell: {
-                      text: '熱賣中',
-                      color: 'black',
-                    },
-                    remainFew: {
-                      text: `剩餘${subArea.remainingSeats}`,
-                      color: 'primary.500',
-                    },
-                  };
+                  const status = statusContent(subArea.remainingSeats);
                   return (
                     <chakra.button
                       key={subArea.id}
@@ -65,7 +66,7 @@ const AreaPicker = ({ price, name, subAreas, clickHandler }: AreaPickerProps) =>
                     >
                       <Square size="20px" bg={subArea.color} marginRight="8px" />
                       <Text marginRight="20px">{subArea.name}</Text>
-                      <Text color={statusMap[getStatus()].color}>{statusMap[getStatus()].text}</Text>
+                      <Text color={status.color}>{status.text}</Text>
                     </chakra.button>
                   );
                 })}
