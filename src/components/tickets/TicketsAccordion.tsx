@@ -67,7 +67,7 @@ const TicketsAccordion = ({ list }: { list: TicketGroup[] }) => {
                       content: {
                         ticketNo: ticket.ticketNo,
                         coverImageUrl: activity.coverImgUrl,
-                        seat: `${ticket.row}排 ${ticket.seat}號`,
+                        seat: `${ticket.subArea} ${ticket.row}排 ${ticket.seat}號`,
                         name: activity.name,
                         address: activity.address,
                         isUsed: ticket.isUsed,
