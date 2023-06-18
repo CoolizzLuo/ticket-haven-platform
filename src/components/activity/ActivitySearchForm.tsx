@@ -1,4 +1,15 @@
-import { Text, HStack, Box, Select, InputGroup, Input, InputRightElement, Heading } from '@chakra-ui/react';
+import {
+  Text,
+  HStack,
+  Stack,
+  Box,
+  Select,
+  InputGroup,
+  Input,
+  InputRightElement,
+  Heading,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { useReducer } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { SearchFormState as SearchState } from '@/types/activityTypes';
@@ -15,6 +26,8 @@ const searchReducer = (state: SearchState, action: Action): SearchState => {
 };
 
 const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType; searchParams?: SearchState }) => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   const initSearchState = searchParams || { region: '', startAfter: '', q: '' };
 
   const [searchForm, dispatch] = useReducer(searchReducer, initSearchState);
@@ -40,36 +53,44 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
   };
 
   return (
-    <Box as="section" py="80px" bgColor="#F7F4F6">
+    <Box as="section" py={{ base: '40px', md: '80px' }}>
       <Heading as="h2" textAlign="center" mb="32px">
         找活動
       </Heading>
       <HStack justifyContent="center">
-        <HStack justifyContent="center" bgColor="white" p="40px" borderRadius="8px">
-          <Box padding="20px" borderRight="1px solid" borderColor="gray.200">
-            <Text as="label">區域</Text>
-            <Select
-              variant="ghost"
-              size="sm"
-              placeholder="全部"
-              value={searchForm.region}
-              onChange={(e) => onChangeHandler('region', e.target.value)}
-            >
-              <option value="0">北部</option>
-              <option value="1">中部</option>
-              <option value="2">南部</option>
-            </Select>
-          </Box>
-          <Box padding="20px">
-            <Text as="label">日期</Text>
-            <Input
-              variant="ghost"
-              type="date"
-              size="sm"
-              value={searchForm.startAfter}
-              onChange={(e) => onChangeHandler('startAfter', e.target.value)}
-            />
-          </Box>
+        <Stack
+          isInline={!isMobile}
+          justifyContent="center"
+          p={{ base: '20px', md: '40px' }}
+          borderRadius="8px"
+          bgColor={{ base: 'natural.50', md: 'white' }}
+        >
+          <HStack>
+            <Box padding="20px" borderRight="1px solid" borderColor="gray.200">
+              <Text as="label">區域</Text>
+              <Select
+                variant="ghost"
+                size="sm"
+                placeholder="全部"
+                value={searchForm.region}
+                onChange={(e) => onChangeHandler('region', e.target.value)}
+              >
+                <option value="0">北部</option>
+                <option value="1">中部</option>
+                <option value="2">南部</option>
+              </Select>
+            </Box>
+            <Box padding="20px">
+              <Text as="label">日期</Text>
+              <Input
+                variant="ghost"
+                type="date"
+                size="sm"
+                value={searchForm.startAfter}
+                onChange={(e) => onChangeHandler('startAfter', e.target.value)}
+              />
+            </Box>
+          </HStack>
           <Box>
             <InputGroup width="320px" alignItems="center" mb="2">
               <Input
@@ -93,7 +114,7 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
               熱門搜尋：BlackPink 五月天 告五人
             </Text>
           </Box>
-        </HStack>
+        </Stack>
       </HStack>
     </Box>
   );

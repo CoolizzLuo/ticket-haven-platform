@@ -53,23 +53,23 @@ const Tickets = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Container maxW="container.lg" py="120px">
-      <Text textStyle="h1" textAlign="center" mb="80px">
+    <Container maxW="container.lg" py={{ base: '40px', md: '120px' }} bgColor={{ base: 'natural.50', md: 'white' }}>
+      <Text textStyle={{ base: 'h4', md: 'h1' }} textAlign="center" mb={{ base: '20px', md: '80px' }}>
         我的票券
       </Text>
       <ShareModalProvider>
         <Tabs variant="card" size="lg">
-          <TabList mb="24px" justifyContent="space-between">
-            <Flex>
+          <TabList mb="24px" justifyContent="space-between" flexWrap="wrap">
+            <Flex order={{ base: '2', md: '1' }}>
               <Tab mr="8px">可使用</Tab>
               <Tab mr="8px">已過期</Tab>
             </Flex>
-            <Button leftIcon={<AddIcon />} onClick={() => setIsOpen(true)}>
+            <Button leftIcon={<AddIcon />} order={{ base: '1', md: '2' }} onClick={() => setIsOpen(true)}>
               兌換票券
             </Button>
           </TabList>
           <TabPanels>
-            <TabPanel>
+            <TabPanel p={{ base: 0, md: '32px' }}>
               <TicketList isValid={VALID} />
             </TabPanel>
             <TabPanel>

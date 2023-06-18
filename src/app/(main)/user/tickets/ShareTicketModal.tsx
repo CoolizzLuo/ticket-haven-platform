@@ -41,7 +41,7 @@ export const ShareTicketModal = () => {
   }, [ticketNo]);
 
   const copyShareCode = () => {
-    copyTextToClipboard(`輸入票卷編號和驗證碼進行取票\n票卷編號：${ticketNo}\n驗證碼：${shareCode}`);
+    copyTextToClipboard(`輸入票券編號和驗證碼進行取票\n票券編號：${ticketNo}\n驗證碼：${shareCode}`);
   };
 
   return (
