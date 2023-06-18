@@ -17,11 +17,12 @@ import { LuQrCode } from 'react-icons/lu';
 import { SlActionRedo } from 'react-icons/sl';
 import { Ticket } from '@/hooks/api/useTickets';
 
-const TicketShare = ({ isShared, isUsed }: { isShared: boolean; isUsed: boolean }) => {
+const TicketStatusTag = ({ isShared, isUsed }: { isShared: boolean; isUsed: boolean }) => {
   return (
     <>
       {isShared && <Tag variant="warning">已分票</Tag>}
-      {!isShared && isUsed ? <Tag variant="light">已使用</Tag> : <Tag variant="info">未使用</Tag>}
+      {!isShared && isUsed && <Tag variant="light">已使用</Tag>}
+      {!isShared && !isUsed && <Tag variant="info">未使用</Tag>}
     </>
   );
 };
@@ -61,13 +62,13 @@ const TicketInfo = ({
                     {ticket.subArea} {ticket.row}排 {ticket.seat}號
                   </Text>
                   <Box>
-                    <TicketShare isShared={ticket.isShared} isUsed={ticket.isUsed} />
+                    <TicketStatusTag isShared={ticket.isShared} isUsed={ticket.isUsed} />
                   </Box>
                 </>
               ) : (
                 <>
                   <Flex justifyContent="end" mb="20px">
-                    <TicketShare isShared={ticket.isShared} isUsed={ticket.isUsed} />
+                    <TicketStatusTag isShared={ticket.isShared} isUsed={ticket.isUsed} />
                   </Flex>
                   <InputGroup size="sm" mb="20px">
                     <InputLeftAddon w="90px" justifyContent="center" bgColor="natural.600" color="white">

@@ -80,7 +80,7 @@ const OrderAccordion = ({ data }: { data: Order[] }) => {
                   </Text>
                 </div>
                 <div>
-                  <Text>票卷張數</Text>
+                  <Text>票券張數</Text>
                   <Text>{seats.length}</Text>
                 </div>
                 <div>
