@@ -7,6 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { SessionProvider } from 'next-auth/react';
 import { fetcher } from '@/api/swrFetcher';
 import theme from './theme';
+import Dialog from './layout/Dialog';
 
 type Props = {
   children: React.ReactNode;
@@ -21,7 +22,10 @@ const Providers = ({ children }: Props) => {
     <CacheProvider>
       <SessionProvider>
         <SWRConfig value={swrConfig}>
-          <ChakraProvider theme={theme}>{children}</ChakraProvider>
+          <ChakraProvider theme={theme}>
+            <Dialog />
+            {children}
+          </ChakraProvider>
         </SWRConfig>
       </SessionProvider>
     </CacheProvider>

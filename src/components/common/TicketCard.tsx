@@ -1,31 +1,24 @@
-import { Box, ChakraProps } from '@/lib/chakra';
+import { Box, ChakraProps, Flex } from '@/lib/chakra';
 
 const Circle = (props: ChakraProps) => {
-  return (
-    <Box
-      w="30px"
-      h="25px"
-      border="2px"
-      borderColor="natural.500"
-      backgroundColor="white"
-      borderRadius="50%"
-      {...props}
-    />
-  );
+  return <Box w="30px" h="25px" border="2px" borderColor="natural.500" borderRadius="50%" {...props} />;
 };
 
 export const TicketCard = ({
   topContent,
   bottomContent,
+  outerBgColor = 'white',
   ...props
 }: {
   topContent: React.ReactNode;
   bottomContent: React.ReactNode;
+  outerBgColor?: string;
 } & ChakraProps) => {
   return (
-    <Box position="relative" overflow="hidden" {...props}>
+    <Flex position="relative" flexDirection="column" borderRadius="8px" overflow="hidden" {...props}>
       <Box
         position="relative"
+        zIndex={10}
         border="2px"
         borderBottom="none"
         borderColor="natural.500"
@@ -43,8 +36,20 @@ export const TicketCard = ({
           backgroundSize="20px"
           backgroundRepeat="repeat"
         />
-        <Circle position="absolute" top="100%" right={0} transform="translateX(65%) translateY(-50%)" />
-        <Circle position="absolute" top="100%" left={0} transform="translateX(-65%) translateY(-50%)" />
+        <Circle
+          position="absolute"
+          top="100%"
+          right={0}
+          transform="translateX(65%) translateY(-50%)"
+          bgColor={outerBgColor}
+        />
+        <Circle
+          position="absolute"
+          top="100%"
+          left={0}
+          transform="translateX(-65%) translateY(-50%)"
+          bgColor={outerBgColor}
+        />
       </Box>
       <Box
         border="2px"
@@ -52,9 +57,10 @@ export const TicketCard = ({
         borderColor="natural.500"
         borderBottomLeftRadius="8px"
         borderBottomRightRadius="8px"
+        flex={1}
       >
         {bottomContent}
       </Box>
-    </Box>
+    </Flex>
   );
 };

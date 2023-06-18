@@ -91,6 +91,16 @@ const textStyles = {
   },
 };
 
+const fontSizes = {
+  xs: '14px',
+  sm: '16px',
+  md: '20px',
+  lg: '24px',
+  xl: '28px',
+  '2xl': '32px',
+  '3xl': '40px',
+};
+
 const fonts = {
   heading: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   body: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
@@ -116,6 +126,7 @@ const Checkbox = defineStyleConfig({
 const theme = extendTheme({
   colors,
   fonts,
+  fontSizes,
   textStyles,
   styles: {
     global,
