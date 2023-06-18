@@ -30,7 +30,7 @@ export const CheckInModal = ({
       <ModalOverlay />
       <ModalContent bg="natural.100">
         <ModalHeader fontSize="lg" textAlign="center">
-          票卷資訊
+          票券資訊
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody py="32px" px="40px">
@@ -44,7 +44,7 @@ export const CheckInModal = ({
               <SimpleGrid templateColumns="80px 1fr" rowGap="16px" columnGap="12px" py="24px" px="16px">
                 <Text textAlign="right">活動名稱</Text>
                 <Text>{data?.activityName}</Text>
-                <Text textAlign="right">票卷編號</Text>
+                <Text textAlign="right">票券編號</Text>
                 <Text>{data?.ticketNo}</Text>
                 <Text textAlign="right">座位</Text>
                 <Text>
