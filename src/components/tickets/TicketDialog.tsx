@@ -23,7 +23,7 @@ import { LuRefreshCw, LuCalendarDays } from 'react-icons/lu';
 import { GoLocation } from 'react-icons/go';
 import { GrClose } from 'react-icons/gr';
 import useDialogStore from '@/stores/dialogStore';
-import TicketContext from '@/app/user/tickets/TicketContext';
+import TicketContext from '@/app/(main)/user/tickets/TicketContext';
 
 const circleStyle = {
   content: `''`,
@@ -95,7 +95,7 @@ const TicketDialog = () => {
                     borderColor="natural.600"
                     bg="white"
                   >
-                    {content?.ticketNo && (
+                    {content.ticketNo && (
                       <QRCode
                         value={qrcode}
                         style={{ margin: 'auto', height: 'auto', maxWidth: '140px', paddingBottom: '12px' }}

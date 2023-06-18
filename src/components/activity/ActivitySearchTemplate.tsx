@@ -36,7 +36,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
   }, []);
 
   return (
-    <Container maxW="1200px" py={{ base: '40px', md: '80px' }}>
+    <Container maxW="container.xl" py={{ base: '40px', md: '80px' }}>
       <Box as="section">
         <Heading as="h2" fontSize="28px" mb="32px">
           {title}

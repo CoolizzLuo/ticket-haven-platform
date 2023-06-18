@@ -6,10 +6,10 @@ import { HttpStatusError } from './HttpStatusError';
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 export type RequestData<
-  RequestParams = Record<string, any> | void,
-  RequestSearchParams = Record<string, string | string[]> | void,
+  RequestParams extends Record<string, any> | FormData | void = any,
+  RequestSearchParams extends Record<string, string | string[]> | void = any,
 > = {
-  params?: RequestParams | FormData;
+  params?: RequestParams;
   searchParams?: RequestSearchParams;
 };
 
@@ -62,7 +62,11 @@ const getAuthToken = async () => {
 const createRequest =
   (method: Method) =>
   (endpoint: string) =>
-  async <RequestParams = void, RequestSearchParams = void, ResponseData = void>(
+  async <
+    RequestParams extends Record<string, any> | FormData | void = void,
+    RequestSearchParams extends Record<string, any> | void = void,
+    ResponseData = void,
+  >(
     requestData?: RequestData<RequestParams, RequestSearchParams>,
     options: RequestInit = {},
   ) => {

@@ -4694,6 +4694,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html5-qrcode@npm:^2.3.8":
+  version: 2.3.8
+  resolution: "html5-qrcode@npm:2.3.8"
+  checksum: 14b2bd6925c2b31670801a5eb2fe3b258cb4d1a764a52abbdc31d89e58c9a4db1949007448a2b322559fda259a2a1beb8d4def5fd635597a83a667bfaa13be2b
+  languageName: node
+  linkType: hard
+
 "http-cache-semantics@npm:^4.1.0":
   version: 4.1.1
   resolution: "http-cache-semantics@npm:4.1.1"
@@ -6373,6 +6380,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.44.3":
+  version: 7.44.3
+  resolution: "react-hook-form@npm:7.44.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 8dc97e705d28d842c60fd79b0f07b8b045c458c234e3bf422baab87a844d0ebecbdf3e349538eaaa5c12366cd85169f60a52ed84dd31cdd99729899e424548bf
+  languageName: node
+  linkType: hard
+
 "react-icons@npm:^4.9.0":
   version: 4.9.0
   resolution: "react-icons@npm:4.9.0"
@@ -7208,11 +7224,13 @@ __metadata:
     eslint-config-next: 13.3.0
     eslint-config-prettier: ^8.8.0
     framer-motion: ^10.12.4
+    html5-qrcode: ^2.3.8
     husky: ^8.0.0
     next: 13.4.3
     next-auth: ^4.22.1
     react: 18.2.0
     react-dom: 18.2.0
+    react-hook-form: ^7.44.3
     react-icons: ^4.9.0
     react-qr-code: ^2.0.11
     react-slick: ^0.29.0
