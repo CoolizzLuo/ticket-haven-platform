@@ -13,6 +13,7 @@ const SelectSeat = () => {
   const { openConfirm, openAlert } = useDialogStore();
   const activityId = useTicketPurchasingStore.use.activityId();
   const eventId = useTicketPurchasingStore.use.eventId();
+  const orderNo = useTicketPurchasingStore.use.orderNo();
   const setOrder = useTicketPurchasingStore.use.setOrder();
   const { activity } = useActivity(activityId);
 
@@ -25,14 +26,25 @@ const SelectSeat = () => {
         openConfirm('已無剩餘座位', () => router.push(`/purchasing-process/select-area`));
 
       try {
-        const postData = {
-          activityId: activity.id,
-          eventId,
-          areaId: selectArea?.id,
-          subAreaId: selectSubArea?.id,
-          seatAmount: quantity,
-        };
-        const response = await axiosClient.post('/orders', postData);
+        let response;
+        if (orderNo) {
+          const patchData = {
+            areaId: selectArea?.id,
+            subAreaId: selectSubArea?.id,
+            amount: quantity,
+          };
+          response = await axiosClient.patch(`/${orderNo}/seats`, patchData);
+        } else {
+          const postData = {
+            activityId: activity.id,
+            eventId,
+            areaId: selectArea?.id,
+            subAreaId: selectSubArea?.id,
+            seatAmount: quantity,
+          };
+          response = await axiosClient.post('/orders', postData);
+        }
+
         if (response) {
           const {
             data: { data: order },
