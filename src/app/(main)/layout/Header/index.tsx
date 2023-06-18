@@ -26,6 +26,7 @@ import {
   useDisclosure,
   List,
   ListItem,
+  ListIcon,
   Text,
   Divider,
 } from '@chakra-ui/react';
@@ -123,21 +124,21 @@ const MobileNav = ({ isLogin }: { isLogin: boolean }) => {
               <List>
                 {ROUTE_NORMAL_LIST.map((r) => (
                   <ListItem key={r.route} mb="24px" cursor="pointer" onClick={() => handleRedirect(r.route)}>
-                    <Icon as={r.icon} mr="8px" />
-                    <span>{r.name}</span>
+                    <ListIcon as={r.icon} mr="8px" />
+                    {r.name}
                   </ListItem>
                 ))}
                 <Divider my="24px" />
                 <ListItem cursor="pointer" onClick={() => signOut()}>
-                  <Icon as={FiLogOut} mr="8px" />
-                  <span>登出</span>
+                  <ListIcon as={FiLogOut} mr="8px" />
+                  登出
                 </ListItem>
               </List>
             ) : (
               <>
                 <Text onClick={() => signIn(undefined, { callbackUrl: pathname })}>
-                  <Icon as={FiLogOut} mr="8px" height="16px" />
-                  <span>登入</span>
+                  <ListIcon as={FiLogOut} mr="8px" height="16px" />
+                  登入
                 </Text>
                 <Divider my="24px" />
                 <NextLink href={`/signup?redirect=${pathname}`}>
