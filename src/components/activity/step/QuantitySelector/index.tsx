@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, VStack, Heading, Flex, Icon, Text, Checkbox, Button } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
@@ -100,6 +100,7 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
           height="54px"
           fontSize="20px"
           onClick={() => actionsHandler('next')}
+          isDisabled={!isCheck}
         >
           下一步
         </Button>
