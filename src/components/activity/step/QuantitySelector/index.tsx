@@ -22,6 +22,14 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
 
   const selectArea = useTicketPurchasingStore.use.selectArea();
   const selectSubArea = useTicketPurchasingStore.use.selectSubArea();
+  const eventId = useTicketPurchasingStore.use.eventId();
+  const startTime = activity.events.find(({ id }) => id === eventId)?.startTime;
+
+  useEffect(() => {
+    if (!startTime) {
+      router.push(`/activities/${activity.id}`);
+    }
+  }, [startTime]);
 
   useEffect(() => {
     if (!selectArea || !selectSubArea) {
@@ -53,7 +61,7 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
         <Box>
           <Flex alignItems="center" gap="10px" marginBottom="8px">
             <Icon as={MdOutlineCalendarMonth} />
-            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
+            <Text>{dayjs(startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
           </Flex>
           <Flex alignItems="center" gap="10px">
             <Icon as={GoLocation} />

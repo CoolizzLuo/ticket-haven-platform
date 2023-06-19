@@ -13,6 +13,7 @@ const SelectSeat = () => {
   const { openConfirm, openAlert } = useDialogStore();
   const activityId = useTicketPurchasingStore.use.activityId();
   const eventId = useTicketPurchasingStore.use.eventId();
+  const orderNo = useTicketPurchasingStore.use.orderNo();
   const setOrder = useTicketPurchasingStore.use.setOrder();
   const { activity } = useActivity(activityId);
 
@@ -25,27 +26,44 @@ const SelectSeat = () => {
         openConfirm('已無剩餘座位', () => router.push(`/purchasing-process/select-area`));
 
       try {
-        const postData = {
-          activityId: activity.id,
-          eventId,
-          areaId: selectArea?.id,
-          subAreaId: selectSubArea?.id,
-          seatAmount: quantity,
-        };
-        const response = await axiosClient.post('/orders', postData);
+        let response;
+        if (orderNo) {
+          const patchData = {
+            areaId: selectArea?.id,
+            subAreaId: selectSubArea?.id,
+            amount: quantity,
+          };
+          response = await axiosClient.patch(`/orders/${orderNo}/seats`, patchData);
+        } else {
+          const postData = {
+            activityId: activity.id,
+            eventId,
+            areaId: selectArea?.id,
+            subAreaId: selectSubArea?.id,
+            seatAmount: quantity,
+          };
+          response = await axiosClient.post('/orders', postData);
+        }
+
         if (response) {
           const {
             data: { data: order },
           } = response;
           if (order) {
-            setOrder(order.orderNo);
+            if (order.orderNo) setOrder(order.orderNo);
             router.push('/purchasing-process/confirm');
           }
         }
       } catch (err: any) {
         if (err) {
-          const message = '系統發生問題，請稍後再試';
-          openAlert(message, () => router.push(`/activities/${activityId}`));
+          switch (err.response.status) {
+            case 401:
+              openAlert('請先登入', () => router.push(`/signin`));
+              break;
+            default:
+              openAlert('系統發生問題，請稍後再試', () => router.push(`/activities/${activityId}`));
+              break;
+          }
           console.log(err);
         }
       }
