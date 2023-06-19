@@ -33,7 +33,7 @@ const SelectSeat = () => {
             subAreaId: selectSubArea?.id,
             amount: quantity,
           };
-          response = await axiosClient.patch(`/${orderNo}/seats`, patchData);
+          response = await axiosClient.patch(`/orders/${orderNo}/seats`, patchData);
         } else {
           const postData = {
             activityId: activity.id,
@@ -50,7 +50,7 @@ const SelectSeat = () => {
             data: { data: order },
           } = response;
           if (order) {
-            setOrder(order.orderNo);
+            if (order.orderNo) setOrder(order.orderNo);
             router.push('/purchasing-process/confirm');
           }
         }
