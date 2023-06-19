@@ -23,7 +23,7 @@ const Tabs = defineMultiStyleConfig({
       },
       tabpanel: {
         p: '32px',
-        borderRadius: '6PX',
+        borderRadius: '6px',
       },
     },
   },

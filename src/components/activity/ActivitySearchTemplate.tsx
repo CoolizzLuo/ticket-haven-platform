@@ -45,13 +45,7 @@ const ActivitySearchTemplate = ({ title, tabs = [] }: ActivitySearchProps) => {
           <TabList mb="24px">
             {tabs.map((opt) => {
               return (
-                <Tab
-                  key={opt.id}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  mr="8px"
-                  _selected={{ color: 'white', bg: 'primary.500' }}
-                >
+                <Tab key={opt.id} borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'primary.500' }}>
                   {opt.name}
                 </Tab>
               );

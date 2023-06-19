@@ -1,6 +1,6 @@
 'use client';
 
-import { Text, Box, useBreakpointValue, Button, Image, border } from '@chakra-ui/react';
+import { Text, Box, useBreakpointValue, Button, Image, border, Container } from '@chakra-ui/react';
 import { calendarFormat, dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 import Slider from 'react-slick';
@@ -52,7 +52,9 @@ function Carousel({ list }: { list: CarouselProps[] }) {
         {list.map((item) => (
           <NextLink href={`/activities/${item.id}`} key={item.id}>
             <Box position="relative">
-              <Image src={item.url} width="100%" height={CAROUSEL_HEIGHT} objectFit="contain" />
+              <Container maxW={{ base: 'full', md: 'container.xl' }}>
+                <Image src={item.url} width="100%" height={CAROUSEL_HEIGHT} objectFit="cover" />
+              </Container>
               <Box
                 width="100%"
                 height={CAROUSEL_HEIGHT}
@@ -119,7 +121,7 @@ const Home = () => {
     <>
       <Carousel list={activities.map((a) => ({ url: a.coverImgUrl, id: a.id }))} />
       {!isMobile && (
-        <Box bg="natural.50">
+        <Box bg="natural.50" w="100%">
           <ActivitySearchForm
             onChange={redirectEventsResultPage}
             searchParams={{ startAfter: calendarFormat(new Date()) }}
@@ -129,7 +131,7 @@ const Home = () => {
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
       <Box as="section" py={{ base: '40px', md: '120px' }} bgColor="#F7F4F6" textAlign="center">
-        <Image w="200px" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
+        <Image w="300px" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
         <Text>採用 QR code 電子票券</Text>
         <Text mb="60px">掃描即可輕鬆入場</Text>
         <NextLink href={`/signup?redirect=${pathname}`}>

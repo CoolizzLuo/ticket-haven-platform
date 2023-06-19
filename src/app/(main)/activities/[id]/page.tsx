@@ -26,7 +26,7 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getActivityById } from '@/api/activities';
-import { dayFormat, isBeforeToday, isAfterToday, dayFromNow } from '@/lib/dayjs';
+import { dayFormat, isBeforeToday, isAfterToday, dayFromNow, YMMDDdddFormat, timeFormat } from '@/lib/dayjs';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 
 type Event = {
@@ -132,13 +132,7 @@ const Activitie = () => {
               }}
             >
               {['節目介紹', '座位示意', '注意事項', '購票提醒', '退票說明'].map((title) => (
-                <Tab
-                  key={title}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  mr="8px"
-                  _selected={{ color: 'white', bg: 'primary.500' }}
-                >
+                <Tab key={title} borderWidth="1px" borderRadius="md" _selected={{ color: 'white', bg: 'primary.500' }}>
                   {title}
                 </Tab>
               ))}
@@ -251,38 +245,43 @@ const Activitie = () => {
                   <CardBody p="0">
                     <Flex>
                       <Box bg="natural.50" p="20px" flexGrow="1">
-                        <Text mb="8px">演出時間</Text>
-                        <Text mb="4px"> {event.startTime && dayFormat(event.startTime)}</Text>
+                        <Text mb="8px" color="natural.700">
+                          演出時間
+                        </Text>
+                        <Text textStyle="t6" color="natural.900" fontWeight="bold">
+                          {event.startTime && YMMDDdddFormat(event.startTime)}
+                        </Text>
+                        <Text textStyle="t6" color="natural.900" fontWeight="bold">
+                          {event.startTime && timeFormat(event.startTime)}
+                        </Text>
                       </Box>
-                      <Box textAlign="center" p="20px" alignSelf="center">
+                      <Box textAlign="center" p="20px" alignSelf="center" flexGrow="1">
                         {isAfterToday(event.sellStartTime) && (
-                          <Text color="#BF7506" mb="8px">
+                          <Text color="#BF7506" mb="8px" lineHeight="1.5" fontWeight="400" whiteSpace="nowrap">
                             {dayFromNow(event.sellStartTime)}後開賣
                           </Text>
                         )}
 
                         {isAfterToday(event.sellStartTime) && (
-                          <Button py="8px" px="12px" colorScheme="natural" variant="outline" isDisabled>
+                          <Button py="8px" px="12px" colorScheme="natural" variant="outline" cursor="not-allowed">
                             即將開賣
                           </Button>
                         )}
 
                         {isBeforeToday(event.sellEndTime) && (
-                          <Button colorScheme="natural" variant="outline" py="8px" px="12px" isDisabled>
+                          <Button colorScheme="natural" variant="outline" py="8px" px="12px" cursor="not-allowed">
                             結束售票
                           </Button>
                         )}
 
                         {!event.soldOut && isBeforeToday(event.sellStartTime) && isAfterToday(event.sellEndTime) && (
-                          // <NextLink href={`/activities/${event.id}/step/1`} key={event.id}>
                           <Button colorScheme="primary" py="8px" px="12px" onClick={() => buyTickets(id, event.id)}>
                             立即購票
                           </Button>
-                          // </NextLink>
                         )}
 
                         {event.soldOut && isBeforeToday(event.sellEndTime) && (
-                          <Button size="md" color="#BFBCBD" bg="white" disabled>
+                          <Button size="md" colorScheme="natural" bg="white" cursor="not-allowed">
                             售罄
                           </Button>
                         )}
