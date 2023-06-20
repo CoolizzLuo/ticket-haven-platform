@@ -121,7 +121,7 @@ const Activitie = () => {
 
       <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} gap="30px" as="ul" alignItems="stretch">
         <Box order={{ base: 2, md: 1 }} width="100%" overflow="hidden">
-          <Tabs variant="unstyled">
+          <Tabs variant="card">
             <TabList
               overflowX="scroll"
               whiteSpace="nowrap"

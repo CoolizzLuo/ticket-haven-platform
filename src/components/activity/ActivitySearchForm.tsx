@@ -64,7 +64,7 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
             justifyContent="center"
             p={{ base: '20px', md: '40px' }}
             borderRadius="8px"
-            width="67%"
+            width={{ md: '100%', lg: '80%', xl: '67%' }}
             bgColor={{ base: 'natural.50', md: 'white' }}
           >
             <HStack w="50%">

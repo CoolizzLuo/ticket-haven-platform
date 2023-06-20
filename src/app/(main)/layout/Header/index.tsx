@@ -63,14 +63,13 @@ type HandleSearchType = (searchQ: string) => void;
 const HeaderSearchInput = ({ handleSearch }: { handleSearch: HandleSearchType }) => {
   const [searchQ, setSearchQ] = useState<string>('');
   return (
-    <InputGroup width="320px" height="48px" alignItems="center" mr="2">
+    <InputGroup width="320px" height="44px" alignItems="center" mr="2">
       <Input
-        type="text"
         borderRadius="70px"
+        focusBorderColor="primary.500"
         bg="white"
-        focusBorderColor="green"
         placeholder="搜尋藝人、場館、活動..."
-        fontSize="20px"
+        fontSize="md"
         height="inherit"
         maxLength={50}
         py="12px"
@@ -211,7 +210,7 @@ const DeskTopNav = ({ isLogin }: { isLogin: boolean }) => {
           <Menu placement="bottom-end">
             <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
               <Avatar
-                size="md"
+                height="44px"
                 src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
               />
             </MenuButton>

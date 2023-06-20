@@ -1,6 +1,6 @@
 'use client';
 
-import { Text, Box, useBreakpointValue, Button, Image, border, Container } from '@chakra-ui/react';
+import { Text, Box, useBreakpointValue, Button, Image, Container } from '@chakra-ui/react';
 import { calendarFormat, dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 import Slider from 'react-slick';
@@ -130,27 +130,32 @@ const Home = () => {
       )}
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
-      <Box as="section" py={{ base: '40px', md: '120px' }} bgColor="#F7F4F6" textAlign="center">
-        <Image w="300px" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
-        <Text>採用 QR code 電子票券</Text>
-        <Text mb="60px">掃描即可輕鬆入場</Text>
-        <NextLink href={`/signup?redirect=${pathname}`}>
-          <Button
-            fontSize={20}
-            fontWeight={600}
-            bg="primary.500"
-            color="white"
-            height="auto"
-            px={8}
-            py={2}
-            _hover={{
-              bg: 'black',
-              color: 'white',
-            }}
-          >
-            立刻註冊
-          </Button>
-        </NextLink>
+      <Box as="section" py={{ base: '40px', md: '120px' }} bgColor="natural.50" textAlign="center">
+        <Container maxW="container.lg">
+          <Image w="50%" src="/brand.svg" alt="Logo" margin="auto" mb="60px" />
+          <Text mb="8px" textStyle="t5">
+            採用 QR code 電子票券
+          </Text>
+          <Text mb="56px" textStyle="t5">
+            掃描即可輕鬆入場
+          </Text>
+          <NextLink href={`/signup?redirect=${pathname}`}>
+            <Button
+              fontSize={20}
+              fontWeight={600}
+              bg="primary.500"
+              color="white"
+              px="40px"
+              py="12px"
+              _hover={{
+                bg: 'black',
+                color: 'white',
+              }}
+            >
+              立刻註冊
+            </Button>
+          </NextLink>
+        </Container>
       </Box>
     </>
   );
