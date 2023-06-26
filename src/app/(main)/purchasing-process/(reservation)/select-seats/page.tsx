@@ -5,7 +5,6 @@ import StepPage from '@/components/activity/step';
 import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import useDialogStore from '@/stores/dialogStore';
 import QuantitySelector from '@/components/activity/step/QuantitySelector';
-import useActivity from '@/hooks/api/useActivity';
 import axiosClient from '@/api/axiosClient';
 
 const SelectSeat = () => {
@@ -13,21 +12,23 @@ const SelectSeat = () => {
   const { openConfirm, openAlert } = useDialogStore();
   const activityId = useTicketPurchasingStore.use.activityId();
   const eventId = useTicketPurchasingStore.use.eventId();
+  const lastEventId = useTicketPurchasingStore.use.lastEventId();
+  const setLastEventId = useTicketPurchasingStore.use.setLastEventId();
   const orderNo = useTicketPurchasingStore.use.orderNo();
   const setOrder = useTicketPurchasingStore.use.setOrder();
-  const { activity } = useActivity(activityId);
+  const activity = useTicketPurchasingStore.use.activity();
 
   const selectArea = useTicketPurchasingStore.use.selectArea();
   const selectSubArea = useTicketPurchasingStore.use.selectSubArea();
 
-  if (activity) {
+  if (activity && eventId && selectArea && selectSubArea) {
     const createOrder = async (quantity: number) => {
       if (!selectSubArea?.remainingSeats)
         openConfirm('已無剩餘座位', () => router.push(`/purchasing-process/select-area`));
 
       try {
         let response;
-        if (orderNo) {
+        if (orderNo && lastEventId === eventId) {
           const patchData = {
             areaId: selectArea?.id,
             subAreaId: selectSubArea?.id,
@@ -43,6 +44,7 @@ const SelectSeat = () => {
             seatAmount: quantity,
           };
           response = await axiosClient.post('/orders', postData);
+          setLastEventId(eventId);
         }
 
         if (response) {
