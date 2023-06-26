@@ -85,14 +85,18 @@ const CheckIn = () => {
       scannerRef.current?.pause();
       setQrcodeText(text);
       setIsLoadingTicket(true);
-      const res = (await httpClient.get('/check-in/ticket')({
-        searchParams: {
-          inspectorToken: authId,
-          ticketToken: text,
-        },
-      })) as BaseResponse<TicketInfo>;
-      setIsLoadingTicket(false);
-      setCheckInModalState({ isOpen: true, data: res.data });
+
+      try {
+        const res = (await httpClient.get('/check-in/ticket')({
+          searchParams: {
+            inspectorToken: authId,
+            ticketToken: text,
+          },
+        })) as BaseResponse<TicketInfo>;
+        setCheckInModalState({ isOpen: true, data: res.data });
+      } finally {
+        setIsLoadingTicket(false);
+      }
     };
 
     scannerRef.current = new Html5Qrcode(scannerId);
