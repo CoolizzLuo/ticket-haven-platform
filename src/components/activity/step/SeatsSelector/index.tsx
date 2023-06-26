@@ -1,16 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { VStack, Box, HStack, Button, Heading, Select } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { Area, Activity } from '@/types/activityTypes';
-import useTicketPurchasingStore, { SubArea } from '@/stores/ticketPurchasing';
+import { Area, Activity, SubArea } from '@/types/activityTypes';
+import useTicketPurchasingStore from '@/stores/ticketPurchasing';
 import AreaPicker from './AreaPicker';
 
 interface SeatsSelectorProps {
   activity: Activity;
   seats: Area[];
+  eventId: string;
+  updateSeats: (id: string) => void;
 }
 
 type ButtonType = 'sale' | 'soldout';
@@ -34,24 +36,53 @@ const buttonProps = (isActive: boolean) => {
 const formatDateLocationStr = (date: string, location: string) =>
   `${dayjs(date).format('YYYY/MM/DD(ddd) HH:mm')} ${location}`;
 
-const SeatSelector = ({ activity, seats }: SeatsSelectorProps) => {
+const SeatSelector = ({ activity, seats, eventId, updateSeats }: SeatsSelectorProps) => {
   const [btnStatus, setBtnStatus] = useState<ButtonType>('sale');
   const router = useRouter();
   const setSelectArea = useTicketPurchasingStore.use.setArea();
+  const seatsFiltered = useMemo(() => {
+    const conditions = (remainingSeats: number) => {
+      if (btnStatus === 'soldout') {
+        return remainingSeats === 0;
+      }
+      if (btnStatus === 'sale') {
+        return remainingSeats > 0;
+      }
+    };
+    if (seats.length > 0) {
+      const filtered = seats.map((area: Area) => {
+        const filterdSubAreas = area.subAreas.reduce((acc: SubArea[], subArea: SubArea) => {
+          if (conditions(subArea.remainingSeats)) {
+            acc.push(subArea);
+          }
+          return acc;
+        }, []);
+        return { ...area, subAreas: filterdSubAreas };
+      }, []);
+      return filtered;
+    }
+    return [];
+  }, [btnStatus, seats]);
+
   const clickHandler = (area: Area) => (subArea: SubArea) => {
     setSelectArea(area, subArea);
     router.push('/purchasing-process/select-seats');
   };
+
+  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    updateSeats(e.target.value);
+  };
+
   return (
     <VStack align="stretch" gap="48px" bg="natural.50" borderRadius="6px" padding="40px 24px">
       <Heading as="h2" fontSize="28px">
         {activity.name}
       </Heading>
-      <Select defaultValue={activity.events && formatDateLocationStr(activity.events[0].startTime, activity.location)}>
-        {activity.events?.map(({ startTime }) => {
+      <Select defaultValue={eventId} onChange={selectHandler}>
+        {activity.events?.map(({ startTime, id }) => {
           const str = formatDateLocationStr(startTime, activity.location);
           return (
-            <option key={startTime} value={str}>
+            <option key={startTime} value={id}>
               {str}
             </option>
           );
@@ -67,7 +98,7 @@ const SeatSelector = ({ activity, seats }: SeatsSelectorProps) => {
           </Button>
         </HStack>
         <VStack align="stretch" gap="24px">
-          {seats.map((area) => (
+          {seatsFiltered.map((area) => (
             <AreaPicker key={area.id} {...area} clickHandler={clickHandler(area)} />
           ))}
         </VStack>

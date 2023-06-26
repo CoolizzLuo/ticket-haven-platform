@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, VStack, Heading, Flex, Icon, Text, Checkbox, Button } from '@chakra-ui/react';
 import { GoLocation } from 'react-icons/go';
@@ -22,6 +22,14 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
 
   const selectArea = useTicketPurchasingStore.use.selectArea();
   const selectSubArea = useTicketPurchasingStore.use.selectSubArea();
+  const eventId = useTicketPurchasingStore.use.eventId();
+  const startTime = activity.events.find(({ id }) => id === eventId)?.startTime;
+
+  useEffect(() => {
+    if (!startTime) {
+      router.push(`/activities/${activity.id}`);
+    }
+  }, [startTime]);
 
   useEffect(() => {
     if (!selectArea || !selectSubArea) {
@@ -53,7 +61,7 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
         <Box>
           <Flex alignItems="center" gap="10px" marginBottom="8px">
             <Icon as={MdOutlineCalendarMonth} />
-            <Text>{dayjs(activity.events[0].startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
+            <Text>{dayjs(startTime).format('YYYY/MM/DD(ddd.) HH:mm')}</Text>
           </Flex>
           <Flex alignItems="center" gap="10px">
             <Icon as={GoLocation} />
@@ -92,6 +100,7 @@ const QuantitySelector = ({ activity, createOrder }: QuantitySelectorProps) => {
           height="54px"
           fontSize="20px"
           onClick={() => actionsHandler('next')}
+          isDisabled={!isCheck}
         >
           下一步
         </Button>

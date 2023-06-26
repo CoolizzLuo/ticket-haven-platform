@@ -11,7 +11,10 @@ dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
 export const dayFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD HH:mm A (ddd.)');
+export const YMMDDdddFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD (ddd.)');
+export const timeFormat = (date: string | Date | Dayjs) => dayjs(date).format('HH:mm A');
 export const dateFormatWithoutday = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD HH:mm A');
+export const dateAndDay = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD (ddd.)');
 export const dayYMDFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY/MM/DD');
 export const calendarFormat = (date: string | Date | Dayjs) => dayjs(date).format('YYYY-MM-DD');
 

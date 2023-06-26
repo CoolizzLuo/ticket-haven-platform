@@ -5,9 +5,8 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { Html5Qrcode, QrcodeSuccessCallback } from 'html5-qrcode';
 import { ScanIcon } from '@/components/icons';
 import { useEventInfo } from '@/hooks/api/check-in/useEventInfo';
-import { Box, Container, Flex, Heading, Text, position, useToast } from '@/lib/chakra';
+import { Box, Container, Flex, Heading, Text, useToast } from '@/lib/chakra';
 import { dayFormat } from '@/lib/dayjs';
-import useDialogStore from '@/stores/dialogStore';
 import { httpClient } from '@/lib/api/httpClient';
 import { BaseResponse } from '@/lib/api/types/baseResponse';
 import { CheckInModal } from './CheckInModal';
@@ -17,7 +16,6 @@ import { Loading } from './LoadingComp';
 const CheckIn = () => {
   const { authId } = useParams();
   const router = useRouter();
-  const { openAlert } = useDialogStore();
   const toast = useToast();
 
   const scannerId = useId();
@@ -87,14 +85,18 @@ const CheckIn = () => {
       scannerRef.current?.pause();
       setQrcodeText(text);
       setIsLoadingTicket(true);
-      const res = (await httpClient.get('/check-in/ticket')({
-        searchParams: {
-          inspectorToken: authId,
-          ticketToken: text,
-        },
-      })) as BaseResponse<TicketInfo>;
-      setIsLoadingTicket(false);
-      setCheckInModalState({ isOpen: true, data: res.data });
+
+      try {
+        const res = (await httpClient.get('/check-in/ticket')({
+          searchParams: {
+            inspectorToken: authId,
+            ticketToken: text,
+          },
+        })) as BaseResponse<TicketInfo>;
+        setCheckInModalState({ isOpen: true, data: res.data });
+      } finally {
+        setIsLoadingTicket(false);
+      }
     };
 
     scannerRef.current = new Html5Qrcode(scannerId);

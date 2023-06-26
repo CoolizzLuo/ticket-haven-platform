@@ -236,12 +236,6 @@ const Confirm = () => {
             </Flex>
           </div>
         </Flex>
-        <Heading fontSize="28px" mt="32px" mb="16px">
-          付款方式
-        </Heading>
-        <Button variant="outline" colorScheme="blue" w="150px" p="24px" borderRadius={0}>
-          藍新金流
-        </Button>
         <Flex mt="32px" gap="16px">
           <Button onClick={cancelOrder} variant="outline" colorScheme="natural">
             取消訂單
