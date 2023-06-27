@@ -23,7 +23,7 @@ export interface TicketPurchasingStore {
   orderNo: string | undefined;
   setEvent: (activityId: string, eventId: string) => void;
   setArea: (area: Area, selectSubArea: SubArea) => void;
-  setOrder: (orderNo: string) => void;
+  setOrderNo: (orderNo: string) => void;
   clearArea: () => void;
   clear: () => void;
 }
@@ -42,7 +42,7 @@ const useTicketPurchasingStore = createSelectors(
       ...initialValues,
       setEvent: (activityId, eventId) => set(() => ({ activityId, eventId })),
       setArea: (selectArea, selectSubArea) => set(() => ({ selectArea, selectSubArea })),
-      setOrder: (orderNo) => set(() => ({ orderNo })),
+      setOrderNo: (orderNo) => set(() => ({ orderNo })),
       clearArea: () => set(() => ({ selectArea: undefined, selectSubArea: undefined })),
       clear: () => set(() => initialValues),
     })),
