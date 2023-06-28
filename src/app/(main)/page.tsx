@@ -89,12 +89,12 @@ const Home = () => {
   const section1 = {
     title: '近期開賣',
     tabs: [
-      { id: '1', name: '今天', params: { startAfter: today, startBefore: today } },
-      { id: '2', name: '明天', params: { startAfter: tommorrow, startBefore: tommorrow } },
+      { id: '1', name: '今天', params: { sellStartAfter: today, sellStartBefore: today, sort: 'sellAt' } },
+      { id: '2', name: '明天', params: { sellStartAfter: tommorrow, sellStartBefore: tommorrow, sort: 'sellAt' } },
       {
         id: '3',
         name: '未來一週',
-        params: { startAfter: today, startBefore: endOfWeek },
+        params: { sellStartAfter: today, sellStartBefore: endOfWeek, sort: 'sellAt' },
       },
     ],
   };
@@ -103,10 +103,10 @@ const Home = () => {
   const section2 = {
     title: '近期演出',
     tabs: [
-      { id: '1', name: '全部', params: {} },
-      { id: '2', name: '北部', params: { region: 0 } },
-      { id: '3', name: '中部', params: { region: 1 } },
-      { id: '4', name: '南部', params: { region: 2 } },
+      { id: '1', name: '全部', params: { startAfter: today, startBefore: endOfWeek, sort: 'startAt' } },
+      { id: '2', name: '北部', params: { region: 0, startAfter: today, startBefore: endOfWeek, sort: 'startAt' } },
+      { id: '3', name: '中部', params: { region: 1, startAfter: today, startBefore: endOfWeek, sort: 'startAt' } },
+      { id: '4', name: '南部', params: { region: 2, startAfter: today, startBefore: endOfWeek, sort: 'startAt' } },
     ],
   };
 
