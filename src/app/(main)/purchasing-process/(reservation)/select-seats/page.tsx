@@ -7,6 +7,7 @@ import useDialogStore from '@/stores/dialogStore';
 import QuantitySelector from '@/components/activity/step/QuantitySelector';
 import useActivity from '@/hooks/api/useActivity';
 import axiosClient from '@/api/axiosClient';
+import useOrder from '@/hooks/api/useOrder';
 
 const SelectSeat = () => {
   const router = useRouter();
@@ -14,26 +15,28 @@ const SelectSeat = () => {
   const activityId = useTicketPurchasingStore.use.activityId();
   const eventId = useTicketPurchasingStore.use.eventId();
   const orderNo = useTicketPurchasingStore.use.orderNo();
-  const setOrder = useTicketPurchasingStore.use.setOrder();
+  const setOrderNo = useTicketPurchasingStore.use.setOrderNo();
   const { activity } = useActivity(activityId);
 
   const selectArea = useTicketPurchasingStore.use.selectArea();
   const selectSubArea = useTicketPurchasingStore.use.selectSubArea();
+  const { addSeat } = useOrder(orderNo);
 
   if (activity) {
     const createOrder = async (quantity: number) => {
+      if (!selectArea || !selectSubArea) return;
+
       if (!selectSubArea?.remainingSeats)
         openConfirm('已無剩餘座位', () => router.push(`/purchasing-process/select-area`));
 
       try {
-        let response;
         if (orderNo) {
           const patchData = {
             areaId: selectArea?.id,
             subAreaId: selectSubArea?.id,
             amount: quantity,
           };
-          response = await axiosClient.patch(`/orders/${orderNo}/seats`, patchData);
+          await addSeat(patchData);
         } else {
           const postData = {
             activityId: activity.id,
@@ -42,18 +45,15 @@ const SelectSeat = () => {
             subAreaId: selectSubArea?.id,
             seatAmount: quantity,
           };
-          response = await axiosClient.post('/orders', postData);
-        }
 
-        if (response) {
           const {
             data: { data: order },
-          } = response;
-          if (order) {
-            if (order.orderNo) setOrder(order.orderNo);
-            router.push('/purchasing-process/confirm');
-          }
+          } = await axiosClient.post('/orders', postData);
+
+          setOrderNo(order.orderNo);
         }
+
+        router.push('/purchasing-process/confirm');
       } catch (err: any) {
         if (err) {
           switch (err.response.status) {

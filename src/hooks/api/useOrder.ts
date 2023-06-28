@@ -66,35 +66,59 @@ const useOrder = (orderNo?: string | null) => {
   );
 
   const deleteSeat = useCallback(
-    async (seatData: { subAreaId: string; row: number; seat: number }) => {
+    (seatData: { subAreaId: string; row: number; seat: number }) =>
       mutate(
         async () => {
-          await httpClient.delete(`orders/${orderNo}/seats`)<
+          const res = await httpClient.delete(`orders/${orderNo}/seats`)<
             { subAreaId: string; row: number; seat: number },
             void,
-            BaseResponse<boolean>
+            BaseResponse<Order>
           >({ params: seatData });
-          return undefined;
+
+          return res.data;
         },
         {
-          populateCache: false,
+          revalidate: false,
           optimisticData: (prevData): any => {
             if (prevData) {
+              const seat = prevData.seats.find(
+                (s) => s.subAreaId === seatData.subAreaId && s.row === seatData.row && s.seat === seatData.seat,
+              );
+              const price = prevData.price - seat!.price;
               return {
                 ...prevData,
                 seats: prevData.seats.filter(
                   (s) => !(s.subAreaId === seatData.subAreaId && s.row === seatData.row && s.seat === seatData.seat),
                 ),
+                price,
               };
             }
           },
         },
-      );
-    },
+      ),
     [orderNo],
   );
 
-  return { order: data, cancelOder, getPaymentInfo, deleteSeat, mutate, ...props };
+  const addSeat = useCallback(
+    (params: { areaId: string; subAreaId: string; amount: number }) =>
+      mutate(
+        async () => {
+          const res = await httpClient.patch(`orders/${orderNo}/seats`)<
+            { areaId: string; subAreaId: string; amount: number },
+            void,
+            BaseResponse<Order>
+          >({ params });
+
+          return res.data;
+        },
+        {
+          revalidate: false,
+        },
+      ),
+    [orderNo],
+  );
+
+  return { order: data, cancelOder, getPaymentInfo, deleteSeat, addSeat, mutate, ...props };
 };
 
 export default useOrder;
