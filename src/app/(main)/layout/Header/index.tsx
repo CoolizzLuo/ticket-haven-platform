@@ -32,12 +32,13 @@ import {
 } from '@chakra-ui/react';
 
 import NextLink from 'next/link';
-import { SearchIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '@chakra-ui/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { FaListAlt } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { BsFillPersonFill, BsFillTicketDetailedFill } from 'react-icons/bs';
+import { CgMenuRightAlt } from 'react-icons/cg';
 import { useState } from 'react';
 
 const ROUTE_NORMAL_LIST = [
@@ -78,7 +79,15 @@ const HeaderSearchInput = ({ handleSearch }: { handleSearch: HandleSearchType })
         onChange={(e) => setSearchQ(e.target.value)}
       />
       <InputRightElement height="inherit">
-        <SearchIcon color="gray.500" boxSize={5} cursor="pointer" onClick={() => handleSearch(searchQ)} />
+        <SearchIcon
+          color="gray.500"
+          boxSize={5}
+          cursor="pointer"
+          onClick={() => {
+            setSearchQ('');
+            handleSearch(searchQ);
+          }}
+        />
       </InputRightElement>
     </InputGroup>
   );
@@ -98,7 +107,7 @@ const MobileNav = ({ isLogin }: { isLogin: boolean }) => {
     <>
       <IconButton
         variant="ghost"
-        icon={<HamburgerIcon fontSize="1.5rem" color="white" />}
+        icon={<CgMenuRightAlt fontSize="2.5rem" color="white" />}
         aria-label="Open Menu"
         onClick={onOpen}
       />
@@ -137,7 +146,7 @@ const MobileNav = ({ isLogin }: { isLogin: boolean }) => {
             ) : (
               <>
                 <Text onClick={() => signIn(undefined, { callbackUrl: pathname })}>
-                  <ListIcon as={FiLogOut} mr="8px" height="16px" />
+                  <Icon as={FiLogOut} mr="8px" height="16px" />
                   登入
                 </Text>
                 <Divider my="24px" />
@@ -242,7 +251,7 @@ const Header = () => {
   const isLogin = status === 'authenticated';
 
   return (
-    <Box as="section" p="5" bg="primary.500">
+    <Box as="section" p={{ base: 4, md: 5 }} bg="primary.500">
       <Box as="nav" width="100%">
         <Container maxW="container.xl">
           <HStack justifyContent="space-between">
