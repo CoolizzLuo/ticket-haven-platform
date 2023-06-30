@@ -13,6 +13,7 @@ import {
 import { useReducer } from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { SearchFormState as SearchState } from '@/types/activityTypes';
+import { Region } from '@/constants/region';
 
 type Action =
   | { type: 'region'; payload: number | '' }
@@ -53,71 +54,87 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
   };
 
   return (
-    <Box as="section" py={{ base: '40px', md: '80px' }} w="100%">
-      <Text fontWeight="700" textStyle={{ base: 't5', md: 't3' }} textAlign="center" mb="32px">
+    <Box as="section" w="100%" pb={{ md: '80px' }} pt={{ base: '40px', md: '80px' }}>
+      <Text fontWeight="700" textStyle={{ base: 't5', md: 't3' }} textAlign="center" mb={{ base: '20px', md: '32px' }}>
         找活動
       </Text>
-      <Container maxWidth="container.xl">
-        <HStack justifyContent="center">
+      <Container maxWidth="container.xl" px={{ base: '0', md: '16px' }}>
+        <HStack justifyContent="center" w={{ base: '100%', md: 'auto' }}>
           <Stack
             isInline={!isMobile}
             justifyContent="center"
             p={{ base: '20px', md: '40px' }}
             borderRadius="8px"
-            width={{ md: '100%', lg: '80%', xl: '67%' }}
+            width={{ base: '100%', lg: '80%', xl: '67%' }}
             bgColor={{ base: 'natural.50', md: 'white' }}
           >
-            <HStack w="50%">
-              <Box padding="1rem" borderRight="1px solid" borderColor="gray.200">
-                <Text as="label" fontSize="md" color="primary.500" fontWeight="bold">
+            <HStack w={{ base: '100%', md: '50%' }}>
+              <Box padding={{ base: '0 12px', md: '1rem' }} borderRight="1px solid" borderColor="gray.200">
+                <Text
+                  textAlign={{ base: 'center', md: 'left' }}
+                  fontSize={{ base: 't6', md: 't5' }}
+                  color="primary.500"
+                  fontWeight={{ md: '700' }}
+                >
                   區域
                 </Text>
                 <Select
                   variant="ghost"
                   size="sm"
-                  fontSize="md"
+                  fontSize={{ base: 't6', md: 't5' }}
                   placeholder="全部"
                   value={searchForm.region}
-                  left="-12px"
+                  left={{ md: '-12px' }}
+                  bg="transparent"
                   onChange={(e) => onChangeHandler('region', e.target.value)}
                 >
-                  <option value="0">北部</option>
-                  <option value="1">中部</option>
-                  <option value="2">南部</option>
+                  <option value={Region.NORTH}>北部</option>
+                  <option value={Region.MIDDLE}>中部</option>
+                  <option value={Region.SOUTH}>南部</option>
                 </Select>
               </Box>
-              <Box padding="1rem">
-                <Text as="label" fontSize="md" color="primary.500" fontWeight="bold">
+              <Box padding={{ base: '0 12px', md: '1rem' }} flexGrow="1">
+                <Text
+                  textAlign={{ base: 'center', md: 'left' }}
+                  fontSize={{ base: 't6', md: 't5' }}
+                  color="primary.500"
+                  fontWeight={{ md: '700' }}
+                >
                   日期
                 </Text>
                 <Input
-                  fontSize="md"
+                  fontSize={{ base: 't6', md: 't5' }}
                   variant="ghost"
                   type="date"
                   size="sm"
                   px="0"
+                  bg="transparent"
                   value={searchForm.startAfter}
                   onChange={(e) => onChangeHandler('startAfter', e.target.value)}
                 />
               </Box>
             </HStack>
-            <Box w="50%">
-              <InputGroup width="100%" alignItems="center" mb="2" height="66px">
+            <Box w={{ base: '100%', md: '50%' }}>
+              <InputGroup width="100%" alignItems="center" mb="2" height={{ base: '48px', md: '66px' }}>
                 <Input
                   borderRadius="70px"
                   bg="white"
                   placeholder="台北小巨蛋"
-                  fontSize="md"
-                  px="24px"
-                  lineHeight="1.2"
+                  fontSize={{ base: 't6', md: 't5' }}
+                  px={{ base: '20px', md: '24px' }}
                   value={searchForm.q}
                   onChange={(e) => onChangeHandler('q', e.target.value)}
                   height="inherit"
                 />
-                <InputRightElement mr="8px" onClick={redirectEventsResultPage} cursor="pointer" height="inherit">
+                <InputRightElement
+                  mr={{ base: '4px', md: '8px' }}
+                  onClick={redirectEventsResultPage}
+                  cursor="pointer"
+                  height="inherit"
+                >
                   <Box
-                    width="50px"
-                    height="50px"
+                    width={{ base: '40px', md: '50px' }}
+                    height={{ base: '40px', md: '50px' }}
                     bg="primary.500"
                     borderRadius="50%"
                     display="flex"
@@ -129,7 +146,12 @@ const ActivitySearchForm = ({ onChange, searchParams }: { onChange: OnChangeType
                   </Box>
                 </InputRightElement>
               </InputGroup>
-              <Text as="label" ml="28px" color="primary.500">
+              <Text
+                as="label"
+                ml={{ base: '24px', md: '28px' }}
+                color="primary.500"
+                textStyle={{ base: 't7', md: 't6' }}
+              >
                 <Text as="span" color="natural.700">
                   熱門搜尋：
                 </Text>

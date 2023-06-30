@@ -5,7 +5,7 @@ import { calendarFormat, dayYMDFormat, dayAfterToday } from '@/lib/dayjs';
 import NextLink from 'next/link';
 import Slider from 'react-slick';
 import useActivities from '@/hooks/api/useActivities';
-
+import { CalendarIcon } from '@/components/icons';
 import { usePathname, useRouter } from 'next/navigation';
 
 import ActivitySearchForm from '@/components/activity/ActivitySearchForm';
@@ -87,6 +87,7 @@ const Home = () => {
   const endOfWeek = dayAfterToday(7);
 
   const section1 = {
+    icon: CalendarIcon,
     title: '近期開賣',
     tabs: [
       { id: '1', name: '今天', params: { sellStartAfter: today, sellStartBefore: today, sort: 'sellAt' } },
@@ -120,14 +121,12 @@ const Home = () => {
   return (
     <>
       <Carousel list={activities.map((a) => ({ url: a.coverImgUrl, id: a.id }))} />
-      {!isMobile && (
-        <Box bg="natural.50" w="100%">
-          <ActivitySearchForm
-            onChange={redirectEventsResultPage}
-            searchParams={{ startAfter: calendarFormat(new Date()) }}
-          />
-        </Box>
-      )}
+      <Box bg={{ md: 'natural.50' }} w="100%" px={{ base: 4, md: 0 }}>
+        <ActivitySearchForm
+          onChange={redirectEventsResultPage}
+          searchParams={{ startAfter: calendarFormat(new Date()) }}
+        />
+      </Box>
       <ActivitySearchTemplate title={section1.title} tabs={section1.tabs} />
       <ActivitySearchTemplate title={section2.title} tabs={section2.tabs} />
       <Box as="section" py={{ base: '40px', md: '120px' }} bgColor="natural.50" textAlign="center">

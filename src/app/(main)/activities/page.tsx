@@ -59,11 +59,16 @@ const Activities = () => {
 
   return (
     <div>
-      <Container maxW="100%" bg={{ md: 'natural.50' }}>
+      <Container maxW="100%" pt={{ base: '40px', md: 0 }} bg={{ md: 'natural.50' }}>
         <ActivitySearchForm onChange={handleSearchChange} searchParams={{ region, startAfter, q: keyword }} />
       </Container>
-      <Container maxW="container.xl" py="80px">
-        <Grid templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="30px" as="ul" alignItems="stretch">
+      <Container maxW="container.xl" py={{ base: '28px', md: '80px' }}>
+        <Grid
+          templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
+          gap={{ base: '20px', md: '30px' }}
+          as="ul"
+          alignItems="stretch"
+        >
           {result.length ? (
             result.map((r: ActType) => (
               <ActivityCard
