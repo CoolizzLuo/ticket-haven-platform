@@ -40,6 +40,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { BsFillPersonFill, BsFillTicketDetailedFill } from 'react-icons/bs';
 import { CgMenuRightAlt } from 'react-icons/cg';
 import { useState } from 'react';
+import { useUser } from '@/hooks/api/useUser';
 
 const ROUTE_NORMAL_LIST = [
   {
@@ -177,6 +178,8 @@ const DeskTopNav = ({ isLogin }: { isLogin: boolean }) => {
   const pathname = usePathname();
   const router = useRouter();
 
+  const { user } = useUser();
+
   return (
     <HStack>
       <HeaderSearchInput handleSearch={(queryStr) => router.push(`/activities?q=${queryStr}`)} />
@@ -218,10 +221,7 @@ const DeskTopNav = ({ isLogin }: { isLogin: boolean }) => {
         ) : (
           <Menu placement="bottom-end">
             <MenuButton as={Button} rounded="full" variant="link" cursor="pointer" minW={0}>
-              <Avatar
-                height="44px"
-                src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-              />
+              <Avatar height="44px" src={user?.avatarUrl} />
             </MenuButton>
             <MenuList minW="150px" py="9px">
               {ROUTE_NORMAL_LIST.map((m) => (
