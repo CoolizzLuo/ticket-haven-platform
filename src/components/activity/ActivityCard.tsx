@@ -27,7 +27,7 @@ const EventCards = ({ id, name, startAt, sellAt, soldOut, coverImgUrl }: Props) 
               _hover={{ transform: 'scale(1.05)', transition: 'transform 0.2s' }}
             />
           </Box>
-          <Stack py="3" align="flex-start">
+          <Stack py={{ base: '2', md: '3' }} pb={{ base: 0 }} align="flex-start">
             <Text size="20px" fontWeight="400" color="natural.600">
               {dateAndDay(startAt)}
             </Text>

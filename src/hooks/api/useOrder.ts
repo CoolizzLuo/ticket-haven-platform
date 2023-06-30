@@ -1,4 +1,3 @@
-import axiosClient from '@/api/axiosClient';
 import { BaseResponse } from '@/api/types/baseResponse';
 import { OrderStatus } from '@/constants/orderStatus';
 import { httpClient } from '@/lib/api/httpClient';
